@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  26 SEP 2013 03:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  26 SEP 2013 03:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -221,7 +221,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
- [4]
+ [4] [5]
 (./usability-metrics.aux) ) 
 Here is how much of TeX's memory you used:
  2278 strings out of 493315
@@ -238,10 +238,10 @@ c/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public
 msfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmsy10.pfb>
-Output written on usability-metrics.pdf (4 pages, 81567 bytes).
+Output written on usability-metrics.pdf (5 pages, 83243 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
- 28 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
