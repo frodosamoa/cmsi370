@@ -21,4 +21,10 @@ $(function () {
         $('#deleteModal').modal('hide');
     });
 
+
+    // Set up handlers for character clicks.
+    $("#character-list tbody > tr").click(function () {
+        $("#character-info > h1").text($(this).find("td:nth-child(2)").text());
+        $("#character-info").collapse('show');
+    });
 });
