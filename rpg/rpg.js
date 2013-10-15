@@ -1,10 +1,17 @@
-// Big things have small beginnings...
 $(function () {
 
-    $("#confirm-delete-button").click(function () {
-        console.log("Delete confirmed!!!!!");
+	$("#confirm-create-button").click(function () {
+		console.log("Character created.");
+        $('#createModal').modal('hide');
+    });
 
-        // Now we dismiss the dialog.
+    $("#confirm-edit-button").click(function () {
+    	console.log("Character edited.");
+        $('#editModal').modal('hide');
+    });
+
+    $("#confirm-delete-button").click(function () {
+    	console.log("Character delted.");
         $('#deleteModal').modal('hide');
     });
 
