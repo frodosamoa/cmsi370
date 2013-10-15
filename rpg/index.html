@@ -10,11 +10,32 @@
     <link rel="stylesheet" href="rpg.css">
   </head>
   <body>
-
     <div class = "wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="table-container">
+              <table class="table table-hover" style="width:">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Characters</th>
 
-      <div class="middleText">
-        <h3> You have no characters. Create one by clicking the green button.</h3>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Conan</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!-- /example -->
+          </div>
+          <div class="col-md-6">
+            <p> here is where the character will show up.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Deletion Modal -->
@@ -63,6 +84,8 @@
 
             <div class="modal-body">
               <center>
+                <input type="text" class="form-control" placeholder="Your character's name">
+                <br>
                 <p>Select your character's <strong>type</strong>.
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <label class="btn btn-default">
@@ -145,13 +168,13 @@
       <div id="container">
         <center>
           <a id="create-button" data-toggle="modal" href="#createModal" class="btn btn-lg btn-success footerModal">
-            <span class="glyphicon glyphicon-plus"></span>
+            <span id="create-glyph" class="glyphicon glyphicon-plus white"></span>
           </a>
-          <a id="edit-button" data-toggle="modal" href="#editModal" class="btn btn-lg btn-info footerModal">
-            <span class="glyphicon glyphicon-edit"></span>
+          <a id="edit-button" data-toggle="modal" href="#editModal" class="btn btn-lg btn-info footerModal" disabled="disabled">
+            <span id="edit-glyph" class="glyphicon glyphicon-edit black"></span>
           </a>
-          <a id="delete-button" data-toggle="modal" href="#deleteModal" class="btn btn-lg btn-danger footerModal">
-            <span class="glyphicon glyphicon-trash"></span>
+          <a id="delete-button" data-toggle="modal" href="#deleteModal" class="btn btn-lg btn-danger footerModal" disabled="disabled">
+            <span id="delete-glyph" class="glyphicon glyphicon-trash black"></span>
           </a>
         </center>
       </div>
