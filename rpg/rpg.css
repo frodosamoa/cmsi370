@@ -27,16 +27,21 @@ footer, .push {
 
 span.glyphicon-plus {
     font-size: 1.6em;
-    color: white;
 }
 
 span.glyphicon-edit {
     font-size: 1.6em;
-    color: black;
 }
 
 span.glyphicon-trash {
     font-size: 1.6em;
+}
+
+.white, .white a {
+    color: white;
+}
+
+.black, .black a {
     color: black;
 }
 
