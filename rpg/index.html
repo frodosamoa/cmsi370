@@ -31,7 +31,7 @@
                 <tr>
               </tbody>
             </table>
-            
+
             <a id="create-button" data-toggle="modal" href="#createModal" class="btn btn-block btn-success">
               <span id="create-glyph" class="glyphicon glyphicon-plus white"></span>
             </a>
@@ -70,10 +70,10 @@
               </tbody>
             </table>
             <button id="view-items" type="button" class="btn btn-default btn-lg btn-block">View items</button>
-            <a id="edit-button" data-toggle="modal" href="#editModal" class="btn btn-block btn-info" disabled="disabled">
+            <a id="edit-button" data-toggle="modal" href="#editModal" class="btn btn-block btn-info">
               <span id="edit-glyph" class="glyphicon glyphicon-edit black"></span>
             </a>
-            <a id="delete-button" data-toggle="modal" href="#deleteModal" class="btn btn-block btn-danger" disabled="disabled">
+            <a id="delete-button" data-toggle="modal" href="#deleteModal" class="btn btn-block btn-danger">
               <span id="delete-glyph" class="glyphicon glyphicon-trash black"></span>
             </a>
           </div>
@@ -98,7 +98,7 @@
                   <th>Type</th>
               </thead>
               <tbody>
-                <tr>
+                <tr id="test" data-container="body" data-toggle="popover" data-placement="right" data-content="Delete">
                   <td>Sword</td>
                   <td>Weapon</td>
                 </tr>                 
@@ -108,121 +108,15 @@
           </div>
 
           <!-- Enlarged character image. -->
-          <div id="character-enlarged-image" class="col-md-4 panel-collapse collapse">
-            <h3></h3>
+          <div id="enlarged-image" class="col-md-4 panel-collapse collapse">
             <center>
+              <h1></h1> <!-- Character title -->
               <img class="img-circle" src="http://placehold.it/300x300"/>
             </center>
           </div>
         </div>
 
-      <!-- Deletion Modal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Delete Character</h4>
-            </div>
-            <div class="modal-body">
-              Deleting a character is permanent and <strong>cannot be undone</strong>.
-            </div>
-            <div class="modal-footer">
-              <button type="cancel-delete-button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button id="confirm-delete-button" type="button" class="btn btn-danger">Delete</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <!-- Edition Modal -->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Character</h4>
-            </div>
-            <div class="modal-body">
-                            <center>
-                <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
-                <br>
-                <p>Select your character's <strong>type</strong>.
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Archer
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Knight
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Thief
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Ranger
-                  </label>
-                </div>
-
-                <br>
-                <p>Select your character's <strong>weapon</strong>.
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Sword
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Bow and Arrow
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Warhammer
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Mace
-                  </label>
-                </div>
-
-                <br>
-                <p>Select your character's <strong>strongest</strong> attribute.
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Strength
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Dexterity
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Intelligence
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Stamina
-                  </label>
-                </div>
-
-                <br>
-                <p>Select your character's <strong>weakest</strong> attribute.
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Strength
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Dexterity
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Intelligence
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Stamina
-                  </label>
-                </div>
-              </center>
-
-            </div>
-            <div class="modal-footer">
-              <button type="cancel-edit-button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button id="confirm-edit-button" type="button" class="btn btn-success">Save</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <!-- Creation Modal -->
+      <!-- Character creation Modal -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -304,12 +198,120 @@
             </div>
 
             <div class="modal-footer">
-              <button type="cancel-create-button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button id="confirm-create-button" type="button" class="btn btn-success">Create Character</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
+      <!-- Character deletion Modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Character</h4>
+            </div>
+            <div class="modal-body">
+              Deleting a character is permanent and <strong>cannot be undone</strong>.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button id="confirm-delete-button" type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+      <!-- Character edition Modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Character</h4>
+            </div>
+            <div class="modal-body">
+                            <center>
+                <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
+                <br>
+                <p>Select your character's <strong>type</strong>.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Archer
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Knight
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Thief
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Ranger
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>weapon</strong>.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Sword
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Bow and Arrow
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Warhammer
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Mace
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>strongest</strong> attribute.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Strength
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Dexterity
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Intelligence
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Stamina
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>weakest</strong> attribute.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Strength
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Dexterity
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Intelligence
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Stamina
+                  </label>
+                </div>
+              </center>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button id="confirm-edit-button" type="button" class="btn btn-success">Save</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
 
     </div><!-- /.container -->
   
