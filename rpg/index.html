@@ -16,19 +16,28 @@
       <div class="container">
         <div class="row">
           <div id="character-list" class="col-md-4">
-            <div class="character-list-container">
+            <div id="character-list-container">
               <h2>Characters</h2>
-              <table class="table table-hover" id="character-list-table">
+              <table id="character-list-table" class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>Conan</td>
+                  <tr>
+                </tbody>
               </table>
-            </div><!-- /example -->
+            </div>
           </div>
           <div id="character-info" class="col-md-4 panel-collapse collapse">
-            <br>
-            <img class="character-img" src="http://placehold.it/40x40"/>
-            <div id="character-name">
-              <h3></h3> <!-- Character name will go here. -->
+            <div id="character-title">
+              <div id="character-image">
+                <img class="img-circle" src="http://placehold.it/70x70"/>
+              </div>
+              <div id="character-name">
+                <h3></h3> <!-- Character name will go here. -->
+              </div>
             </div>
-            <table class="table table-hover" id="character-info-table">
+            <div id="character-attributes">
+              <table class="table table-hover" id="character-info-table">
                 <tbody>
                   <tr>
                     <td><strong>Type</strong></td>
@@ -48,12 +57,31 @@
                   </tr>                  
                 </tbody>
               </table>
-                <button id="view-items" type="button" class="btn btn-default btn-lg btn-block">View items</button>
+              <button id="view-items" type="button" class="btn btn-default btn-lg btn-block">View items</button>
+            </div>
           </div>
-          <div id="character-detailed-info" class="col-md-4 panel-collapse collapse">
-            <h3></h3> <!-- Character name will go here. -->
-            <p>Here is where a detailed description of whatever they user has clicked wil be shown.</p>
-            <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
+          <div id="character-detailed-info">
+            <div id="detailed-info" class="col-md-4 panel-collapse collapse">
+              <h3></h3>
+              <p>Here is where a detailed description of whatever they user has clicked wil be shown.</p>
+            </div>
+            <div id="item-list" class="col-md-4 panel-collapse collapse">
+              <h3>Items</h3>
+              <table class="table table-hover" id="character-items-table">
+                <thead>
+                  <tr>
+                    <th>Item name</th>
+                    <th>Type</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sword</td>
+                    <td>Weapon</td>
+                  </tr>                 
+                </tbody>
+              </table>
+              <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
+            </div>
           </div>
         </div>
       </div>
@@ -84,6 +112,76 @@
               <h4 class="modal-title">Edit Character</h4>
             </div>
             <div class="modal-body">
+                            <center>
+                <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
+                <br>
+                <p>Select your character's <strong>type</strong>.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Archer
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Knight
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Thief
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Ranger
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>weapon</strong>.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Sword
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Bow and Arrow
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Warhammer
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Mace
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>strongest</strong> attribute.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Strength
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Dexterity
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Intelligence
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Stamina
+                  </label>
+                </div>
+
+                <br>
+                <p>Select your character's <strong>weakest</strong> attribute.
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option1"> Strength
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option2"> Dexterity
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Intelligence
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" name="options" id="option3"> Stamina
+                  </label>
+                </div>
+              </center>
 
             </div>
             <div class="modal-footer">
@@ -104,7 +202,7 @@
 
             <div class="modal-body">
               <center>
-                <input id="character-name" type="text" class="form-control" placeholder="Your character's name">
+                <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 <br>
                 <p>Select your character's <strong>type</strong>.
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
