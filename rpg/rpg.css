@@ -11,13 +11,10 @@ html, body {
 	height: auto !important;
 	height: 100%;
 	margin: 0 auto -80px; /* the bottom margin is the negative value of the footer's height */
-	display: table;
 }
 
-.middleText {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
+.character-img {
+	float:left;
 }
 
 footer, .push {
