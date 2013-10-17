@@ -9,12 +9,26 @@ html, body {
 .wrapper {
 	min-height: 100%;
 	height: auto !important;
-	height: 100%;
 	margin: 0 auto -80px; /* the bottom margin is the negative value of the footer's height */
 }
 
-.character-img {
-	float:left;
+#character-title {
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+#character-image {
+	float: left;
+}
+
+#character-attributes {
+	margin-top: 10px;
+}
+
+#character-name {
+	margin-left: 15px;
+	display:  inline-block;
+	vertical-align: middle;
 }
 
 footer, .push {
