@@ -1,14 +1,20 @@
 $(function () {
 
 	// TODO:
-	// Edit modal and delete modal unclickable if no characters.
-	// Create and delete modal unclickable when editing character.
-	// If character is clicked, create character is unclickable.
+    // Row numbers for characters.
 
     // Close all modals when thier respective "confirm" button is clicked.
 	$("#confirm-create-button").click(function () {
-        $("#character-list > tbody:last").append($("<tr><td>1</td><td>Poop</td></tr>"));
+        // Add row to character list.
+        $("#character-list-table").append("<tr><td>" + $("#character-name-input").val() + "</td></tr>");
+
+        // Add info to character info.
+
+        // Reset all options for modal.
+
+        // Hide the modal.
 		$("#createModal").modal("hide");
+
     });
 
     $("#confirm-edit-button").click(function () {
@@ -22,7 +28,7 @@ $(function () {
     });
 
     // Set up handlers for character clicks.
-    $("#character-list tbody > tr").click(function () {
+    $("#character-list-table tbody > tr").click(function () {
         // If a character is chosen, let them be edited and deleted. Change
         // the glypp icons for editing and deleting.
         $("#edit-button").removeAttr("disabled");
@@ -36,23 +42,40 @@ $(function () {
 
         // Change the color of the table to let the user know which
         // character is selected.
-        var rowClicked = $(this).index() + 1;
-        $("#character-list tbody > tr:nth-child(" + rowClicked + ")").addClass("active");
+        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").addClass("active");
                                                   
         // Send the character name to character info panel.                      
-        $("#character-info > #character-name > h3").text($(this).find("td:nth-child(2)").text());
+        $("#character-info > #character-title > #character-name > h3").text($(this).find("td:nth-child(1)").text());
         $("#character-info").collapse("show");
+
+    });
+
+    // Enlarge the characters's image.
+    $("#character-image").click(function(){});
+
+    // Spawn a random item.
+    $("#spawn-item").click(function () {
 
     });
 
     // View the character's items.
     $("#view-items").click(function () {
-        $("#character-detailed-info").collapse("show");
+        // Show item list.
+        $("#item-list").collapse("show");
+        
+        // Hide detailed info.
+        $("#detailed-info").collapse("hide");
     });
 
     // Set up handlers for character information clicks.
     $("#character-info-table tbody > tr ").click(function () {
-        $("#character-detailed-info > h3").text($(this).find("td:nth-child(2)").text());
-        $("#character-detailed-info").collapse("show");
+        // Hide item list.
+        $("#item-list").collapse("hide");
+
+        // Put the currently selescted info title.
+        $("#detailed-info > h3").text($(this).find("td:nth-child(2)").text());
+
+        // Show detailed info.
+        $("#detailed-info").collapse("show");
     });
 });
