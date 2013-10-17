@@ -1,9 +1,8 @@
 $(function () {
 
 	// TODO:
-    // Row numbers for characters.
 
-    // Close all modals when thier respective "confirm" button is clicked.
+    //Create a character.
 	$("#confirm-create-button").click(function () {
         // Add row to character list.
         $("#character-list-table").append("<tr><td>" + $("#character-name-input").val() + "</td></tr>");
@@ -19,13 +18,19 @@ $(function () {
 
     // Edit the character.
     $("#confirm-edit-button").click(function () {
-        //$("#character-list-table") Edit the character's info.
+        // Edit the character's info.
+
+        // Reset options for modal.
+
+        // Hide the modal.
         $("#editModal").modal("hide");
     });
 
     // Delete the character.
     $("#confirm-delete-button").click(function () {
-        //$("#character-list") Delete the character from the table.
+        // Delete the character from the table.
+
+        // Hide the modal
         $("#deleteModal").modal("hide");
     });
 
@@ -54,12 +59,12 @@ $(function () {
 
     // Enlarge the characters's image.
     $("#character-title").click(function(){
-        // Show the character's enlarged image.
-        $("#character-enlarged-image").collapse("show");
-
         // Hide detailed info and item list.
         $("#detailed-info").collapse("hide");
         $("#item-list").collapse("hide");
+
+        // Show the character's enlarged image.
+        $("#character-enlarged-image").collapse("show");
     });
 
     // Spawn a random item.
@@ -69,27 +74,24 @@ $(function () {
 
     // View the character's items.
     $("#view-items").click(function () {
-        // Show item list.
-        $("#item-list").collapse("show");
-        
         // Hide detailed info and enlarged picture.
         $("#detailed-info").collapse("hide");
         $("#character-enlarged-image").collapse("hide");
+
+        // Show item list.
+        $("#item-list").collapse("show");
     });
 
     // Set up handlers for character information clicks.
     $("#character-info-table tbody > tr ").click(function () {
-
-
-        // Put the currently selescted info title.
-        $("#detailed-info > h3").text($(this).find("td:nth-child(2)").text());
-
-        // Show detailed info.
-        $("#detailed-info").collapse("show");
-
         // Hide item list and enlarged image.
         $("#item-list").collapse("hide");
         $("#character-enlarged-image").collapse("hide");
 
+        // Put the currently selected row in the table nfo title.
+        $("#detailed-info > h3").text($(this).find("td:nth-child(2)").text());
+
+        // Show detailed info.
+        $("#detailed-info").collapse("show");
     });
 });
