@@ -1,3 +1,11 @@
+html, body {
+	height: 100%;
+}
+
+#character-list, #character-info {
+	border-right: 1px solid #ccc;
+}
+
 #character-title {
 	margin-top: 10px;
 	margin-bottom: 24px;
@@ -13,26 +21,14 @@
 
 #character-name {
 	margin-left: 15px;
-	display:  inline-block;
+	display: inline-block;
 	vertical-align: middle;
 }
 
-span.glyphicon-plus {
-    font-size: 1.6em;
-}
-
-span.glyphicon-edit {
-    font-size: 1.6em;
-}
-
-span.glyphicon-trash {
+span.glyphicon-plus, span.glyphicon-edit, span.glyphicon-trash {
     font-size: 1.6em;
 }
 
 .white, .white a {
     color: white;
-}
-
-.black, .black a {
-    color: black;
 }
