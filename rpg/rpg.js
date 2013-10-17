@@ -1,6 +1,10 @@
 $(function () {
 
 	// TODO:
+    // Allow user to "unselect" character.
+    // Character title with enlarged image.
+    // Character items to be deleted.
+    // Charatcer items popover funcitonality.
 
     //Create a character.
 	$("#confirm-create-button").click(function () {
@@ -36,12 +40,10 @@ $(function () {
 
     // Set up handlers for character clicks.
     $("#character-list-table tbody > tr").click(function () {
-        // If a character is chosen, let them be edited and deleted. Change
-        // the glypp icons for editing and deleting.
-        $("#edit-button").removeAttr("disabled");
-        $("#edit-glyph").removeClass("black").addClass("white");
-        $("#delete-button").removeAttr("disabled");
-        $("#delete-glyph").removeClass("black").addClass("white");
+        // If you select a character, hide the detailed info.
+        $("#detailed-info").collapse("hide");
+        $("#enlarged-image").collapse("hide");
+        $("#item-list").collapse("hide");
 
         // Change the color of the table to let the user know which
         // character is selected.
@@ -50,33 +52,34 @@ $(function () {
         // Send the character name to character info panel.                      
         $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
         $("#character-info").collapse("show");
-
-        // Hide detailed information or item list.
-        $("#detailed-info").collapse("hide");
-        $("#item-list").collapse("hide");
-        $("#character-enlarged-image").collapse("hide");
     });
 
     // Enlarge the characters's image.
     $("#character-title").click(function(){
+        $("#enlarged-image > h2").text($(this).find("#character-name").text())
+
         // Hide detailed info and item list.
         $("#detailed-info").collapse("hide");
         $("#item-list").collapse("hide");
 
         // Show the character's enlarged image.
-        $("#character-enlarged-image").collapse("show");
+        $("#enlarged-image").collapse("show");
+    });
+
+    $("#test").click(function () {
+        $("#test").popover("show");
     });
 
     // Spawn a random item.
     $("#spawn-item").click(function () {
-
+        $("#character-items-table").append("<tr><td>Mace</td><td>Weapon</td></tr>")
     });
 
     // View the character's items.
     $("#view-items").click(function () {
         // Hide detailed info and enlarged picture.
         $("#detailed-info").collapse("hide");
-        $("#character-enlarged-image").collapse("hide");
+        $("#enlarged-image").collapse("hide");
 
         // Show item list.
         $("#item-list").collapse("show");
@@ -86,7 +89,7 @@ $(function () {
     $("#character-info-table tbody > tr ").click(function () {
         // Hide item list and enlarged image.
         $("#item-list").collapse("hide");
-        $("#character-enlarged-image").collapse("hide");
+        $("#enlarged-image").collapse("hide");
 
         // Put the currently selected row in the table nfo title.
         $("#detailed-info > h3").text($(this).find("td:nth-child(2)").text());
