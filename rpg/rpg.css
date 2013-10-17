@@ -1,20 +1,6 @@
-* {
-	margin: 0;
-}
-
-html, body {
-	height: 100%;
-}
-
-.wrapper {
-	min-height: 100%;
-	height: auto !important;
-	margin: 0 auto -80px; /* the bottom margin is the negative value of the footer's height */
-}
-
 #character-title {
 	margin-top: 10px;
-	margin-bottom: 30px;
+	margin-bottom: 24px;
 }
 
 #character-image {
@@ -29,11 +15,6 @@ html, body {
 	margin-left: 15px;
 	display:  inline-block;
 	vertical-align: middle;
-}
-
-footer, .push {
-	height: 80px; /* '.push' must be the same height as 'footer' */
-	background-color: #AFAAAA;
 }
 
 span.glyphicon-plus {
@@ -54,10 +35,4 @@ span.glyphicon-trash {
 
 .black, .black a {
     color: black;
-}
-
-.footerModal {
-	margin-top: 10px;
-    width: 200px !important;
-    height: 60px !important;
 }
