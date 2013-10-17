@@ -11,43 +11,49 @@
   </head>
   <body>
     <div class = "wrapper">
+
+      <!-- Character containers -->
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <div class="table-container">
-              <table class="table table-hover" style="width:" id="character-list">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Characters</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Conan</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Gordon Freeman</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Pikachu</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>50 Scent</td>
-                  </tr>
-                </tbody>
+          <div id="character-list" class="col-md-4">
+            <div class="character-list-container">
+              <h2>Characters</h2>
+              <table class="table table-hover" id="character-list-table">
               </table>
             </div><!-- /example -->
           </div>
-          <div id="character-info" class="col-md-6 panel-collapse collapse">
-            <h1></h1> <!-- Character name will go here. -->
-            <p> here is where the character will show up.</p>
-            <img src="http://placehold.it/256x384"/>
+          <div id="character-info" class="col-md-4 panel-collapse collapse">
+            <br>
+            <img class="character-img" src="http://placehold.it/40x40"/>
+            <div id="character-name">
+              <h3></h3> <!-- Character name will go here. -->
+            </div>
+            <table class="table table-hover" id="character-info-table">
+                <tbody>
+                  <tr>
+                    <td><strong>Type</strong></td>
+                    <td>Ranger</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Weapon</strong></td>
+                    <td>Sword</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Strongest Attribute</strong></td>
+                    <td>Strength</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Weakest Attribute</strong></td>
+                    <td>Dexterity</td>
+                  </tr>                  
+                </tbody>
+              </table>
+                <button id="view-items" type="button" class="btn btn-default btn-lg btn-block">View items</button>
+          </div>
+          <div id="character-detailed-info" class="col-md-4 panel-collapse collapse">
+            <h3></h3> <!-- Character name will go here. -->
+            <p>Here is where a detailed description of whatever they user has clicked wil be shown.</p>
+            <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
           </div>
         </div>
       </div>
@@ -98,7 +104,7 @@
 
             <div class="modal-body">
               <center>
-                <input type="text" class="form-control" placeholder="Your character's name">
+                <input id="character-name" type="text" class="form-control" placeholder="Your character's name">
                 <br>
                 <p>Select your character's <strong>type</strong>.
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
