@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="rpg.css">
   </head>
   <body>
-    <!-- Character containers -->
+
+    <!-- Main container -->
     <div class="container">
+
+      <!-- Character columns -->
       <div class="row">
 
+        <!-- Character list -->
         <div id="character-list" class="col-md-4">
           <div id="character-list-container">
             <h2>Characters</h2>
@@ -27,12 +31,14 @@
                 <tr>
               </tbody>
             </table>
+            
             <a id="create-button" data-toggle="modal" href="#createModal" class="btn btn-block btn-success">
               <span id="create-glyph" class="glyphicon glyphicon-plus white"></span>
             </a>
           </div>
         </div>
 
+        <!-- Character info -->
         <div id="character-info" class="col-md-4 panel-collapse collapse">
           <div id="character-title">
             <div id="character-image">
@@ -73,11 +79,16 @@
           </div>
         </div>
 
+        <!-- Character detailed info/item list/enlarged image. -->
         <div id="character-detailed-info">
+
+          <!-- Detailed info. -->
           <div id="detailed-info" class="col-md-4 panel-collapse collapse">
             <h3></h3>
             <p>Here is where a detailed description of whatever they user has clicked wil be shown.</p>
           </div>
+
+          <!-- Item list. -->
           <div id="item-list" class="col-md-4 panel-collapse collapse">
             <h3>Items</h3>
             <table class="table table-hover" id="character-items-table">
@@ -95,6 +106,8 @@
             </table>
             <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
           </div>
+
+          <!-- Enlarged character image. -->
           <div id="character-enlarged-image" class="col-md-4 panel-collapse collapse">
             <h3></h3>
             <center>
@@ -297,6 +310,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
     </div><!-- /.container -->
   
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
