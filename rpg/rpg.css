@@ -40,6 +40,10 @@ span.glyphicon-trash {
     color: black;
 }
 
+#edit-button.highlighted {
+    color: white;
+}
+
 .footerModal {
 	margin-top: 10px;
     width: 200px !important;
