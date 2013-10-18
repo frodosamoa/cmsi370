@@ -1,51 +1,34 @@
-* {
-	margin: 0;
-}
-
 html, body {
 	height: 100%;
 }
 
-.wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -80px; /* the bottom margin is the negative value of the footer's height */
-	display: table;
+#character-list, #character-info {
+	border-right: 1px solid #ccc;
 }
 
-.middleText {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-}
-
-footer, .push {
-	height: 80px; /* '.push' must be the same height as 'footer' */
-	background-color: #AFAAAA;
-}
-
-span.glyphicon-plus {
-    font-size: 1.6em;
-    color: white;
-}
-
-span.glyphicon-edit {
-    font-size: 1.6em;
-    color: black;
-}
-
-span.glyphicon-trash {
-    font-size: 1.6em;
-    color: black;
-}
-
-#edit-button.highlighted {
-    color: white;
-}
-
-.footerModal {
+#character-title {
 	margin-top: 10px;
-    width: 200px !important;
-    height: 60px !important;
+	margin-bottom: 24px;
+}
+
+#character-image {
+	float: left;
+}
+
+#character-attributes {
+	margin-top: 10px;
+}
+
+#character-name {
+	margin-left: 15px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+span.glyphicon-plus, span.glyphicon-edit, span.glyphicon-trash {
+    font-size: 1.6em;
+}
+
+.white, .white a {
+    color: white;
 }
