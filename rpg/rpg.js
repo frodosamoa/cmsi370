@@ -22,6 +22,23 @@ $(function () {
 
     });
 
+    $(document).on("click", "#character-list-table tbody > tr", function() {
+        // Show the character info column.
+        $("#character-info").collapse("show");
+
+        // Send the character name to character info panel.                      
+        $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
+
+        // If you select a character, hide the detailed info.
+        $("#detailed-info").collapse("hide");
+        $("#enlarged-image").collapse("hide");
+        $("#item-list").collapse("hide");
+
+        // Change the color of the table to let the user know which
+        // character is selected.
+        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
+    });
+
     // Edit the character.
     $("#confirm-edit-button").click(function () {
         // Edit the character's info.
@@ -40,25 +57,6 @@ $(function () {
         $("#deleteModal").modal("hide");
     });
 
-    // Set up handlers for character clicks.
-    $("#character-list-table tbody > tr").click(function () {
-        // Show the character info column.
-        $("#character-info").collapse("show");
-
-        // Send the character name to character info panel.                      
-        $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
-
-        // If you select a character, hide the detailed info.
-        $("#detailed-info").collapse("hide");
-        $("#enlarged-image").collapse("hide");
-        $("#item-list").collapse("hide");
-
-        // Change the color of the table to let the user know which
-        // character is selected.
-        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
-                                                  
-
-    });
 
     // Enlarge the characters's image.
     $("#character-title").click(function(){
@@ -108,16 +106,33 @@ $(function () {
         $("#detailed-info").collapse("show");
     });
 
-    var characterRowTemplate = '<tr>' +
-      '<td></td>'+
-      '</tr>';
+    var characterListRowTemplate = '<tr>' +
+        '<td></td>'+
+        '</tr>';
+
+    var characterInfoRowTemplate = '<tr>' +
+        '<td><strong>Type</strong></td>' + 
+        '<td></td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td><strong></strong></td>'
+        '<td></td>' + 
+        '</tr>' + 
+        '<tr>' +
+        '<td><strong>Strongest Attribute</strong></td>' +
+        '<td></td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td><strong>Weakest Attribute</strong></td>' +
+        '<td></td>' +
+        '</tr>';
 
     $.getJSON(
         "http://lmu-diabolical.appspot.com/characters",
         function (characters) {
             // Do something with the character list.
             characters.forEach(function (character) {
-                var $characterRow = $(characterRowTemplate);
+                var $characterRow = $(characterListRowTemplate);
                 $characterRow.find("td:nth-child(1)").text(character.name);
                 $("#character-list-table > tbody").append($characterRow);
             });
