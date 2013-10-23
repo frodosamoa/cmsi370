@@ -8,7 +8,25 @@ $(function () {
     // Change all other classes of character list to unactive when one is chosen.
 
 
-    //Create a character.
+
+    var characterInfoRowTemplate = '<tr>' +
+        '<td><strong>Class</strong></td>' + 
+        '<td></td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td><strong>Gender</strong></td>' +
+        '<td></td>' + 
+        '</tr>' + 
+        '<tr>' +
+        '<td><strong>Level</strong></td>' +
+        '<td></td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td><strong>Money</strong></td>' +
+        '<td></td>' +
+        '</tr>';
+
+    // Character Creation
 	$("#confirm-create-button").click(function () {
         // Add row to character list.
         $("#character-list-table").append("<tr><td>" + $("#character-name-input").val() + "</td></tr>");
@@ -22,21 +40,41 @@ $(function () {
 
     });
 
+    // Character Selection
     $(document).on("click", "#character-list-table tbody > tr", function() {
         // Show the character info column.
         $("#character-info").collapse("show");
 
-        // Send the character name to character info panel.                      
-        $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
-
-        // If you select a character, hide the detailed info.
+        // If you select a cnewharacter, hide the detailed info.
         $("#detailed-info").collapse("hide");
         $("#enlarged-image").collapse("hide");
         $("#item-list").collapse("hide");
 
         // Change the color of the table to let the user know which
-        // character is selected.
-        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
+        // character is selected. "Unselect" unselected users.
+        $("#character-list-table tbody > tr").not(this).removeClass("success");
+        $(this).toggleClass("success");
+
+        // Remove old table.
+        // $("#character-info-table").empty()
+
+        // Put in new table.
+        $.getJSON(
+        "http://lmu-diabolical.appspot.com/characters/4954004257767424",
+        function (character) {
+            // Send the character name to the info panel.
+            $("#character-name > h3").text(character.name);
+
+            // Do something with the character list.
+            var $characterInfo = $(characterInfoRowTemplate);
+            $characterInfo.find("tr:eq(1) td:eq(2)").text(character.classType);
+            $characterInfo.find("tr:eq(2) td:eq(2)").text(character.gender);
+            $characterInfo.find("tr:eq(3) td:eq(2)").text(character.level);
+            $characterInfo.find("tr:eq(4) td:eq(2)").text(character.money);
+            $("#character-info-table > tbody").html($characterInfo);
+        });
+
+
     });
 
     // Edit the character.
@@ -90,17 +128,18 @@ $(function () {
     });
 
     // Set up handlers for character information clicks.
-    $("#character-info-table tbody > tr ").click(function () {
+    $(document).on("click", "#character-info-table tbody > tr", function() {
         // Change the color of the table to let the user know which
         // attribute is selected.
-        $("#character-info-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
+        $("#character-info-table tbody > tr").not(this).removeClass("success");
+        $(this).toggleClass("success");
 
         // Hide item list and enlarged image.
         $("#item-list").collapse("hide");
         $("#enlarged-image").collapse("hide");
 
         // Put the currently selected row in the table nfo title.
-        $("#detailed-info > h3").text($(this).find("td:nth-child(2)").text());
+        $("#detailed-info > h3").text($(this).find("td:nth-child(1)").text() +  " : " + $(this).find("td:nth-child(2)").text());
 
         // Show detailed info.
         $("#detailed-info").collapse("show");
@@ -108,23 +147,6 @@ $(function () {
 
     var characterListRowTemplate = '<tr>' +
         '<td></td>'+
-        '</tr>';
-
-    var characterInfoRowTemplate = '<tr>' +
-        '<td><strong>Type</strong></td>' + 
-        '<td></td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td><strong></strong></td>'
-        '<td></td>' + 
-        '</tr>' + 
-        '<tr>' +
-        '<td><strong>Strongest Attribute</strong></td>' +
-        '<td></td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td><strong>Weakest Attribute</strong></td>' +
-        '<td></td>' +
         '</tr>';
 
     $.getJSON(
