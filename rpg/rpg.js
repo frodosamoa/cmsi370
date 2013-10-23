@@ -1,29 +1,26 @@
 $(function () {
 
 	// TODO:
-    // Allow user to "unselect" character.
-    // Character title with enlarged image.
     // Character items to be deleted.
     // Character items popover funcitonality.
-    // Change all other classes of character list to unactive when one is chosen.
-
+    // Character creation. Character Edition. Character Deletion.
 
 
     var characterInfoRowTemplate = '<tr>' +
         '<td><strong>Class</strong></td>' +
-        '<td id="character-class"></td>' +
+        '<td id="character-class" align="right"></td>' +
         '</tr>' +
         '<tr>' +
         '<td><strong>Gender</strong></td>' +
-        '<td id="character-gender"></td>' +
+        '<td id="character-gender" align="right"></td>' +
         '</tr>' + 
         '<tr>' +
         '<td><strong>Level</strong></td>' +
-        '<td id="character-level"></td>' +
+        '<td id="character-level" align="right"></td>' +
         '</tr>' +
         '<tr>' +
         '<td><strong>Money</strong></td>' +
-        '<td id="character-money"></td>' +
+        '<td id="character-money" align="right"></td>' +
         '</tr>';
 
     // Character Creation
@@ -140,7 +137,7 @@ $(function () {
 
         // Put in new table.
         $.getJSON(
-        "http://lmu-diabolical.appspot.com/characters/" + "4954004257767424",
+        "http://lmu-diabolical.appspot.com/characters/" + $(this).attr('id'),
         function (character) {
             // Send the character name to the info panel.
             $("#character-name > h3").text(character.name);
@@ -150,7 +147,7 @@ $(function () {
             console.log(typeof($characterInfo))
 
             $characterInfo.find("#character-class").text(character.classType);
-            $characterInfo.find("#character-gender").text(character.gender);
+            $characterInfo.find("#character-gender").text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
             $characterInfo.find("#character-level").text(character.level);
             $characterInfo.find("#character-money").text(character.money);
             $("#character-info-table > tbody").html($characterInfo);
@@ -201,7 +198,6 @@ $(function () {
     });
 
 
-
     var characterListRowTemplate = '<tr>' +
         '<td></td>'+
         '</tr>';
@@ -212,6 +208,7 @@ $(function () {
             // Do something with the character list.
             characters.forEach(function (character) {
                 var $characterRow = $(characterListRowTemplate);
+                $characterRow.attr("id", character.id);
                 $characterRow.find("td:nth-child(1)").text(character.name);
                 $("#character-list-table > tbody").append($characterRow);
             });
