@@ -4,7 +4,9 @@ $(function () {
     // Allow user to "unselect" character.
     // Character title with enlarged image.
     // Character items to be deleted.
-    // Charatcer items popover funcitonality.
+    // Character items popover funcitonality.
+    // Change all other classes of character list to unactive when one is chosen.
+
 
     //Create a character.
 	$("#confirm-create-button").click(function () {
@@ -40,6 +42,12 @@ $(function () {
 
     // Set up handlers for character clicks.
     $("#character-list-table tbody > tr").click(function () {
+        // Show the character info column.
+        $("#character-info").collapse("show");
+
+        // Send the character name to character info panel.                      
+        $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
+
         // If you select a character, hide the detailed info.
         $("#detailed-info").collapse("hide");
         $("#enlarged-image").collapse("hide");
@@ -47,11 +55,9 @@ $(function () {
 
         // Change the color of the table to let the user know which
         // character is selected.
-        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").addClass("active");
+        $("#character-list-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
                                                   
-        // Send the character name to character info panel.                      
-        $("#character-name > h3").text($(this).find("td:nth-child(1)").text());
-        $("#character-info").collapse("show");
+
     });
 
     // Enlarge the characters's image.
@@ -87,6 +93,10 @@ $(function () {
 
     // Set up handlers for character information clicks.
     $("#character-info-table tbody > tr ").click(function () {
+        // Change the color of the table to let the user know which
+        // attribute is selected.
+        $("#character-info-table tbody > tr:nth-child(" + ($(this).index() + 1) + ")").toggleClass("success");
+
         // Hide item list and enlarged image.
         $("#item-list").collapse("hide");
         $("#enlarged-image").collapse("hide");
@@ -97,4 +107,20 @@ $(function () {
         // Show detailed info.
         $("#detailed-info").collapse("show");
     });
+
+    var characterRowTemplate = '<tr>' +
+      '<td></td>'+
+      '</tr>';
+
+    $.getJSON(
+        "http://lmu-diabolical.appspot.com/characters",
+        function (characters) {
+            // Do something with the character list.
+            characters.forEach(function (character) {
+                var $characterRow = $(characterRowTemplate);
+                $characterRow.find("td:nth-child(1)").text(character.name);
+                $("#character-list-table > tbody").append($characterRow);
+            });
+        }
+    );
 });
