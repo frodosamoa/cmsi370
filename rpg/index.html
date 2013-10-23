@@ -60,10 +60,12 @@
         <!-- Character detailed info/item list/enlarged image. -->
         <div id="character-detailed-info">
 
-          <!-- Detailed info. -->
-          <div id="detailed-info" class="col-md-4 panel-collapse collapse">
-            <h3></h3>
-            <p>Here is where a detailed description of whatever they user has clicked wil be shown.</p>
+          <!-- Enlarged character image. -->
+          <div id="enlarged-image" class="col-md-4 panel-collapse collapse">
+            <center>
+              <h1></h1> <!-- Character title -->
+              <img class="img-circle" src="http://placehold.it/300x300"/>
+            </center>
           </div>
 
           <!-- Item list. -->
@@ -84,14 +86,6 @@
             </table>
             <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
           </div>
-
-          <!-- Enlarged character image. -->
-          <div id="enlarged-image" class="col-md-4 panel-collapse collapse">
-            <center>
-              <h1></h1> <!-- Character title -->
-              <img class="img-circle" src="http://placehold.it/300x300"/>
-            </center>
-          </div>
         </div>
 
       <!-- Character creation Modal -->
@@ -108,7 +102,7 @@
                 
                 <p>Select your character's <strong>class</strong>.</p>
                 <div>
-                  <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <div id="chosen-class" class="btn-group btn-group-justified" data-toggle="buttons">
                     <label class="btn btn-default">
                       <input type="radio" name="options" id="option1"> Archer
                     </label>
@@ -127,7 +121,7 @@
 
                 <p>Select your character's <strong>gender</strong>.</p>
                 <div>
-                  <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <div id="chosen-gender" class="btn-group btn-group-justified" data-toggle="buttons">
                     <label class="btn btn-default">
                       <input type="radio" name="options" id="option1"> Male
                     </label>
