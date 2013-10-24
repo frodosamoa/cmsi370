@@ -309,7 +309,7 @@ $(function () {
                     $('#character-list-table > tbody').append($characterRow);
                 });
             }
-            console.log('Characters updated');
+            //console.log('Characters updated');
         );
 
     // Get the characters when the page loads.
