@@ -75,8 +75,7 @@ $(function () {
         updateCharacterList;
 
         // Hide character info and detailed info after creation.
-        $('#character-info').collapse('hide');
-        $('#item-list').collapse('hide');
+        $('#character-info, #item-list').collapse('hide');
 
         //Show the newly created character.
 
@@ -89,17 +88,16 @@ $(function () {
 
     // Cleanup after closure of modal.
     $('#createModal').on('hidden.bs.modal', function () {
-        $("#character-name-input, #create-class").val("");
-        $("#create-male, #create-female").removeClass("active");
+        $('#character-name-input, #create-class, #create-level, #create-money').val('');
+        $('#create-male, #create-female').removeClass('active');
+        $('#character-name-input, #create-class, #roll-level, #roll-money, #create-male, #create-female, #spawn-character').removeAttr('disabled');
     });
 
     // Spawn character.
     $('#spawn-character').click(function () {
         $(this).attr('disabled', 'disabled');
-        $('#character-name-input').attr('disabled', 'disabled');
-        $('#create-class').attr('disabled', 'disabled');
-        $('#roll-level').attr('disabled', 'disabled');
-        $('#roll-money').attr('disabled', 'disabled');
+        $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
+
 
         $.getJSON(
             'http://lmu-diabolical.appspot.com/characters/spawn',
@@ -127,7 +125,6 @@ $(function () {
     $('#edit-character').click(function () {
         $('#edit-character-name-input').val($('#character-name > h3').text())
         $('#edit-class').val($('#character-class').text())
-        console.log($('#character-gender').text().toUpperCase())
         if ($('#character-gender').text().toUpperCase() === 'MALE') {
             $('#edit-male').addClass('active');
         } else {
@@ -187,8 +184,7 @@ $(function () {
         });
 
         // Hide character info and detailed info after deletion.
-        $('#character-info').collapse('hide');
-        $('#character-item-list').collapse('hide');
+        $('#character-info, #character-item-list').collapse('hide');
 
         // Update the character list.
         updateCharacterList;
@@ -242,8 +238,6 @@ $(function () {
             $characterInfo.find('#character-money').text(character.money);
             $('#character-info-table > tbody').html($characterInfo);
         });
-
-
     });
 
     // Set up handlers for character information clicks.
@@ -255,7 +249,6 @@ $(function () {
 
         // Hide item list and enlarged image.
         $('#item-list').collapse('hide');
-        $('#enlarged-image').collapse('hide');
     });
 
 /** 
@@ -316,10 +309,9 @@ $(function () {
                     $('#character-list-table > tbody').append($characterRow);
                 });
             }
-            // console.log('Characters updated');
+            console.log('Characters updated');
         );
 
     // Get the characters when the page loads.
     updateCharacterList;
-    console.log(updateCharacterList);
 });
