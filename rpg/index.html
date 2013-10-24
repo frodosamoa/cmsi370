@@ -25,8 +25,8 @@
               <h2>Characters</h2> 
             </div>
               <div style="float: right;">
-                <a id="help-button" data-toggle="modal" href="#helpModal" class="btn">
-                  <button class="btn btn-lg btn-info">?</button>
+                <a id="help" data-toggle="modal" href="#helpModal" class="btn">
+                  <button id="help-button" class="btn btn-info">?</button>
                 </a>
               </div>
             </div>
@@ -35,14 +35,18 @@
               </tbody>
             </table>
 
-            <a id="create-button" data-toggle="modal" href="#createModal" class="btn btn-block btn-success">
-              <span id="create-glyph" class="glyphicon glyphicon-plus white"></span>
-            </a>
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label id="create-character" href="#createModal" data-toggle="modal" class="btn btn-success" style="width: 5%;">
+                <input type="radio" name="options" id="option1">
+                <span id="edit-glyph" class="glyphicon glyphicon-plus white page-icons"></span>
+              </label>
+            </div>
           </div>
         </div>
 
         <!-- Character info -->
         <div id="character-info" class="col-md-4 panel-collapse collapse">
+
           <div id="character-title">
             <div id="character-image">
               <img class="img-circle" src="http://placehold.it/70x70"/>
@@ -51,67 +55,49 @@
               <h3></h3> <!-- Character name will go here. -->
             </div>
           </div>
-          <div id="character-attributes">
+
             <table id="character-info-table" class="table table-hover table-condensed">
               <tbody>                 
               </tbody>
             </table>
-            <div id="chosen-class" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
-              <label id="view-items" class="btn btn-default">
-                <input type="radio" name="options" id="option1">View items
-              </label>
-            </div>
-            <br>
+
             <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label href="#editModal" data-toggle="modal" class="btn btn-info">
+              <label id="edit-character" href="#editModal" data-toggle="modal" class="btn btn-info">
                 <input type="radio" name="options" id="option1">
-                <span id="edit-glyph" class="glyphicon glyphicon-edit black"></span>
+                <span id="edit-glyph" class="glyphicon glyphicon-edit white page-icons"></span>
               </label>
-              <label href="#deleteModal" data-toggle="modal" class="btn btn-danger">
+              <label id="delete-character" href="#deleteModal" data-toggle="modal" class="btn btn-danger">
                 <input type="radio" name="options" id="option2">
-                <span id="delete-glyph" class="glyphicon glyphicon-trash black"></span>
+                <span id="delete-glyph" class="glyphicon glyphicon-trash white page-icons"></span>
               </label>
             </div>
-          </div>
+
         </div>
 
-        <!-- Character detailed info/item list/enlarged image. -->
-        <div id="character-detailed-info">
-
-          <!-- Enlarged character image. -->
-          <div id="enlarged-image" class="col-md-4 panel-collapse collapse">
-            <center>
-              <h1></h1> <!-- Character title -->
-              <img class="img-circle" src="http://placehold.it/300x300"/>
-            </center>
+        <!-- Item list. -->
+        <div id="character-item-list" class="col-md-4 panel-collapse collapse">
+          <h3>Items</h3>
+          <table id="character-items-table" class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>Item name</th>
+                <th>Type</th>
+            </thead>
+            <tbody>
+              <tr id="item-row" data-container="body" data-toggle="popover" data-placement="right" data-content="Delete">
+              </tr>                 
+            </tbody>
+          </table>
+          <div id="spawn-item" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
+            <label class="btn btn-default">
+              <input type="radio" name="options" id="option1">Spawn item
+            </label>
           </div>
-
-          <!-- Item list. -->
-          <div id="item-list" class="col-md-4 panel-collapse collapse">
-            <h3>Items</h3>
-            <table id="character-items-table" class="table table-hover table-condensed">
-              <thead>
-                <tr>
-                  <th>Item name</th>
-                  <th>Type</th>
-              </thead>
-              <tbody>
-                <tr id="item-row" data-container="body" data-toggle="popover" data-placement="right" data-content="Delete">
-                  <td>Sword</td>
-                  <td>Weapon</td>
-                </tr>                 
-              </tbody>
-            </table>
-            <div id="spawn-item" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-default">
-                <input type="radio" name="options" id="option1">Spawn random item
-              </label>
-            </div>
-            <br>
-          </div>
+          <br>
         </div>
+      </div>
 
-      <!-- Character creation Modal -->
+      <!-- Character creation modal. -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -120,74 +106,96 @@
             </div>
 
             <div class="modal-body">
-
+                <center>
                 <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 
                 <br>
-                <p>Select your character's <strong>class</strong>.</p>
-                <div>
-                  <div id="chosen-class" class="btn-group btn-group-justified" data-toggle="buttons">
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-archer"> Archer
-                    </label>
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-knight"> Knight
-                    </label>
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-thief"> Thief
-                    </label>
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-ranger"> Ranger
-                    </label>
-                  </div>
-                </div>
+                <p>Write your character's <strong>class</strong>, or simply click roll if you want a random class.</p>
+                <input id="create-class" type="text" class="form-control" placeholder="Your character's class">
 
                 <br>
                 <p>Select your character's <strong>gender</strong>.</p>
-                <div>
-                  <div id="chosen-gender" class="btn-group btn-group-justified" data-toggle="buttons">
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-male"> Male
+                  <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label id="create-male" class="btn btn-default">
+                      <input type="radio" name="options"> Male
                     </label>
-                    <label class="btn btn-default">
-                      <input type="radio" name="options" id="create-female"> Female
+                    <label id="create-female" class="btn btn-default">
+                      <input type="radio" name="options"> Female
                     </label>
                   </div>
-                </div>
 
                 <br>
                 <p>Roll for your character's <strong>level</strong>.</p>
-                <div id="rollButton">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button id="roll-level" class="btn btn-default">Roll</button>
-                        </span>
-                        <input id="create-level" type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="roll-level" class="btn btn-default">Roll</button>
+                    </span>
+                    <input id="create-level" type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
                 </div>
 
                 <br>
                 <p>Roll for your character's <strong>money</strong>.</p>
-                <div class="inline">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button id="roll-money" class="btn btn-default">Roll</button>
-                        </span>
-                        <input id="create-money" type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
-                    </div>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="roll-money" class="btn btn-default">Roll</button>
+                    </span>
+                    <input id="create-money" type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
                 </div>
-
+              </center>
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button id="confirm-create-button" type="button" class="btn btn-success">Create Character</button>
+              <button id="spawn-character" class="btn btn-info" type="button" style="float: left;">
+                <span id="random-glyph" class="glyphicon glyphicon-random white page-icons"></span>
+              </button>
+              <button id="cancel-create" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button id="confirm-create" type="button" class="btn btn-success">Create Character</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
-      <!-- Character deletion Modal -->
+      <!-- Character edition modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Character</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                <input id="edit-character-name-input" type="text" class="form-control" disabled="disabled">
+                <br>
+                <p>Change your character's <strong>class</strong>, or simply click roll if you want a random class.</p>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="roll-class" class="btn btn-default">Roll</button>
+                    </span>
+                    <input id="edit-class" type="text" class="form-control">
+                </div>
+
+                <br>
+                <p>Change your character's <strong>gender</strong>.</p>
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                  <label id="edit-male" class="btn btn-default">
+                    <input type="radio" name="options" > Male
+                  </label>
+                  <label id="edit-female" class="btn btn-default">
+                    <input type="radio" name="options" > Female
+                  </label>
+                </div>
+              </center>
+
+            </div>
+            <div class="modal-footer">
+              <button id="cancel-edit" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button id="confirm-edit" type="button" class="btn btn-success">Save</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+      <!-- Character deletion modal -->
       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -198,73 +206,40 @@
               Deleting a character is permanent and <strong>cannot be undone</strong>.
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button id="confirm-delete-button" type="button" class="btn btn-danger">Delete</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-      <!-- Character edition Modal -->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Character</h4>
-            </div>
-            <div class="modal-body">
-                            <center>
-                <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
-                <br>
-                <p>Change your character's <strong>class</strong>.</p>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Archer
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Knight
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Thief
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3"> Ranger
-                  </label>
-                </div>
-
-                <br>
-                <p>Change your character's <strong>gender</strong>.</p>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option1"> Male
-                  </label>
-                  <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2"> Female
-                  </label>
-                </div>
-              </center>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button id="confirm-edit-button" type="button" class="btn btn-success">Save</button>
+              <button id="cancel-delete"type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button id="confirm-delete" type="button" class="btn btn-danger">Delete</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
       <!-- Help Modal -->
-      <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+      <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-              <p>Fuck you.</p>
+              <p>Welcome to my <strong>CMSI: 370 Role Playing Game</strong>.</p>
+              <p>To get started, you can either create a new character or click an existing character in the list.</p>
+              <br>
+
+              <p>To create a character, click <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-plus white help-icons"></span></button> at the bottom of the character list. This will allow you to choose your character's name, class, and gender. Your character's level and money amount are determined by the gods when you click "Roll". You can also spawn a random character by clicking <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-random white help-icons"></span></button>. That will automatically fill in the information for your character for you.</p>
+              <br>
+
+              <p>To edit a character, first click a character. Then click <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit white help-icons"></span></button> at the bottom of their information panel. This will allow you to change your character's class and gender. You cant change your character's level and money. Sorry! The gods have spoken. </p>
+              <br>
+
+              <p>To delete a character, first click a character. Then click <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash white help-icons"></span></button> at the bottom of their information panel. This will then prompt you, asking if you are sure. To which you can confirm. Beware! Characters are deleted forever. </p>
+              <br>
+
+              <p>To spawn a random item, first click a character. Then click <button class="btn btn-xs btn-default">Spawn item</button> at the bottom of their items list.</p>
+              <br>
+
             </div>
             <div class="modal-footer">
-              <button id="confirm-help-button" type="button" class="btn btn-danger">OK</button>
+              <button id="confirm-help-button" type="button" class="btn btn-default">OK</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -72,7 +72,7 @@ $(function () {
         $('#create-character').removeClass('active')
 
         // Update list of characters after creating a new one.
-        updateCharacterList();
+        updateCharacterList;
 
         // Hide character info and detailed info after creation.
         $('#character-info').collapse('hide');
@@ -90,6 +90,8 @@ $(function () {
     // Spawn character.
     $('#spawn-character').click(function () {
         $(this).attr('disabled', 'disabled');
+        $('#character-name-input').attr('disabled', 'disabled');
+        $('#create-class').attr('disabled', 'disabled');
         $('#roll-level').attr('disabled', 'disabled');
         $('#roll-money').attr('disabled', 'disabled');
 
@@ -98,7 +100,13 @@ $(function () {
             function (character) {
                 $('#character-name-input').val(character.name);
                 $('#create-class').val(character.classType);
-                //$('#create-male').hasClass('active') ? 'MALE' : 'FEMALE',
+                if (character.gender === 'MALE') {
+                    $('#create-male').addClass('active');
+                    $('#create-female').attr('disabled', 'disabled');
+                } else {
+                    $('#create-female').addClass('active');
+                    $('#create-male').attr('disabled', 'disabled');
+                }
                 $('#create-level').val(character.level);
                 $('#create-money').val(character.money);
             }
@@ -111,14 +119,21 @@ $(function () {
 
     // Edit modal.
     $('#edit-character').click(function () {
-        console.log($('#character-name > h3').text());
         $('#edit-character-name-input').val($('#character-name > h3').text())
         $('#edit-class').val($('#character-class').text())
-        console.log($('#character-gender').text());
+        console.log($('#character-gender').text().toUpperCase())
+        if ($('#character-gender').text().toUpperCase() === 'MALE') {
+            $('#edit-male').addClass('active');
+        } else {
+            $('#edit-female').addClass('active');
+        }
     });
 
     // Edit the character.
     $('#confirm-edit').click(function () {
+
+        $('#edit-character').removeClass('active');
+
         // Hide the modal.
         $('#editModal').modal('hide');
 
@@ -126,7 +141,7 @@ $(function () {
         var character = { 
                 id         : $('#character-name > h3').attr('id'),
                 name       : $('#character-name > h3').text(),
-                classType  : $('#edit-class').text(), 
+                classType  : $('#edit-class').val(), 
                 gender     : $('#edit-male').hasClass('active') ? 'MALE' : 'FEMALE', 
                 level      : $('#character-level').text(), 
                 money      : $('#character-money').text()
@@ -146,14 +161,14 @@ $(function () {
     });
 
     $('#cancel-edit').click(function () {
-        $('#edit-character').removeClass('active')
+        $('#edit-character').removeClass('active');
     });
 
     /**
      *  DELETION
      */
 
-    $('#confirm-delete-button').click(function () {
+    $('#confirm-delete').click(function () {
         // Hide the modal
         $('#deleteModal').modal('hide');
 
@@ -170,8 +185,12 @@ $(function () {
         $('#character-item-list').collapse('hide');
 
         // Update the character list.
-        updateCharacterList();
+        updateCharacterList;
     });
+
+    $('#cancel-delete').click(function () {
+        $('#delete-character').removeClass('active');
+    })
 
 /**
  *  HELP MODAL
@@ -257,7 +276,6 @@ $(function () {
     $('#spawn-item').click(function () {
         $('#character-items-table').append('<tr><td>Mace</td><td>Weapon</td></tr>')
 
-
         // var itemRowTemplate = '<tr id='test' data-container='body' data-toggle='popover' data-placement='right' data-content='Delete'>' +
         //     '<td>Sword</td>' +
         //     '<td>Weapon</td>' +
@@ -278,8 +296,7 @@ $(function () {
 
 
     // Updates the character list.
-    function updateCharacterList () {
-        $.getJSON(
+    var updateCharacterList = $.getJSON(
             'http://lmu-diabolical.appspot.com/characters',
             function (characters) {
                 // If there are any characters there, remove them.
@@ -293,9 +310,10 @@ $(function () {
                     $('#character-list-table > tbody').append($characterRow);
                 });
             }
+            // console.log('Characters updated');
         );
-    };
 
     // Get the characters when the page loads.
-    updateCharacterList();
+    updateCharacterList;
+    console.log(updateCharacterList);
 });
