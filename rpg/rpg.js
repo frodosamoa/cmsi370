@@ -87,6 +87,12 @@ $(function () {
         $('#create-character').removeClass('active')
     });
 
+    // Cleanup after closure of modal.
+    $('#createModal').on('hidden.bs.modal', function () {
+        $("#character-name-input, #create-class").val("");
+        $("#create-male, #create-female").removeClass("active");
+    });
+
     // Spawn character.
     $('#spawn-character').click(function () {
         $(this).attr('disabled', 'disabled');
