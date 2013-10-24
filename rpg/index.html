@@ -20,8 +20,13 @@
         <!-- Character list -->
         <div id="character-list" class="col-md-4">
           <div id="character-list-container">
-            <h2>Characters</h2>
-            <table id="character-list-table" class="table table-hover">
+            <div>
+              <h2>Characters</h2> 
+              <div>
+                <span align="right" id="question-glyph" class="glyphicon glyphicon-question-sign black"></span>
+              </div>
+            </div>
+            <table id="character-list-table" class="table table-hover table-condensed">
               <tbody>
               </tbody>
             </table>
@@ -43,17 +48,26 @@
             </div>
           </div>
           <div id="character-attributes">
-            <table id="character-info-table" class="table table-hover">
+            <table id="character-info-table" class="table table-hover table-condensed">
               <tbody>                 
               </tbody>
             </table>
-            <button id="view-items" type="button" class="btn btn-default btn-lg btn-block">View items</button>
-            <a id="edit-button" data-toggle="modal" href="#editModal" class="btn btn-block btn-info">
-              <span id="edit-glyph" class="glyphicon glyphicon-edit black"></span>
-            </a>
-            <a id="delete-button" data-toggle="modal" href="#deleteModal" class="btn btn-block btn-danger">
-              <span id="delete-glyph" class="glyphicon glyphicon-trash black"></span>
-            </a>
+            <div id="chosen-class" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
+              <label id="view-items" class="btn btn-default">
+                <input type="radio" name="options" id="option1">View items
+              </label>
+            </div>
+            <br>
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label href="#editModal" data-toggle="modal" class="btn btn-info">
+                <input type="radio" name="options" id="option1">
+                <span id="edit-glyph" class="glyphicon glyphicon-edit black"></span>
+              </label>
+              <label href="#deleteModal" data-toggle="modal" class="btn btn-danger">
+                <input type="radio" name="options" id="option2">
+                <span id="delete-glyph" class="glyphicon glyphicon-trash black"></span>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -71,7 +85,7 @@
           <!-- Item list. -->
           <div id="item-list" class="col-md-4 panel-collapse collapse">
             <h3>Items</h3>
-            <table class="table table-hover" id="character-items-table">
+            <table id="character-items-table" class="table table-hover table-condensed">
               <thead>
                 <tr>
                   <th>Item name</th>
@@ -84,7 +98,12 @@
                 </tr>                 
               </tbody>
             </table>
-            <button id="spawn-item" type="button" class="btn btn-default btn-lg btn-block">Spawn random item</button>
+            <div id="spawn-item" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-default">
+                <input type="radio" name="options" id="option1">Spawn random item
+              </label>
+            </div>
+            <br>
           </div>
         </div>
 
@@ -97,9 +116,10 @@
             </div>
 
             <div class="modal-body">
-              <center>
+
                 <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 
+                <br>
                 <p>Select your character's <strong>class</strong>.</p>
                 <div>
                   <div id="chosen-class" class="btn-group btn-group-justified" data-toggle="buttons">
@@ -118,7 +138,7 @@
                   </div>
                 </div>
 
-
+                <br>
                 <p>Select your character's <strong>gender</strong>.</p>
                 <div>
                   <div id="chosen-gender" class="btn-group btn-group-justified" data-toggle="buttons">
@@ -131,31 +151,28 @@
                   </div>
                 </div>
 
-
+                <br>
                 <p>Roll for your character's <strong>level</strong>.</p>
-                <div class="inline">
-                  <div id="rollButton" style="float: left">
-                    <button id="character-money" type="button" class="btn btn-default" >Roll</button>
-                  </div>
-
-                  <div id="rollField" style="float: right">
-                    <input type="text" class="form-control" placeholder="Click roll">
-                  </div>
+                <div id="rollButton">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button id="roll-level" class="btn btn-default">Roll</button>
+                        </span>
+                        <input type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
+                    </div>
                 </div>
 
-
+                <br>
                 <p>Roll for your character's <strong>money</strong>.</p>
                 <div class="inline">
-                  <div id="rollButton" style="float: left">
-                    <button id="character-money" type="button" class="btn btn-default" >Roll</button>
-                  </div>
-
-                  <div id="rollField" style="float: right">
-                    <input type="text" class="form-control" placeholder="Click roll">
-                  </div>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button id="roll-money" class="btn btn-default">Roll</button>
+                        </span>
+                        <input type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
+                    </div>
                 </div>
 
-              </center>
             </div>
 
             <div class="modal-footer">
