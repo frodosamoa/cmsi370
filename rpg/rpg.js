@@ -175,11 +175,14 @@ $(function () {
         // Hide the modal
         $('#deleteModal').modal('hide');
 
+        var idToDelete = $('#character-name > h3').attr('id');
+        $(".loader").show();
         $.ajax({
             type: 'DELETE',
-            url: 'http://lmu-diabolical.appspot.com/characters/' + $('#character-name > h3').attr('id'),
+            url: 'http://lmu-diabolical.appspot.com/characters/' + idToDelete,
             success: function (data, textStatus, jqXHR) {
-                console.log('Gone baby gone.');
+                $("#" + idToDelete).remove();
+                $(".loader").hide();
             }
         });
 
