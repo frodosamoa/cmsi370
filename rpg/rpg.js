@@ -1,9 +1,5 @@
 $(function () {
 
-    // TODO:
-    // Find out actual way of seeing which radio button the user chose for gender.
-    // Reset create modal after hitting cancel.
-    // Reset edit modal after hitting cancel.
     // Show a newly created character.
 
     var MAX_LEVEL = 100,
@@ -36,166 +32,239 @@ $(function () {
      *  CREATION
      */
 
-    // Create modal.
-	$('#confirm-create').click(function () {
+        // Create modal.
+    	$('#confirm-create').click(function () {
 
-        // Hide the modal.
-		$('#createModal').modal('hide');
+            // Make the create buttons be unactive.
+            $('#confirm-create, #cancel-create').attr('disabled', 'disabled');
 
-        // Values for character creation.
-        var character = {
-                name      : $('#character-name-input').val(),
-                classType : $('#create-class').val(),
-                gender    : $('#create-male').hasClass('active') ? 'MALE' : 'FEMALE',
-                level     : $('#create-level').val(),
-                money     : $('#create-money').val()
-            };
+            // Show the loader gif.
+            $('.create-loader').show();
 
-        // POST the character.
-        $.ajax({
-            type: 'POST',
-            url: 'http://lmu-diabolical.appspot.com/characters',
-            data: JSON.stringify(character),
-            contentType: 'application/json',
-            dataType: 'json',
-            accept: 'application/json',
-            complete: function (jqXHR, textStatus) {
-                // The new character can be accessed from the Location header.
-                console.log('You may access the new character at:' +
-                    jqXHR.getResponseHeader('Location'));
-            }
+            // Make the create character button be 'unactive' after creation.
+            $('#create-character').removeClass('active')
+
+            // Values for character creation.
+            var character = {
+                    name      : $('#character-name-input').val(),
+                    classType : $('#create-class').val(),
+                    gender    : $('#create-male').hasClass('active') ? 'MALE' : 'FEMALE',
+                    level     : $('#create-level').val(),
+                    money     : $('#create-money').val()
+                };
+
+            // POST the character.
+            $.ajax({
+                type: 'POST',
+                url: 'http://lmu-diabolical.appspot.com/characters',
+                data: JSON.stringify(character),
+                contentType: 'application/json',
+                dataType: 'json',
+                accept: 'application/json',
+                complete: function (jqXHR, textStatus) {   
+                        console.log("You may access the new character at:" +
+                            typeof(jqXHR));     
+                    // Hide the modal.
+                    $('#createModal').modal('hide');
+
+                    // Hide the loader gif.
+                    $('.create-loader').hide();
+
+                    // Clear item list.
+                    $('#item-list').empty();
+
+                    // Add the character to the character list.
+                    var $characterRow = $(characterListRowTemplate);
+                    $characterRow.attr('id', character.id);
+                    $characterRow.find('td:nth-child(1)').text(character.name);
+                    $('#character-list-table > tbody').append($characterRow);
+
+                    // If the character info panes are not shown, show them
+                    $('#character-info, #character-item-list').collapse('hide');
+
+                    // Send the character Id to the header id.
+                    $('#character-name > h3').attr('id', character.id);
+
+                    // Make the confirm create button unactive.
+                    $('#confirm-create, #cancel-create').removeAttr('disabled');
+
+                    // Send the character name to the info panel.
+                    $('#character-name > h3').text(character.name);
+
+                    // Put the created character's information in their info table.
+                    if ($('#characters').is(':empty')) {
+                    
+                    } else {
+                        $('#character-class').text(character.classType);
+                        $('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
+                        $('#character-level').text(character.level);
+                        $('#character-money').text(character.money);
+                    }
+                }
+            });
+
+        });
+        
+        // Cancel creation.
+        $('#cancel-create').click( function () {
+            $('#create-character').removeClass('active')
         });
 
-        // Reset values in character creation modal.
+        // Cleanup after closure of modal.
+        $('#createModal').on('hidden.bs.modal', function () {
+            $('#character-name-input, #create-class, #create-level, #create-money').val('');
+            $('#create-male, #create-female').removeClass('active');
+            $('#character-name-input, #create-class, #roll-level, #roll-money, #create-male, #create-female, #spawn-character').removeAttr('disabled');
+        });
 
-        // Make the create character button be 'unactive' after creation.
-        $('#create-character').removeClass('active')
+        // Spawn random character information for character creation.
+        $('#spawn-character').click(function () {
+            $(this).attr('disabled', 'disabled');
+            $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
 
-        // Update list of characters after creating a new one.
-        updateCharacterList;
-
-        // Hide character info and detailed info after creation.
-        $('#character-info, #item-list').collapse('hide');
-
-        //Show the newly created character.
-
-    });
-    
-    // Cancel creation.
-    $('#cancel-create').click( function () {
-        $('#create-character').removeClass('active')
-    });
-
-    // Cleanup after closure of modal.
-    $('#createModal').on('hidden.bs.modal', function () {
-        $('#character-name-input, #create-class, #create-level, #create-money').val('');
-        $('#create-male, #create-female').removeClass('active');
-        $('#character-name-input, #create-class, #roll-level, #roll-money, #create-male, #create-female, #spawn-character').removeAttr('disabled');
-    });
-
-    // Spawn character.
-    $('#spawn-character').click(function () {
-        $(this).attr('disabled', 'disabled');
-        $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
-
-
-        $.getJSON(
-            'http://lmu-diabolical.appspot.com/characters/spawn',
-            function (character) {
-                $('#character-name-input').val(character.name);
-                $('#create-class').val(character.classType);
-                if (character.gender === 'MALE') {
-                    $('#create-male').addClass('active');
-                    $('#create-female').attr('disabled', 'disabled');
-                } else {
-                    $('#create-female').addClass('active');
-                    $('#create-male').attr('disabled', 'disabled');
+            $.getJSON(
+                'http://lmu-diabolical.appspot.com/characters/spawn',
+                function (character) {
+                    $('#character-name-input').val(character.name);
+                    $('#create-class').val(character.classType);
+                    if (character.gender === 'MALE') {
+                        $('#create-male').addClass('active');
+                        $('#create-female').attr('disabled', 'disabled');
+                    } else {
+                        $('#create-female').addClass('active');
+                        $('#create-male').attr('disabled', 'disabled');
+                    }
+                    $('#create-level').val(character.level);
+                    $('#create-money').val(character.money);
                 }
-                $('#create-level').val(character.level);
-                $('#create-money').val(character.money);
-            }
-        );
-    });
+            );
+        });
 
     /**
      *  EDITION
      */
 
-    // Edit modal.
-    $('#edit-character').click(function () {
-        $('#edit-character-name-input').val($('#character-name > h3').text())
-        $('#edit-class').val($('#character-class').text())
-        if ($('#character-gender').text().toUpperCase() === 'MALE') {
-            $('#edit-male').addClass('active');
-        } else {
-            $('#edit-female').addClass('active');
-        }
-    });
-
-    // Edit the character.
-    $('#confirm-edit').click(function () {
-
-        $('#edit-character').removeClass('active');
-
-        // Hide the modal.
-        $('#editModal').modal('hide');
-
-        // Values for character creation.
-        var character = { 
-                id         : $('#character-name > h3').attr('id'),
-                name       : $('#character-name > h3').text(),
-                classType  : $('#edit-class').val(), 
-                gender     : $('#edit-male').hasClass('active') ? 'MALE' : 'FEMALE', 
-                level      : $('#character-level').text(), 
-                money      : $('#character-money').text()
-            };
-
-        $.ajax({
-            type: 'PUT',
-            url: 'http://lmu-diabolical.appspot.com/characters/' + character.id.toString(),
-            data: JSON.stringify(character),
-            contentType: 'application/json',
-            dataType: 'json',
-            accept: 'application/json',
-            success: function (data, textStatus, jqXHR) {
-                console.log('Done: no news is good news.');
+        // Edit modal.
+        $('#edit-character').click(function () {
+            $('#edit-character-name-input').val($('#character-name > h3').text())
+            $('#edit-class').val($('#character-class').text())
+            if ($('#character-gender').text().toUpperCase() === 'MALE') {
+                $('#edit-male').addClass('active');
+            } else {
+                $('#edit-female').addClass('active');
             }
         });
-    });
 
-    $('#cancel-edit').click(function () {
-        $('#edit-character').removeClass('active');
-    });
+        // Edit the character.
+        $('#confirm-edit').click(function () {
+
+            // Get the character's id.
+            var idToEdit = $('#character-name > h3').attr('id');
+
+            // Make the edit buttons be unactive.
+            $('#confirm-edit, #cancel-edit').attr('disabled', 'disabled');
+
+            // Make sure the edit character button is 'unactive' after clicking cancel.
+            $('#edit-character').removeClass('active');
+
+            // Show the loader gif.
+            $('.edit-loader').show();
+
+            // Values for character creation.
+            var character = { 
+                    id         : $('#character-name > h3').attr('id'),
+                    name       : $('#character-name > h3').text(),
+                    classType  : $('#edit-class').val(), 
+                    gender     : $('#edit-male').hasClass('active') ? 'MALE' : 'FEMALE', 
+                    level      : $('#character-level').text(), 
+                    money      : $('#character-money').text()
+                };
+
+            $.ajax({
+                type: 'PUT',
+                url: 'http://lmu-diabolical.appspot.com/characters/' + idToEdit,
+                data: JSON.stringify(character),
+                contentType: 'application/json',
+                dataType: 'json',
+                accept: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    // Hide the modal.
+                    $('#editModal').modal('hide');
+
+                    // Hide the loader gif.
+                    $('.edit-loader').hide();
+
+                    // Make the edit buttons be active.
+                    $('#confirm-edit, #cancel-edit').removeAttr('disabled');
+
+                    // Put the changed information into the character info table.
+                    $('#character-class').html(character.classType);
+                    $('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
+                }
+            });
+        });
+
+        // Cleanup after closure of modal.
+        $('#editModal').on('hidden.bs.modal', function () {
+            $('#edit-class').val('');
+            $('#edit-male, #edit-female').removeClass('active');
+        });
+
+        // Made the edit button be 'unactive' after hitting cancel.
+        $('#cancel-edit').click(function () {
+            $('#edit-character').removeClass('active');
+        });
 
     /**
      *  DELETION
      */
 
-    $('#confirm-delete').click(function () {
-        // Hide the modal
-        $('#deleteModal').modal('hide');
+        $('#confirm-delete').click(function () {
 
-        var idToDelete = $('#character-name > h3').attr('id');
-        $(".loader").show();
-        $.ajax({
-            type: 'DELETE',
-            url: 'http://lmu-diabolical.appspot.com/characters/' + idToDelete,
-            success: function (data, textStatus, jqXHR) {
-                $("#" + idToDelete).remove();
-                $(".loader").hide();
-            }
+            // Get the character's id.
+            var idToDelete = $('#character-name > h3').attr('id');
+
+
+            // Make the delete buttons be unactive.
+            $('#confirm-delete, #cancel-delete').attr('disabled', 'disabled');
+
+            // Show the loader gif.
+            $('.delete-loader').show();
+
+            $.ajax({
+                type: 'DELETE',
+                url: 'http://lmu-diabolical.appspot.com/characters/' + idToDelete,
+                success: function (data, textStatus, jqXHR) {
+                    // Remove the row.
+                    $('#' + idToDelete).remove();
+
+                    //Hide the loader .gif.
+                    $('.delete-loader').hide();
+
+                    // Hide the modal.
+                    $('#deleteModal').modal('hide');
+
+                    // Make the delete buttons be active.
+                    $('#confirm-delete, #cancel-delete').removeAttr('disabled');
+
+                    // Clear item list.
+                    $('#item-list').empty();
+
+                    // Make the delete button 'unactive'.
+                    $('#delete-character').removeClass('active');
+
+                    // Hide character info and detailed info after deletion.
+                    $('#character-info, #character-item-list').collapse('hide');
+                }
+            });
+
+
         });
 
-        // Hide character info and detailed info after deletion.
-        $('#character-info, #character-item-list').collapse('hide');
-
-        // Update the character list.
-        updateCharacterList;
-    });
-
-    $('#cancel-delete').click(function () {
-        $('#delete-character').removeClass('active');
-    })
+        // Make the delete button 'unactive' after hitting cancel.
+        $('#cancel-delete').click(function () {
+            $('#delete-character').removeClass('active');
+        })
 
 /**
  *  HELP MODAL
@@ -222,6 +291,8 @@ $(function () {
         $('#character-list-table tbody > tr').not(this).removeClass('success');
         $(this).toggleClass('success');
 
+        // Clear item list.
+        $('#item-list').empty();
 
         // Put in new table.
         $.getJSON(
@@ -276,45 +347,31 @@ $(function () {
 
      // Spawn a random item.
     $('#spawn-item').click(function () {
-        $('#character-items-table').append('<tr><td>Mace</td><td>Weapon</td></tr>')
-
-        // var itemRowTemplate = '<tr id='test' data-container='body' data-toggle='popover' data-placement='right' data-content='Delete'>' +
-        //     '<td>Sword</td>' +
-        //     '<td>Weapon</td>' +
-        //     '</tr>';
-
-        // $.getJSON(
-        //     'http://lmu-diabolical.appspot.com/items/spawn',
-        //     {
-        //         level: 50,
-        //         slot: 'body'
-        //     },
-        //     function (item) {
-        //         // Mmmmm, new item.
-        //         console.log(item);
-        //     }
-        // );
+        $('#character-items-table').append('<tr><td>Not Available</td><td>At This Time</td></tr>')
     });
 
 
-    // Updates the character list.
-    var updateCharacterList = $.getJSON(
-            'http://lmu-diabolical.appspot.com/characters',
-            function (characters) {
-                // If there are any characters there, remove them.
-                 $('#character-list-table > tbody').empty();
+/**
+ *  INITIAL PAGE LOAD
+ */
 
-                // Do something with the character list.
-                characters.forEach(function (character) {
-                    var $characterRow = $(characterListRowTemplate);
-                    $characterRow.attr('id', character.id);
-                    $characterRow.find('td:nth-child(1)').text(character.name);
-                    $('#character-list-table > tbody').append($characterRow);
-                });
-            }
-            //console.log('Characters updated');
-        );
+    // Show character list loader.
+    $('.character-list-loader').show()
 
-    // Get the characters when the page loads.
-    updateCharacterList;
+    // Get the character list.
+    $.getJSON(
+        'http://lmu-diabolical.appspot.com/characters',
+        function (characters) {
+            // Hide loader.
+            $('.character-list-loader').hide();
+
+            characters.forEach(function (character) {
+                var $characterRow = $(characterListRowTemplate);
+                $characterRow.attr('id', character.id);
+                $characterRow.find('td:nth-child(1)').text(character.name);
+                $('#character-list-table > tbody').append($characterRow);
+            });
+        }
+    );
+
 });
