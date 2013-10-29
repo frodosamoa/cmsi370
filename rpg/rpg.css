@@ -3,46 +3,55 @@ html, body {
 }
 
 /* Default hidden. */
-.loader {
+.character-list-loader, .create-loader, .delete-loader, .edit-loader {
     display: none;
 }
 
+/* Give a small border to all colums that have information. */
 #character-list, #character-info, #character-item-list {
 	border-left: 1px solid #ccc;
 }
 
+/* Give a margin to the top and bottom of the charcter title. */
 #character-title {
 	margin-top: 10px;
 	margin-bottom: 24px;
 }
 
+/* Float the character image left. */
 #character-image {
 	float: left;
 }
 
+/* Give the character attributes a top margin of 10. */
 #character-attributes {
 	margin-top: 10px;
 }
 
+/* Center the character name in the character info panel vertically. */
 #character-name {
 	margin-left: 15px;
 	display: inline-block;
 	vertical-align: middle;
 }
 
+/* Help icons for the help modal are smaller than normal. */
 #help-icons {
 	font-size: 0.2em;
 }
 
+/* Icons in the actual are bigger. */
 #page-icons {
     font-size: 1.5em;
 }
 
+/* Make the help bottun more inline with the Characters title. */
 #help {
 	padding-top: 18px;
 	padding-right: 18px;
 }
 
+/* White color for the glyphicons. */
 .white, .white a {
     color: white;
 }
