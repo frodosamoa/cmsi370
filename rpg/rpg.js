@@ -60,8 +60,11 @@ $(function () {
                 dataType: 'json',
                 accept: 'application/json',
                 complete: function (jqXHR, textStatus) {   
-                        console.log("You may access the new character at:" +
-                            typeof(jqXHR));     
+                    // Get the Id of the character we just created.
+                    var location = jqXHR.getResponseHeader("Location");   
+                    var urlIndex = "characters/";
+                    var Id = location.substring(location.indexOf(urlIndex) + urlIndex.length);
+
                     // Hide the modal.
                     $('#createModal').modal('hide');
 
@@ -73,39 +76,36 @@ $(function () {
 
                     // Add the character to the character list.
                     var $characterRow = $(characterListRowTemplate);
-                    $characterRow.attr('id', character.id);
+                    $characterRow.attr('id', Id);
                     $characterRow.find('td:nth-child(1)').text(character.name);
                     $('#character-list-table > tbody').append($characterRow);
 
                     // If the character info panes are not shown, show them
-                    $('#character-info, #character-item-list').collapse('hide');
+                    $('#character-info, #character-item-list').collapse('show');
 
                     // Send the character Id to the header id.
-                    $('#character-name > h3').attr('id', character.id);
-
-                    // Make the confirm create button unactive.
-                    $('#confirm-create, #cancel-create').removeAttr('disabled');
+                    $('#character-name > h3').attr('id', Id);
 
                     // Send the character name to the info panel.
                     $('#character-name > h3').text(character.name);
 
+                    // Make the confirm create button unactive.
+                    $('#confirm-create, #cancel-create').removeAttr('disabled');
+
+                    // Select the new character's row and unselect any other character.
+                    $('#character-list-table tbody > tr').not('#character-list-table tbody > tr:last').removeClass('success');
+                    $('#character-list-table tbody > tr:last').toggleClass('success');
+
                     // Put the created character's information in their info table.
-                    if ($('#characters').is(':empty')) {
-                    
-                    } else {
-                        $('#character-class').text(character.classType);
-                        $('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
-                        $('#character-level').text(character.level);
-                        $('#character-money').text(character.money);
-                    }
+                    var $characterInfo = $(characterInfoRowTemplate);
+                    $characterInfo.find('#character-class').text(character.classType);
+                    $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
+                    $characterInfo.find('#character-level').text(character.level);
+                    $characterInfo.find('#character-money').text(character.money);
+                    $('#character-info-table > tbody').html($characterInfo);
                 }
             });
 
-        });
-        
-        // Cancel creation.
-        $('#cancel-create').click( function () {
-            $('#create-character').removeClass('active')
         });
 
         // Cleanup after closure of modal.
@@ -222,7 +222,6 @@ $(function () {
             // Get the character's id.
             var idToDelete = $('#character-name > h3').attr('id');
 
-
             // Make the delete buttons be unactive.
             $('#confirm-delete, #cancel-delete').attr('disabled', 'disabled');
 
@@ -255,8 +254,6 @@ $(function () {
                     $('#character-info, #character-item-list').collapse('hide');
                 }
             });
-
-
         });
 
         // Make the delete button 'unactive' after hitting cancel.
@@ -347,7 +344,6 @@ $(function () {
     $('#spawn-item').click(function () {
         $('#item-list').append('<tr><td>Not Available</td><td>At This Time</td></tr>')
     });
-
 
 /**
  *  INITIAL PAGE LOAD

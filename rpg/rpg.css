@@ -12,7 +12,7 @@ html, body {
 	border-left: 1px solid #ccc;
 }
 
-/* Give a margin to the top and bottom of the charcter title. */
+/* Give a margin to the top and bottom of the character title. */
 #character-title {
 	margin-top: 10px;
 	margin-bottom: 24px;
@@ -45,7 +45,7 @@ html, body {
     font-size: 1.5em;
 }
 
-/* Make the help bottun more inline with the Characters title. */
+/* Make the help bottun more inline with the characters title. */
 #help {
 	padding-top: 18px;
 	padding-right: 18px;
