@@ -22,7 +22,7 @@
           <div id="character-list-container">
             <div>
               <div style="float: left;">
-              <h2>Characters <span class="loader"><img src="ajax-loader.gif"></span></h2>
+              <h2>Characters<span class="character-list-loader"><img src="ajax-loader.gif"></span></h2>
             </div>
               <div style="float: right;">
                 <a id="help" data-toggle="modal" href="#helpModal" class="btn">
@@ -31,7 +31,7 @@
               </div>
             </div>
             <table id="character-list-table" class="table table-hover table-condensed">
-              <tbody>
+              <tbody id="characters">
               </tbody>
             </table>
 
@@ -76,23 +76,17 @@
 
         <!-- Item list. -->
         <div id="character-item-list" class="col-md-4 panel-collapse collapse">
-          <h3>Items</h3>
+          <h3>Items (Not functional)</h3>
           <table id="character-items-table" class="table table-hover table-condensed">
             <thead>
               <tr>
                 <th>Item name</th>
                 <th>Type</th>
             </thead>
-            <tbody>
-              <tr id="item-row" data-container="body" data-toggle="popover" data-placement="right" data-content="Delete">
-              </tr>                 
+            <tbody id="item-list">
             </tbody>
           </table>
-          <div id="spawn-item" class="btn-group btn-block btn-group-justified" data-toggle="buttons">
-            <label class="btn btn-default">
-              <input type="radio" name="options" id="option1">Spawn item
-            </label>
-          </div>
+          <button id="spawn-item" class="btn btn-block btn-default">Spawn item</button>
           <br>
         </div>
       </div>
@@ -148,6 +142,7 @@
               <button id="spawn-character" class="btn btn-info pull-left" type="button">
                 <span id="random-glyph" class="glyphicon glyphicon-random white page-icons"></span>
               </button>
+              <span class="create-loader"><img src="ajax-loader.gif"></span>
               <button id="cancel-create" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button id="confirm-create" type="button" class="btn btn-success">Create Character</button>
             </div>
@@ -166,13 +161,8 @@
                 <center>
                 <input id="edit-character-name-input" type="text" class="form-control" disabled="disabled">
                 <br>
-                <p>Change your character's <strong>class</strong>, or simply click roll if you want a random class.</p>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button id="roll-class" class="btn btn-default">Roll</button>
-                    </span>
-                    <input id="edit-class" type="text" class="form-control">
-                </div>
+                <p>Change your character's <strong>class</strong>.</p>
+                <input id="edit-class" type="text" class="form-control">
 
                 <br>
                 <p>Change your character's <strong>gender</strong>.</p>
@@ -188,6 +178,7 @@
 
             </div>
             <div class="modal-footer">
+              <span class="edit-loader"><img src="ajax-loader.gif"></span>
               <button id="cancel-edit" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button id="confirm-edit" type="button" class="btn btn-success">Save</button>
             </div>
@@ -206,6 +197,7 @@
               Deleting a character is permanent and <strong>cannot be undone</strong>.
             </div>
             <div class="modal-footer">
+              <span class="delete-loader"><img src="ajax-loader.gif"></span>
               <button id="cancel-delete"type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button id="confirm-delete" type="button" class="btn btn-danger">Delete</button>
             </div>
