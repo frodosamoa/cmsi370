@@ -1,7 +1,5 @@
 $(function () {
 
-    // Show a newly created character.
-
     var MAX_LEVEL = 100,
         MAX_MONEY = 1000000,
         characterInfoRowTemplate = '<tr>' +
@@ -347,7 +345,7 @@ $(function () {
 
      // Spawn a random item.
     $('#spawn-item').click(function () {
-        $('#character-items-table').append('<tr><td>Not Available</td><td>At This Time</td></tr>')
+        $('#item-list').append('<tr><td>Not Available</td><td>At This Time</td></tr>')
     });
 
 
