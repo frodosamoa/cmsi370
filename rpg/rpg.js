@@ -1,7 +1,7 @@
 $(function () {
 
-    var MAX_LEVEL = 100,
-        MAX_MONEY = 1000000,
+    var MAX_LEVEL = 100,     // JD: Nice use of "constants" in JavaScript.
+        MAX_MONEY = 1000000, //     Or maybe just "as good as it gets." :)
         characterInfoRowTemplate = '<tr>' +
             '<td><strong>Class</strong></td>' +
             '<td id="character-class" align="right"></td>' +
@@ -63,6 +63,7 @@ $(function () {
                     // Get the Id of the character we just created.
                     var location = jqXHR.getResponseHeader("Location");   
                     var urlIndex = "characters/";
+                    // JD: Whoa, capital "I" in this variable name???
                     var Id = location.substring(location.indexOf(urlIndex) + urlIndex.length);
 
                     // Hide the modal.
@@ -85,6 +86,7 @@ $(function () {
 
                     // Send the character Id to the header id.
                     $('#character-name > h3').attr('id', Id);
+                    // JD: Ummm, it looks like you just gave more than one element the same id...
 
                     // Send the character name to the info panel.
                     $('#character-name > h3').text(character.name);
@@ -117,7 +119,7 @@ $(function () {
 
         // Spawn random character information for character creation.
         $('#spawn-character').click(function () {
-            $(this).attr('disabled', 'disabled');
+            $(this).attr('disabled', 'disabled'); // JD: I'm not clear on this choice to allow spawning just once.
             $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
 
             $.getJSON(
@@ -291,6 +293,8 @@ $(function () {
 
         // Put in new table.
         $.getJSON(
+            // JD: You'll want your arguments indented one level here, because they
+            //     are technically "inside" the function call.
         'http://lmu-diabolical.appspot.com/characters/' + $(this).attr('id'),
         function (character) {
             // Send the character Id to the header id.
@@ -302,6 +306,7 @@ $(function () {
             // Do something with the character list.
             var $characterInfo = $(characterInfoRowTemplate);
             $characterInfo.find('#character-class').text(character.classType);
+            // JD: This line is worth line-breaking; after the + is a good place.
             $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
             $characterInfo.find('#character-level').text(character.level);
             $characterInfo.find('#character-money').text(character.money);
@@ -350,7 +355,7 @@ $(function () {
  */
 
     // Show character list loader.
-    $('.character-list-loader').show()
+    $('.character-list-loader').show() // JD: Missed semicolon.
 
     // Get the character list.
     $.getJSON(

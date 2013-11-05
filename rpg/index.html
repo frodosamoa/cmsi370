@@ -21,9 +21,12 @@
         <div id="character-list" class="col-md-4">
           <div id="character-list-container">
             <div>
+              <!-- JD: Bootstrap offers a "pull-left" class here so that you don't need
+                       to resort to hardcoded inline CSS. -->
               <div style="float: left;">
               <h2>Characters<span class="character-list-loader"><img src="ajax-loader.gif"></span></h2>
             </div>
+              <!-- JD: Similarly, there is also a "pull-right" class. -->
               <div style="float: right;">
                 <a id="help" data-toggle="modal" href="#helpModal" class="btn">
                   <button id="help-button" class="btn btn-info">Help</button>
@@ -59,6 +62,8 @@
 
             <div class="btn-group btn-group-justified" data-toggle="buttons">
               <label id="edit-character" href="#editModal" data-toggle="modal" class="btn btn-info">
+                <!-- JD: Come on now, you can think of a better ID than "option1" and "option2",
+                         can't you? >:-) -->
                 <input type="radio" name="options" id="option1">
                 <span id="edit-glyph" class="glyphicon glyphicon-edit white page-icons"></span>
               </label>
@@ -96,7 +101,8 @@
             </div>
 
             <div class="modal-body">
-                <center>
+                <center> <!-- JD: Oops, MVC no-no.  Bootstrap offers class "text-center" for this.
+                                  Or, of course, you can define CSS of your own. -->
                 <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 
                 <br>
@@ -107,6 +113,8 @@
                 <p>Select your character's <strong>gender</strong>.</p>
                   <div class="btn-group btn-group-justified" data-toggle="buttons">
                     <label id="create-male" class="btn btn-default">
+                      <!-- JD: Last I checked, there is a better name for gender radio buttons
+                               than "options" O_o -->
                       <input type="radio" name="options"> Male
                     </label>
                     <label id="create-female" class="btn btn-default">
@@ -135,6 +143,7 @@
             </div>
 
             <div class="modal-footer">
+              <!-- JD: This is a neat idea; but why allow a roll only once? -->
               <button id="spawn-character" class="btn btn-info pull-left" type="button">
                 <span id="random-glyph" class="glyphicon glyphicon-random white page-icons"></span>
               </button>
@@ -164,6 +173,7 @@
                 <p>Change your character's <strong>gender</strong>.</p>
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <label id="edit-male" class="btn btn-default">
+                    <!-- JD: Extra space snuck in after "options" here. -->
                     <input type="radio" name="options" > Male
                   </label>
                   <label id="edit-female" class="btn btn-default">
@@ -202,6 +212,8 @@
       </div><!-- /.modal -->
 
       <!-- Help Modal -->
+      <!-- JD: This is particularly well-done!  The inclusion of actual buttons in the text
+               is very effective, I think. -->
       <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
