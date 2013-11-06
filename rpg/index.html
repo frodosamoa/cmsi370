@@ -21,13 +21,10 @@
         <div id="character-list" class="col-md-4">
           <div id="character-list-container">
             <div>
-              <!-- JD: Bootstrap offers a "pull-left" class here so that you don't need
-                       to resort to hardcoded inline CSS. -->
-              <div style="float: left;">
+              <div class="pull-left">
               <h2>Characters<span class="character-list-loader"><img src="ajax-loader.gif"></span></h2>
             </div>
-              <!-- JD: Similarly, there is also a "pull-right" class. -->
-              <div style="float: right;">
+              <div class="pull-right">
                 <a id="help" data-toggle="modal" href="#helpModal" class="btn">
                   <button id="help-button" class="btn btn-info">Help</button>
                 </a>
@@ -62,13 +59,11 @@
 
             <div class="btn-group btn-group-justified" data-toggle="buttons">
               <label id="edit-character" href="#editModal" data-toggle="modal" class="btn btn-info">
-                <!-- JD: Come on now, you can think of a better ID than "option1" and "option2",
-                         can't you? >:-) -->
-                <input type="radio" name="options" id="option1">
+                <input type="radio">
                 <span id="edit-glyph" class="glyphicon glyphicon-edit white page-icons"></span>
               </label>
               <label id="delete-character" href="#deleteModal" data-toggle="modal" class="btn btn-danger">
-                <input type="radio" name="options" id="option2">
+                <input type="radio">
                 <span id="delete-glyph" class="glyphicon glyphicon-trash white page-icons"></span>
               </label>
             </div>
@@ -113,12 +108,10 @@
                 <p>Select your character's <strong>gender</strong>.</p>
                   <div class="btn-group btn-group-justified" data-toggle="buttons">
                     <label id="create-male" class="btn btn-default">
-                      <!-- JD: Last I checked, there is a better name for gender radio buttons
-                               than "options" O_o -->
-                      <input type="radio" name="options"> Male
+                      <input type="radio"> Male
                     </label>
                     <label id="create-female" class="btn btn-default">
-                      <input type="radio" name="options"> Female
+                      <input type="radio"> Female
                     </label>
                   </div>
 
@@ -173,11 +166,10 @@
                 <p>Change your character's <strong>gender</strong>.</p>
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <label id="edit-male" class="btn btn-default">
-                    <!-- JD: Extra space snuck in after "options" here. -->
-                    <input type="radio" name="options" > Male
+                    <input type="radio"> Male
                   </label>
                   <label id="edit-female" class="btn btn-default">
-                    <input type="radio" name="options" > Female
+                    <input type="radio"> Female
                   </label>
                 </div>
               </center>
