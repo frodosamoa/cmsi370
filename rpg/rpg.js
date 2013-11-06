@@ -1,7 +1,7 @@
 $(function () {
 
-    var MAX_LEVEL = 100,     // JD: Nice use of "constants" in JavaScript.
-        MAX_MONEY = 1000000, //     Or maybe just "as good as it gets." :)
+    var MAX_LEVEL = 100,    
+        MAX_MONEY = 1000000,
         characterInfoRowTemplate = '<tr>' +
             '<td><strong>Class</strong></td>' +
             '<td id="character-class" align="right"></td>' +
@@ -76,14 +76,14 @@ $(function () {
 
                     // Add the character to the character list.
                     var $characterRow = $(characterListRowTemplate);
-                    $characterRow.attr('id', Id);
+                    $characterRow.attr('id', id);
                     $characterRow.find('td:nth-child(1)').text(character.name);
                     $('#character-list-table > tbody').append($characterRow);
 
                     // If the character info panes are not shown, show them
                     $('#character-info, #character-item-list').collapse('show');
 
-                    // Send the character Id to the header id.
+                    // Send the character id to the header id.
                     $('#character-name > h3').attr('id', id);
                     // JD: Ummm, it looks like you just gave more than one element the same id...
 
@@ -100,7 +100,8 @@ $(function () {
                     // Put the created character's information in their info table.
                     var $characterInfo = $(characterInfoRowTemplate);
                     $characterInfo.find('#character-class').text(character.classType);
-                    $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
+                    $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() +
+                                                                  character.gender.slice(1).toLowerCase());
                     $characterInfo.find('#character-level').text(character.level);
                     $characterInfo.find('#character-money').text(character.money);
                     $('#character-info-table > tbody').html($characterInfo);
@@ -118,7 +119,7 @@ $(function () {
 
         // Spawn random character information for character creation.
         $('#spawn-character').click(function () {
-            $(this).attr('disabled', 'disabled'); // JD: I'm not clear on this choice to allow spawning just once.
+            $(this).attr('disabled', 'disabled');
             $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
 
             $.getJSON(
@@ -198,7 +199,8 @@ $(function () {
 
                     // Put the changed information into the character info table.
                     $('#character-class').html(character.classType);
-                    $('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
+                    $('#character-gender').text(character.gender.charAt(0).toUpperCase() +
+                                                character.gender.slice(1).toLowerCase());
                 }
             });
         });
@@ -304,7 +306,7 @@ $(function () {
                 var $characterInfo = $(characterInfoRowTemplate);
                 $characterInfo.find('#character-class').text(character.classType);
                 $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() +
-                    character.gender.slice(1).toLowerCase());
+                                                              character.gender.slice(1).toLowerCase());
                 $characterInfo.find('#character-level').text(character.level);
                 $characterInfo.find('#character-money').text(character.money);
                 $('#character-info-table > tbody').html($characterInfo);
