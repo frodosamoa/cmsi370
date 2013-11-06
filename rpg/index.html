@@ -52,21 +52,21 @@
             </div>
           </div>
 
-            <table id="character-info-table" class="table table-hover table-condensed">
-              <tbody>                 
-              </tbody>
-            </table>
+          <table id="character-info-table" class="table table-hover table-condensed">
+            <tbody>                 
+            </tbody>
+          </table>
 
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label id="edit-character" href="#editModal" data-toggle="modal" class="btn btn-info">
-                <input type="radio">
-                <span id="edit-glyph" class="glyphicon glyphicon-edit white page-icons"></span>
-              </label>
-              <label id="delete-character" href="#deleteModal" data-toggle="modal" class="btn btn-danger">
-                <input type="radio">
-                <span id="delete-glyph" class="glyphicon glyphicon-trash white page-icons"></span>
-              </label>
-            </div>
+          <div class="btn-group btn-group-justified" data-toggle="buttons">
+            <label id="edit-character" href="#editModal" data-toggle="modal" class="btn btn-info">
+              <input type="radio">
+              <span id="edit-glyph" class="glyphicon glyphicon-edit white page-icons"></span>
+            </label>
+            <label id="delete-character" href="#deleteModal" data-toggle="modal" class="btn btn-danger">
+              <input type="radio">
+              <span id="delete-glyph" class="glyphicon glyphicon-trash white page-icons"></span>
+            </label>
+          </div>
 
         </div>
 
@@ -95,9 +95,7 @@
               <h4 class="modal-title">Create Character</h4>
             </div>
 
-            <div class="modal-body">
-                <center> <!-- JD: Oops, MVC no-no.  Bootstrap offers class "text-center" for this.
-                                  Or, of course, you can define CSS of your own. -->
+            <div class="modal-body text-center">
                 <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 
                 <br>
@@ -132,11 +130,9 @@
                     </span>
                     <input id="create-money" type="text" class="form-control" disabled='disabled' placeholder="Click Roll">
                 </div>
-              </center>
             </div>
 
             <div class="modal-footer">
-              <!-- JD: This is a neat idea; but why allow a roll only once? -->
               <button id="spawn-character" class="btn btn-info pull-left" type="button">
                 <span id="random-glyph" class="glyphicon glyphicon-random white page-icons"></span>
               </button>
@@ -155,25 +151,22 @@
             <div class="modal-header">
               <h4 class="modal-title">Edit Character</h4>
             </div>
-            <div class="modal-body">
-                <center>
-                <input id="edit-character-name-input" type="text" class="form-control" disabled="disabled">
-                <br>
-                <p>Change your character's <strong>class</strong>.</p>
-                <input id="edit-class" type="text" class="form-control">
+            <div class="modal-body text-center">
+              <input id="edit-character-name-input" type="text" class="form-control" disabled="disabled">
+              <br>
+              <p>Change your character's <strong>class</strong>.</p>
+              <input id="edit-class" type="text" class="form-control">
 
-                <br>
-                <p>Change your character's <strong>gender</strong>.</p>
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <label id="edit-male" class="btn btn-default">
-                    <input type="radio"> Male
-                  </label>
-                  <label id="edit-female" class="btn btn-default">
-                    <input type="radio"> Female
-                  </label>
-                </div>
-              </center>
-
+              <br>
+              <p>Change your character's <strong>gender</strong>.</p>
+              <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label id="edit-male" class="btn btn-default">
+                  <input type="radio"> Male
+                </label>
+                <label id="edit-female" class="btn btn-default">
+                  <input type="radio"> Female
+                </label>
+              </div>
             </div>
             <div class="modal-footer">
               <span class="edit-loader"><img src="ajax-loader.gif"></span>
@@ -204,8 +197,6 @@
       </div><!-- /.modal -->
 
       <!-- Help Modal -->
-      <!-- JD: This is particularly well-done!  The inclusion of actual buttons in the text
-               is very effective, I think. -->
       <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
