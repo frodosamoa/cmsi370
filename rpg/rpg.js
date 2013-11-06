@@ -60,11 +60,10 @@ $(function () {
                 dataType: 'json',
                 accept: 'application/json',
                 complete: function (jqXHR, textStatus) {   
-                    // Get the Id of the character we just created.
+                    // Get the id of the character we just created.
                     var location = jqXHR.getResponseHeader("Location");   
                     var urlIndex = "characters/";
-                    // JD: Whoa, capital "I" in this variable name???
-                    var Id = location.substring(location.indexOf(urlIndex) + urlIndex.length);
+                    var id = location.substring(location.indexOf(urlIndex) + urlIndex.length);
 
                     // Hide the modal.
                     $('#createModal').modal('hide');
@@ -85,7 +84,7 @@ $(function () {
                     $('#character-info, #character-item-list').collapse('show');
 
                     // Send the character Id to the header id.
-                    $('#character-name > h3').attr('id', Id);
+                    $('#character-name > h3').attr('id', id);
                     // JD: Ummm, it looks like you just gave more than one element the same id...
 
                     // Send the character name to the info panel.
@@ -293,25 +292,24 @@ $(function () {
 
         // Put in new table.
         $.getJSON(
-            // JD: You'll want your arguments indented one level here, because they
-            //     are technically "inside" the function call.
-        'http://lmu-diabolical.appspot.com/characters/' + $(this).attr('id'),
-        function (character) {
-            // Send the character Id to the header id.
-            $('#character-name > h3').attr('id', character.id);
+            'http://lmu-diabolical.appspot.com/characters/' + $(this).attr('id'),
+            function (character) {
+                // Send the character Id to the header id.
+                $('#character-name > h3').attr('id', character.id);
 
-            // Send the character name to the info panel.
-            $('#character-name > h3').text(character.name);
+                // Send the character name to the info panel.
+                $('#character-name > h3').text(character.name);
 
-            // Do something with the character list.
-            var $characterInfo = $(characterInfoRowTemplate);
-            $characterInfo.find('#character-class').text(character.classType);
-            // JD: This line is worth line-breaking; after the + is a good place.
-            $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() + character.gender.slice(1).toLowerCase());
-            $characterInfo.find('#character-level').text(character.level);
-            $characterInfo.find('#character-money').text(character.money);
-            $('#character-info-table > tbody').html($characterInfo);
-        });
+                // Do something with the character list.
+                var $characterInfo = $(characterInfoRowTemplate);
+                $characterInfo.find('#character-class').text(character.classType);
+                $characterInfo.find('#character-gender').text(character.gender.charAt(0).toUpperCase() +
+                    character.gender.slice(1).toLowerCase());
+                $characterInfo.find('#character-level').text(character.level);
+                $characterInfo.find('#character-money').text(character.money);
+                $('#character-info-table > tbody').html($characterInfo);
+            }
+        );
     });
 
     // Set up handlers for character information clicks.
@@ -355,7 +353,7 @@ $(function () {
  */
 
     // Show character list loader.
-    $('.character-list-loader').show() // JD: Missed semicolon.
+    $('.character-list-loader').show();
 
     // Get the character list.
     $.getJSON(
