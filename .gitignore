@@ -3,6 +3,7 @@ mental-model-paper/*.log
 mental-model-paper/*.synctex.gz
 mental-model-paper/*.bbl
 mental-model-paper/*.blg
+mental-model-paper/notes/*
 usability-study/*.aux
 usability-study/*.log
 usability-study/*.synctex.gz
