@@ -34,13 +34,10 @@ $(function () {
     	$('#confirm-create').click(function () {
 
             // Make the create buttons be unactive.
-            $('#confirm-create, #cancel-create').attr('disabled', 'disabled');
+            $('#confirm-create, #cancel-create, #spawn-character').attr('disabled', 'disabled');
 
             // Show the loader gif.
             $('.create-loader').show();
-
-            // Make the create character button be 'unactive' after creation.
-            $('#create-character').removeClass('active')
 
             // Values for character creation.
             var character = {
@@ -83,15 +80,11 @@ $(function () {
                     // If the character info panes are not shown, show them
                     $('#character-info, #character-item-list').collapse('show');
 
-                    // Send the character id to the header id.
-                    $('#character-name > h3').attr('id', id);
-                    // JD: Ummm, it looks like you just gave more than one element the same id...
-
                     // Send the character name to the info panel.
                     $('#character-name > h3').text(character.name);
 
                     // Make the confirm create button unactive.
-                    $('#confirm-create, #cancel-create').removeAttr('disabled');
+                    $('#confirm-create, #cancel-create, #spawn-character').removeAttr('disabled');
 
                     // Select the new character's row and unselect any other character.
                     $('#character-list-table tbody > tr').not('#character-list-table tbody > tr:last').removeClass('success');
@@ -114,14 +107,10 @@ $(function () {
         $('#createModal').on('hidden.bs.modal', function () {
             $('#character-name-input, #create-class, #create-level, #create-money').val('');
             $('#create-male, #create-female').removeClass('active');
-            $('#character-name-input, #create-class, #roll-level, #roll-money, #create-male, #create-female, #spawn-character').removeAttr('disabled');
         });
 
         // Spawn random character information for character creation.
         $('#spawn-character').click(function () {
-            $(this).attr('disabled', 'disabled');
-            $('#character-name-input, #create-class, #roll-level, #roll-money').attr('disabled', 'disabled');
-
             $.getJSON(
                 'http://lmu-diabolical.appspot.com/characters/spawn',
                 function (character) {
@@ -129,10 +118,10 @@ $(function () {
                     $('#create-class').val(character.classType);
                     if (character.gender === 'MALE') {
                         $('#create-male').addClass('active');
-                        $('#create-female').attr('disabled', 'disabled');
+                        $('#create-female').removeClass('active');
                     } else {
                         $('#create-female').addClass('active');
-                        $('#create-male').attr('disabled', 'disabled');
+                        $('#create-male').removeClass('active');
                     }
                     $('#create-level').val(character.level);
                     $('#create-money').val(character.money);
@@ -157,9 +146,8 @@ $(function () {
 
         // Edit the character.
         $('#confirm-edit').click(function () {
-
             // Get the character's id.
-            var idToEdit = $('#character-name > h3').attr('id');
+            var idToEdit = $('#character-list-table tbody tr.success').attr('id');
 
             // Make the edit buttons be unactive.
             $('#confirm-edit, #cancel-edit').attr('disabled', 'disabled');
@@ -172,7 +160,7 @@ $(function () {
 
             // Values for character creation.
             var character = { 
-                    id         : $('#character-name > h3').attr('id'),
+                    id         : idToEdit,
                     name       : $('#character-name > h3').text(),
                     classType  : $('#edit-class').val(), 
                     gender     : $('#edit-male').hasClass('active') ? 'MALE' : 'FEMALE', 
@@ -208,12 +196,7 @@ $(function () {
         // Cleanup after closure of modal.
         $('#editModal').on('hidden.bs.modal', function () {
             $('#edit-class').val('');
-            $('#edit-male, #edit-female').removeClass('active');
-        });
-
-        // Made the edit button be 'unactive' after hitting cancel.
-        $('#cancel-edit').click(function () {
-            $('#edit-character').removeClass('active');
+            $('#edit-male, #edit-female, #edit-character').removeClass('active');
         });
 
     /**
@@ -221,9 +204,8 @@ $(function () {
      */
 
         $('#confirm-delete').click(function () {
-
             // Get the character's id.
-            var idToDelete = $('#character-name > h3').attr('id');
+            var idToDelete = $('#character-list-table tbody tr.success').attr('id');
 
             // Make the delete buttons be unactive.
             $('#confirm-delete, #cancel-delete').attr('disabled', 'disabled');
@@ -296,9 +278,6 @@ $(function () {
         $.getJSON(
             'http://lmu-diabolical.appspot.com/characters/' + $(this).attr('id'),
             function (character) {
-                // Send the character Id to the header id.
-                $('#character-name > h3').attr('id', character.id);
-
                 // Send the character name to the info panel.
                 $('#character-name > h3').text(character.name);
 
@@ -331,13 +310,11 @@ $(function () {
 
     // Disable roll level buttons.
     $('#roll-level').click(function () {
-        $(this).attr('disabled', 'disabled');
         $('#create-level').val(Math.floor(Math.random() * MAX_LEVEL) + 1);
     });
 
     // Disable roll money button.
     $('#roll-money').click(function () {
-        $(this).attr('disabled', 'disabled');
         $('#create-money').val(Math.floor(Math.random() * MAX_MONEY) + 1);
     });
 
