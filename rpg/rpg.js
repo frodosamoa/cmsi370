@@ -87,7 +87,8 @@ $(function () {
                     $('#confirm-create, #cancel-create, #spawn-character').removeAttr('disabled');
 
                     // Select the new character's row and unselect any other character.
-                    $('#character-list-table tbody > tr').not('#character-list-table tbody > tr:last').removeClass('success');
+                    $('#character-list-table tbody > tr').not('#character-list-table tbody > tr:last')
+                                                         .removeClass('success');
                     $('#character-list-table tbody > tr:last').toggleClass('success');
 
                     // Put the created character's information in their info table.
@@ -237,6 +238,9 @@ $(function () {
 
                     // Hide character info and detailed info after deletion.
                     $('#character-info, #character-item-list').collapse('hide');
+
+                    // Clear out old character info.
+                    $('#character-info-table > tbody, #character-name > h3').empty();
                 }
             });
         });
@@ -299,21 +303,18 @@ $(function () {
         // attribute is selected.
         $('#character-info-table tbody > tr').not(this).removeClass('success');
         $(this).toggleClass('success');
-
-        // Hide item list and enlarged image.
-        $('#item-list').collapse('hide');
     });
 
 /** 
  *  ROLL
  */
 
-    // Disable roll level buttons.
+    // Roll level buttons.
     $('#roll-level').click(function () {
         $('#create-level').val(Math.floor(Math.random() * MAX_LEVEL) + 1);
     });
 
-    // Disable roll money button.
+    // Roll money button.
     $('#roll-money').click(function () {
         $('#create-money').val(Math.floor(Math.random() * MAX_MONEY) + 1);
     });
@@ -324,7 +325,7 @@ $(function () {
 
      // Spawn a random item.
     $('#spawn-item').click(function () {
-        $('#item-list').append('<tr><td>Not Available</td><td>At This Time</td></tr>')
+        $('#item-list').append('<tr><td>Not Available</td><td>At This Time</td></tr>');
     });
 
 /**
