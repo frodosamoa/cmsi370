@@ -1,4 +1,7 @@
 var BoxesTouch = {
+
+    touchCache: {},
+
     /**
      * Sets up the given jQuery collection as the drawing area(s).
      */
@@ -28,8 +31,9 @@ var BoxesTouch = {
         $.each(event.changedTouches, function (index, touch) {
             if (touch.creatingBox == null) {
                 // Save the inital x and y coordinates of our initial touch.
-                touch.initialX = touch.pageX;
-                touch.initialY = touch.pageY;
+                BoxesTouch.touchCache[touch.identifier] = {};
+                BoxesTouch.touchCache[touch.identifier].initialX = touch.pageX;
+                BoxesTouch.touchCache[touch.identifier].initialY = touch.pageY;
 
                 // Create a stringy version of our initial box.
                 var tempBox = "<div id=\"" + 
@@ -42,10 +46,10 @@ var BoxesTouch = {
                 $("#drawing-area").append(tempBox);
 
                 // Link the creatingBox to our recently created div.
-                touch.creatingBox = $("#" + touch.identifier);
+                BoxesTouch.touchCache[touch.identifier].creatingBox = $("#" + touch.identifier);
 
                 // Highlight the div for creation.
-                (touch.creatingBox).addClass("box-create");
+                (BoxesTouch.touchCache[touch.identifier].creatingBox).addClass("box-create");
             }
         });  
 
@@ -80,26 +84,26 @@ var BoxesTouch = {
                 }
 
             // But if we are.
-            } else if (touch.creatingBox) {
+            } else if (BoxesTouch.touchCache[touch.identifier].creatingBox) {
                 var touchX = touch.pageX,
                     touchY = touch.pageY,
-                    touchXGreater = touch.pageX > touch.initialX,
-                    touchYGreater = touch.pageY > touch.initialY;
+                    touchXGreater = touch.pageX > BoxesTouch.touchCache[touch.identifier].initialX,
+                    touchYGreater = touch.pageY > BoxesTouch.touchCache[touch.identifier].initialY;
 
                 // Update the creatingBox with its properties.
-                touch.creatingBox = {
-                    width   : touchXGreater ? touchX - touch.initialX : touch.initialX - touchX,
-                    height  : touchYGreater ? touchY - touch.initialY : touch.initialY - touchY,
-                    left    : touchXGreater ? touch.initialX : touchX,
-                    top     : touchYGreater ? touch.initialY : touchY
+                BoxesTouch.touchCache[touch.identifier].creatingBox = {
+                    width   : touchXGreater ? touchX - BoxesTouch.touchCache[touch.identifier].initialX : BoxesTouch.touchCache[touch.identifier].initialX - touchX,
+                    height  : touchYGreater ? touchY - BoxesTouch.touchCache[touch.identifier].initialY : BoxesTouch.touchCache[touch.identifier].initialY - touchY,
+                    left    : touchXGreater ? BoxesTouch.touchCache[touch.identifier].initialX : touchX,
+                    top     : touchYGreater ? BoxesTouch.touchCache[touch.identifier].initialY : touchY
                 };
 
-                // Update the box's style in the drawing box div.
+                // Update the box's style in the drawing area.
                 $('#' + touch.identifier)
-                        .css('width', touch.creatingBox.width)
-                        .css('height', touch.creatingBox.height)
-                        .css('left', touch.creatingBox.left)
-                        .css('top', touch.creatingBox.top);
+                        .css('width', BoxesTouch.touchCache[touch.identifier].creatingBox.width)
+                        .css('height', BoxesTouch.touchCache[touch.identifier].creatingBox.height)
+                        .css('left', BoxesTouch.touchCache[touch.identifier].creatingBox.left)
+                        .css('top', BoxesTouch.touchCache[touch.identifier].creatingBox.top);
             }
         });
         
@@ -126,7 +130,7 @@ var BoxesTouch = {
                 // Change state to "not-moving-anything" by clearing out
                 // touch.target.movingBox.
                 touch.target.movingBox = null;
-            } else if (touch.creatingBox) {
+            } else if (BoxesTouch.touchCache[touch.identifier].creatingBox) {
                 // Remove id field since we don't need the touch.identifier anymore.
                 $('#' + touch.identifier)
                         .removeClass('box-create');
@@ -138,7 +142,8 @@ var BoxesTouch = {
 
                 // Change state to "not-creating-anything" by clearing out
                 // touch.creating.
-                touch.creatingBox = null;
+                BoxesTouch.touchCache[touch.identifier].creatingBox = null;
+                delete BoxesTouch.touchCache[touch.identifier];
             }
         });
     },
