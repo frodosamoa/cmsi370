@@ -26,12 +26,18 @@ var BoxesTouch = {
      */
     startDrag: function (event) {
         $.each(event.changedTouches, function (index, touch) {
-            if (touch.target.createdBox == null) {
-                touch.target.createdBox = {initialX: touch.pageX, initialY: touch.pageY};
+            if (touch.target.creatingBox == null) {
+                touch.target.initialX = touch.pageX;
+                touch.target.initialY = touch.pageY;
+
                 var tempBox = "<div id=\"" + touch.identifier + "\" class=\"box\"style=\"width: 0px; " +
                               "height: 0px; left: " + touch.pageX +
                               "px; top: " + touch.pageY + "px\"></div>";
                 $("#drawing-area").append(tempBox);
+                console.log($("#drawing-area > div:last-child"));
+
+                touch.target.creatingBox = $("#" + touch.identifier);
+                (touch.target.creatingBox).addClass("box-create");
             }
         });  
 
@@ -46,29 +52,35 @@ var BoxesTouch = {
         $.each(event.changedTouches, function (index, touch) {
             // Don't bother if we aren't tracking anything.
             if (touch.target.movingBox) {
-                console.log(touch.target.movingBox);
                 // Reposition the object.
                 touch.target.movingBox.offset({
                     left: touch.pageX - touch.target.deltaX,
                     top: touch.pageY - touch.target.deltaY
                 });
 
+                if (touch.target.movingBox) {
+                   $(touch.target).removeClass("box-highlight").addClass("box-delete");    
+                } else if (is inside) {
+                   $(touch.target).removeClass("box-delete").addClass("box-highlight");
+                }
+
             // But if we are.
-            } else if (touch.target.createdBox) {
-                console.log($('#' + touch.identifier));
-                touch.target.createdBox = {
-                    initialX : touch.target.createdBox.initialX,
-                    initialY : touch.target.createdBox.initialY,
-                    width   : touch.pageX > touch.target.createdBox.initialX ? touch.pageX - touch.target.createdBox.initialX : touch.target.createdBox.initialX - touch.pageX,
-                    height  : touch.pageY > touch.target.createdBox.initialY ? touch.pageY - touch.target.createdBox.initialY : touch.target.createdBox.initialY - touch.pageY,
-                    left    : touch.pageX > touch.target.createdBox.initialX ? touch.target.createdBox.initialX : touch.pageX,
-                    top     : touch.pageY > touch.target.createdBox.initialY ? touch.target.createdBox.initialY : touch.pageY
+            } else if (touch.target.creatingBox) {
+                var touchXGreater = touch.pageX > touch.target.initialX,
+                    touchYGreater = touch.pageY > touch.target.initialY;
+
+                touch.target.creatingBox = {
+                    width   : touchXGreater ? touch.pageX - touch.target.initialX : touch.target.initialX - touch.pageX,
+                    height  : touchYGreater ? touch.pageY - touch.target.initialY : touch.target.initialY - touch.pageY,
+                    left    : touchXGreater ? touch.target.initialX : touch.pageX,
+                    top     : touchYGreater ? touch.target.initialY : touch.pageY
                 };
 
-                var tempBox = "<div id=\"" + touch.identifier + "\" class=\"box\" style=\"width: " + touch.target.createdBox.width + 
-                          "px; height: " + touch.target.createdBox.height + "px; left: " + touch.target.createdBox.left +
-                          "px; top: " + touch.target.createdBox.top + "px\"></div>";
-                $('#' + touch.identifier).replaceWith(tempBox);
+                $('#' + touch.identifier)
+                        .css('width', touch.target.creatingBox.width)
+                        .css('height', touch.target.creatingBox.height)
+                        .css('left', touch.target.creatingBox.left)
+                        .css('top', touch.target.creatingBox.top);
             }
         });
         
@@ -85,16 +97,20 @@ var BoxesTouch = {
                 // Change state to "not-moving-anything" by clearing out
                 // touch.target.movingBox.
                 touch.target.movingBox = null;
-            } else if (touch.target.createdBox) {
-                // If we created a box, append it to the drawing area.
-                $('#' + touch.identifier).remove();
-                var box = touch.target.createdBox;
-                var div = "<div class=\"box\"style=\"width: " + box.width + 
-                          "px; height: " + box.height + "px; left: " + box.left +
-                          "px; top: " + box.top + "px\"></div>";
-                $('#drawing-area').append(div);
+            } else if (touch.target.creatingBox) {
+                // Remove id field since we don't need the touch.identifier anymore.
+                $('#' + touch.identifier)
+                        .removeClass('box-create')
+                        .removeAttr('id');
 
-                touch.target.createdBox = null;
+                $("#drawing-area").find("div.box").each(function (index, element) {
+                    element.addEventListener("touchstart", BoxesTouch.startMove, false);
+                    element.addEventListener("touchend", BoxesTouch.unhighlight, false);
+                });
+
+                // Change state to "not-creating-anything" by clearing out
+                // touch.target.creating.
+                touch.target.creatingBox = null;
             }
         });
     },
@@ -123,16 +139,7 @@ var BoxesTouch = {
             touch.target.movingBox = jThis;
             touch.target.deltaX = touch.pageX - startOffset.left;
             touch.target.deltaY = touch.pageY - startOffset.top;
-
-            // if (box is oustide) {
-            //    $(touch.target).removeClass("box-highlight");
-            //    $(touch.target).addClass("box-delete");    
-            // } else if (is inside) {
-            //    $(touch.target).removeClass("box-delete");
-            //    $(touch.target).addClass("box-highlight");
-            // }
         });
-
         // Eat up the event so that the drawing area does not
         // deal with it.
         event.stopPropagation();
