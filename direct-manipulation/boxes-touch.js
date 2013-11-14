@@ -27,17 +27,24 @@ var BoxesTouch = {
     startDrag: function (event) {
         $.each(event.changedTouches, function (index, touch) {
             if (touch.creatingBox == null) {
+                // Save the inital x and y coordinates of our initial touch.
                 touch.initialX = touch.pageX;
                 touch.initialY = touch.pageY;
 
+                // Create a stringy version of our initial box.
                 var tempBox = "<div id=\"" + 
                               touch.identifier + 
                               "\" class=\"box\"style=\"width: 0px; height: 0px; left: " + 
                               touch.pageX + "px; top: " +
                               touch.pageY + "px\"></div>";
+                
+                // Add our tempBox to the drawing area.
                 $("#drawing-area").append(tempBox);
 
+                // Link the creatingBox to our recently created div.
                 touch.creatingBox = $("#" + touch.identifier);
+
+                // Highlight the div for creation.
                 (touch.creatingBox).addClass("box-create");
             }
         });  
@@ -64,24 +71,30 @@ var BoxesTouch = {
                     top: touch.pageY - touch.target.deltaY
                 });
 
+                // If the box is outside the drawing area, highlight it red.
+                // If it is not, change it back to the normal highlighting.
                 if (outsideDrawingArea) {
-                   $(touch.target.movingBox).removeClass("box-highlight").addClass("box-delete");  
+                   (touch.target.movingBox).removeClass("box-highlight").addClass("box-delete");  
                 } else {
-                   $(touch.target.movingBox).removeClass("box-delete").addClass("box-highlight");
+                   (touch.target.movingBox).removeClass("box-delete").addClass("box-highlight");
                 }
 
             // But if we are.
             } else if (touch.creatingBox) {
-                var touchXGreater = touch.pageX > touch.initialX,
+                var touchX = touch.pageX,
+                    touchY = touch.pageY,
+                    touchXGreater = touch.pageX > touch.initialX,
                     touchYGreater = touch.pageY > touch.initialY;
 
+                // Update the creatingBox with its properties.
                 touch.creatingBox = {
-                    width   : touchXGreater ? touch.pageX - touch.initialX : touch.initialX - touch.pageX,
-                    height  : touchYGreater ? touch.pageY - touch.initialY : touch.initialY - touch.pageY,
-                    left    : touchXGreater ? touch.initialX : touch.pageX,
-                    top     : touchYGreater ? touch.initialY : touch.pageY
+                    width   : touchXGreater ? touchX - touch.initialX : touch.initialX - touchX,
+                    height  : touchYGreater ? touchY - touch.initialY : touch.initialY - touchY,
+                    left    : touchXGreater ? touch.initialX : touchX,
+                    top     : touchYGreater ? touch.initialY : touchY
                 };
 
+                // Update the box's style in the drawing box div.
                 $('#' + touch.identifier)
                         .css('width', touch.creatingBox.width)
                         .css('height', touch.creatingBox.height)
@@ -105,9 +118,9 @@ var BoxesTouch = {
                     outsideDrawingArea = touch.target.movingBox.offset().left > drawingAreaWidth ||
                                          touch.target.movingBox.offset().top > drawingAreaHeight;
 
+                // If out box is outside of the drawing area, remove it.
                 if (outsideDrawingArea) {
-                    console.log(touch.target.movingBox);
-                    $("#" + touch.target.movingBox.attr('id')).remove();
+                    (touch.target.movingBox).remove();
                 }
 
                 // Change state to "not-moving-anything" by clearing out
