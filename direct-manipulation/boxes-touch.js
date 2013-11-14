@@ -27,9 +27,16 @@ var BoxesTouch = {
     startDrag: function (event) {
         $.each(event.changedTouches, function (index, touch) {
             if (touch.target.createdBox == null) {
-                touch.target.createdBox = {initialX: touch.pageX, initialY: touch.pageY}
+                touch.target.createdBox = {initialX: touch.pageX, initialY: touch.pageY};
+                var tempBox = "<div id=\"" + touch.identifier + "\" class=\"box\"style=\"width: 0px; " +
+                              "height: 0px; left: " + touch.pageX +
+                              "px; top: " + touch.pageY + "px\"></div>";
+                $("#drawing-area").append(tempBox);
             }
-        });        
+        });  
+
+        // Don't do any touch scrolling.
+        event.preventDefault();      
     },
 
     /**
@@ -48,30 +55,20 @@ var BoxesTouch = {
 
             // But if we are.
             } else if (touch.target.createdBox) {
-                var width,
-                    height,
-                    left,
-                    top,
-                    touchX = touch.pageX,
-                    touchY = touch.pageY,
-                    box = touch.target.createdBox,
-                    touchXGreater = touchX > box.initialX,
-                    touchYGreater = touchY > box.initialY;
-                    console.log(box.initialX)
-
-                width = touchXGreater ? touchX - box.initialX : box.initialX - touchX;
-                height = touchYGreater ? touchY - box.initialY : box.initialY - touchY;
-                left = touchXGreater ? box.initialX : touchX;
-                top = touchYGreater ? box.initialY : touchY;
-
+                console.log($('#' + touch.identifier));
                 touch.target.createdBox = {
-                    initialX : box.initialX,
-                    initialY : box.initialY,
-                    width   : width,
-                    height  : height,
-                    left    : left,
-                    top     : top
+                    initialX : touch.target.createdBox.initialX,
+                    initialY : touch.target.createdBox.initialY,
+                    width   : touch.pageX > touch.target.createdBox.initialX ? touch.pageX - touch.target.createdBox.initialX : touch.target.createdBox.initialX - touch.pageX,
+                    height  : touch.pageY > touch.target.createdBox.initialY ? touch.pageY - touch.target.createdBox.initialY : touch.target.createdBox.initialY - touch.pageY,
+                    left    : touch.pageX > touch.target.createdBox.initialX ? touch.target.createdBox.initialX : touch.pageX,
+                    top     : touch.pageY > touch.target.createdBox.initialY ? touch.target.createdBox.initialY : touch.pageY
                 };
+
+                var tempBox = "<div id=\"" + touch.identifier + "\" class=\"box\" style=\"width: " + touch.target.createdBox.width + 
+                          "px; height: " + touch.target.createdBox.height + "px; left: " + touch.target.createdBox.left +
+                          "px; top: " + touch.target.createdBox.top + "px\"></div>";
+                $('#' + touch.identifier).replaceWith(tempBox);
             }
         });
         
@@ -90,11 +87,13 @@ var BoxesTouch = {
                 touch.target.movingBox = null;
             } else if (touch.target.createdBox) {
                 // If we created a box, append it to the drawing area.
+                $('#' + touch.identifier).remove();
                 var box = touch.target.createdBox;
-                var div = "<div class=\"box\"style=\"width:" + box.width + 
+                var div = "<div class=\"box\"style=\"width: " + box.width + 
                           "px; height: " + box.height + "px; left: " + box.left +
                           "px; top: " + box.top + "px\"></div>";
                 $('#drawing-area').append(div);
+
                 touch.target.createdBox = null;
             }
         });
