@@ -1,10 +1,7 @@
-\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
-\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
-%\geometry{landscape}                		% Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
-								% TeX will automatically convert eps --> pdf in pdflatex		
+\documentclass[11pt, oneside]{article}   
+\usepackage{geometry}                	
+\geometry{letterpaper}                   	
+\usepackage{graphicx}						
 \usepackage{amssymb}
 
 \title{Heuristic Evaluation}
@@ -13,32 +10,90 @@
 \begin{document}
 \maketitle
 
+In this heuristic evaluation, I mention the main three different types of customers that enter any given shopping site which are as follows:
+\begin{enumerate}
+\item Customers who know what they want to buy 
+\item Customers who do not know what they want to buy
+\item Customers who have considered buying something, yet have not yet purchased said item
+\end{enumerate}
+I will refer to these types of customers throughout the evaluation.
+
+In terms of the five usability metrics, I define \textit{learnability} as the time to learn, \textit{efficiency} as speed of performance, \textit{errors} as rate of errors, \textit{memorability} as retention over time, and \textit{satisfaction} as subjective satisfaction.
+\pagebreak
+
 \section{Amazon}
 
-It is clear that Amazon has been doing things right for quite some time.
+\subsection{Mental model}
 
-\subsection{Amazon's Mental Model}
+Amazon's mental mondel is quite clear from the moment you land on their homepage. In order to illustrate the diesigner's mental models, I will focus on just the homepage.
+Amazon's designers carried this mental model about the types of customers that they are serving when they designed their website. Each of the types of customers can also be logged in or not, and Amazon accounted for these types in their design.
 
-From the first moment you set eyes on the site, you know that Amazon is pushing lots of products.
-% JD: Actually, based on what is in this writeup, I *don't* know.  What concretely indicates this?
-%     Where are the screenshots?  Examples?  Hard data (if available)?
-%
-%     As you probably know, this is very much the *start* of an analysis, not a complete one.  And,
-%     you need the tie-in to the metrics.  Seeing that connection is a key point of the exercise.
+The \textbf{search bar} is there if the customer has a specific product in mind to buy. This allows the customer for a very refined search of what they are purchasing. This works extremely well because they designer has the mental model that they customer can simply type exactly what they are searching for, and this allows the customer to do so. There even is a dropdown on the left of the input field to search within a specific category. The search terms also tries to autocomplete the search so the customer can type less. A customer does not need to be logged in for this to work as Amazon has designed it.
+
+The \textit{Shop by \textbf{Department}} dropdown is there for the customers who want to shop but do not know what they want to buy. Their main cateogies are listed here with the most popular subcategories for those given categories. Yet, at the bottom of this dropdown, one can see a link to the \textit{Full Store Directory}. Thanks to both of these options, a customer who does not know what they want to buy has no problem figuring this out. Similarly to the search bar, a customer does not need to be logged in for this to be functional.
+
+The \textbf{horizontal lists} have slightly different functionality depending on if a customer is logged in or not. In either case, many horizontally lists show up below the dropdown on the left which are mainly geared towards a customer who does not have a clear idea of what they exactly want to buy. If the customer is not logged in, the lists can be \textit{Included with Prime Membership at No Additional Cost}, \textit{What Other Customers Are Looking At Right Now}, etc. If a customer is logged in the lists change to \textit{More Items to Consider}, \textit{Related to Items You've Viewed}, \textit{New For You}, and \textit{Inspired by Your Shopping Trends}. They usually also include a list that begins with the words \textit{Reccomendations for You in} which is followed by a category of products that you might have been looking at recently. The horizontal lists can help a customer make a choice for any occasion, regardless if they are looged in or not.
+
+The \textbf{search bar}, \textit{Shop by \textbf{Department}} dropdown, and \textbf{horizontal lists} account for all the types of customers that enter Amazon's site. The mental models of the designers work incrdibly well because they have figured out a way to approach every customer.
+
+\subsection{Five key usability metrics}
+In order to illustrate the five key usability metrics, I will go over Amazon's buying process to illustrate these concepts.
+\subsubsection{Learnability}
+In terms of learnability, Amazon's site is designed well because it takes little to no time at all to learn how to use.
+
+\subsubsection{Efficiency}
+Amazon's checkout process is quite error-less. In order to buy a product, Amazon offers a few options for its customers. 
+They allow the customer to add their product to their shopping cart.
+
+
+They also allow them to buy with 1-Click\textregistered, I didn't want them to get mad. This is quite incredible to use, it allows for the user to choose which address they ship to from that are of the screen. The only error that may arise from this is that each location saved in a user's account can have a default payment method. If a user forgets which payment method they have chosen for a given location to ship to, this can charge a different payment method.
+
+\subsubsection{Errors}
+
+\subsubsection{Memorability}
+\subsubsection{Satisfaction}
+Amazon approaches satisfaction in an incredibly reasonable fashion. Since their interface is learnable, efficient (for the most part), and memorable, it is no suprise that Amazon's satisfaction is high.
+
+
+\subsection{Interaction design guidelines, principles, \& theories}
+
+\pagebreak
 
 \section{eBay}
 
-\subsection{eBay's Mental Model}
+\subsection{Mental model}
 
-By looking at eBay's website, you can guide their intentions as to how they want the user to operate their website. By having a category list on the left of the page, the user is inclined to filter their way through their options.
-% JD: The reference to a category list and how it affects user behavior is a step in the right
-%     direction.  More of this please.
+Although specializing in a different kind of market than Amazon, eBay's mental models have many similarities to Amazon.
+
+Search bar autocompletes.
+
+\subsection{Five key usability metrics}
+\subsubsection{Learnability}
+\subsubsection{Efficiency}
+\subsubsection{Errors}
+\subsubsection{Memorability}
+\subsubsection{Satisfaction}
+
+\subsection{Interaction design guidelines, principles, \& theories}
+
+\pagebreak
 
 \section{Shopzilla}
 
-\subsection{Shopzilla's Mental Model}
+\subsection{Mental model}
 
 Looking at Shopzilla's main site, you can see that in their mental model users are inclined to type out what they are searching for. They are presented with a table of categories at the bottom of the page.
-% JD: Ditto on the "good start, but needs more" assessment for this section.
+
+Shopzilla's search does not auto complete like Amazon and eBay's search bars do.
+
+\subsection{Five key usability metrics}
+\subsubsection{Learnability}
+\subsubsection{Efficiency}
+\subsubsection{Errors}
+\subsubsection{Memorability}
+\subsubsection{Satisfaction}
+
+\subsection{Interaction design guidelines, principles, \& theories}
+
 
 \end{document}
