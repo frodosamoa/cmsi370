@@ -1,13 +1,13 @@
-mental-model-paper/*.aux
-mental-model-paper/*.log
-mental-model-paper/*.synctex.gz
-mental-model-paper/*.bbl
-mental-model-paper/*.blg
 mental-model-paper/notes/*
-usability-study/*.aux
-usability-study/*.log
-usability-study/*.synctex.gz
 notes/*
+
 .DS_Store
 
 individual_checklist.pdf
+
+*.synctex.gz
+*.blg
+*.aux
+*.bbl
+*.log
+*.fdb_latexmk
