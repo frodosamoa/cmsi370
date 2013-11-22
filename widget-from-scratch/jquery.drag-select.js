@@ -10,9 +10,11 @@
 (function ($) {
 
     // Templates for the right and left values of the switch.
-    var $leftTemplate = $("<div class=\"leftValue\"></div>"),
-        $rightTemplate = $("<div class=\"rightValue\"></div>");
-        $switcher = $("<div class=\"selector\"></div>")
+    var $leftActiveTemplate = $("<div class=\"leftActive\"></div>"),
+        $rightActiveTemplate = $("<div class=\"rightActive\"></div>"),
+        $leftUnactiveTemplate = $("<div class=\"leftUnactive\"></div>"),
+        $rightUnactiveTemplate = $("<div class=\"rightUnactive\"></div>")
+        $switcher = $("<div class=\"switcher\"></div>");
 
     // Private plugin helpers.
     $.fn.dragSelect = function (options) {
@@ -20,28 +22,49 @@
             $current = null,
             leftValue = options.values ? (options.values.left || "Left") : "Left",
             rightValue = options.values ? (options.values.right || "Right") : "Right",
-            $leftField = $leftTemplate.clone(),
-            $rightField = $rightTemplate.clone();
+            $leftActiveField = $leftActiveTemplate.clone(),
+            $rightActiveField = $rightActiveTemplate.clone()
+            $leftUnactiveField = $leftUnactiveTemplate.clone(),
+            $rightUnactiveField = $rightUnactiveTemplate.clone();
             $switcherClone = $switcher.clone();
 
         // Put in the user defined values into the divs.
-        $leftField.text(leftValue);
-        $rightField.text(rightValue);
+        $leftActiveField.text(leftValue);
+        $rightActiveField.text(rightValue);
+        $leftUnactiveField.text(leftValue);
+        $rightUnactiveField.text(rightValue);
 
         // Append the right value, left value, and the selector to our drag select div.
-        $this.addClass("drag-select").append($leftField, $rightField, $switcherClone);
+        $this.addClass("drag-select")
+            .append($leftActiveField, $rightActiveField,
+                    $leftUnactiveField, $rightUnactiveField,
+                    $switcherClone);
 
-        var leftHeight = $this.find(".leftValue").height(),
-            rightHeight = $this.find(".rightValue").height();
 
-        // Center the right an left valurs vertically. 
-        $this.find(".leftValue").css("margin-top", -(leftHeight / 2));
-        $this.find(".rightValue").css("margin-top", -(rightHeight / 2));
+        var leftMarginTop = -($this.find(".leftValue").height() / 2),
+            rightMarginTop = -($this.find(".rightValue").height() / 2),
+            sideMargin = ($this.find(".switcher").width() / 4);
 
-        $this.find(".selector")
+        // Center the right and left values vertically. 
+        $this.find(".leftActive, .leftUnactive")
+            .css("margin-top",leftMarginTop)
+            .css("left", sideMargin);
+        $this.find(".rightActive, .rightUnactive")
+            .css("margin-top", rightMarginTop)
+            .css("right", sideMargin);
+
+        // Make the switch be as close as possible to the edges.
+        $this.find(".switcher")
+            .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2));
+
+        // $this.find(".selector").css("width", Math.max(left.width(), right.width()))
+
+        $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $(this);
+                $current.css("right", 50);
             });
+
 
         $(document)
             .mousemove(function (event) {
