@@ -41,9 +41,9 @@
                     $switcherClone);
 
 
-        var leftMarginTop = -($this.find(".leftValue").height() / 2),
-            rightMarginTop = -($this.find(".rightValue").height() / 2),
-            sideMargin = ($this.find(".switcher").width() / 4);
+        var leftMarginTop = -($this.find(".leftActive").height() / 2),
+            rightMarginTop = -($this.find(".rightActive").height() / 2),
+            sideMargin = ($this.find(".switcher").width() / 5);
 
         // Center the right and left values vertically. 
         $this.find(".leftActive, .leftUnactive")
@@ -57,19 +57,19 @@
         $this.find(".switcher")
             .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2));
 
-        // $this.find(".selector").css("width", Math.max(left.width(), right.width()))
+        $this.click(function () {
+            $this.find(".switcher").css("left", $this.width() - $this.find(".switcher").width());            
+        })
 
         $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $(this);
-                $current.css("right", 50);
             });
-
 
         $(document)
             .mousemove(function (event) {
                 if ($current) {
-                    
+                    $current.css("left", (event.screenX % $current.width()));
                 }
             })
             .mouseup(function (event) {
