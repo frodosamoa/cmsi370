@@ -1,4 +1,10 @@
-.drag-select-me {
+.drag-select-sex {
 	width: 300px;
-	height: 30px;
+	height: 100px;
+}
+
+.drag-select-yesno {
+	width: 300px;
+	height: 200px;
+	top: 230px;
 }
