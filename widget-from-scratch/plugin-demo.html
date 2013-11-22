@@ -1,0 +1,36 @@
+<!doctype html>
+
+<!-- A demonstration page for some hand-rolled jQuery plugins. -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQuery Plugin Demos</title>
+
+    <link rel="stylesheet"
+          href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+    <!-- Sometimes, a plugin needs "companion" CSS.  That is fine. -->
+    <link rel="stylesheet" href="jquery.drag-select.css">
+
+    <!-- And the page has its own styles. -->
+    <link rel="stylesheet" href="plugin-demo.css">
+  </head>
+    
+  <body>
+    <div class="container">
+
+      <h1>Drag-Select</h1>
+
+      <p>This plugin demonstrates a drag-select jQuery plugin.</p>
+
+      <p><div class="drag-select-me"></div></p>
+    </div>
+
+    <!-- We wrap up by loading up jQuery, then Bootstrap, then our plugins,
+         then finally we actually use them. -->
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="jquery.drag-select.js"></script>
+    <script src="plugin-demo.js"></script>
+  </body>
+</html>
