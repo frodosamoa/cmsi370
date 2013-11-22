@@ -2,35 +2,36 @@
     border: 1px solid #3090C7;
     background: #3090C7;
     border-radius: 5px;  
-/*    -moz-user-select: none;
-    -webkit-user-select: none;*/
-    position: absolute;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    position: relative;
     padding-top: 0.25%;
     padding-bottom: 0.25%;
     padding-left: 0.25%;
     padding-right: 0.25%;
+    margin: 3px 3px 3px 3px;
 }
 
 .selector {
 	width: 35%;
-	height: 93%;
+	height: 99%;
 	border: 1px solid black;
 	border-radius: 3px;
 	z-index: 10;
-	position: absolute;
 }
 
 .rightValue {
-	position: relative;
-	float: right;
+	right: 0;
 	color: #FFF;
-	margin-right: 4%;
-	margin-top: 3%;
-
+	position: absolute;
+	margin-right: 5%;
+	top: 50%;
 }
 
 .leftValue {
-	position: relative;
-	float: left;
+	left: 0;
 	color: #FFF;
+	position: absolute;
+	margin-left: 5%;
+	top: 50%;
 }

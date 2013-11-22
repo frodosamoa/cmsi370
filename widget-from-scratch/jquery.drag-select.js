@@ -10,9 +10,9 @@
 (function ($) {
 
     // Templates for the right and left values of the switch.
-    var $leftTemplate = $("<div id=\"left\" class=\"leftValue\"></div>"),
-        $rightTemplate = $("<div id=\"right\" class=\"rightValue\"></div>");
-        $selector = $("<div class=\"selector\"></div>")
+    var $leftTemplate = $("<div class=\"leftValue\"></div>"),
+        $rightTemplate = $("<div class=\"rightValue\"></div>");
+        $switcher = $("<div class=\"selector\"></div>")
 
     // Private plugin helpers.
     $.fn.dragSelect = function (options) {
@@ -22,14 +22,21 @@
             rightValue = options.values ? (options.values.right || "Right") : "Right",
             $leftField = $leftTemplate.clone(),
             $rightField = $rightTemplate.clone();
-            $selector = $selector.clone();
+            $switcherClone = $switcher.clone();
 
         // Put in the user defined values into the divs.
         $leftField.text(leftValue);
         $rightField.text(rightValue);
 
         // Append the right value, left value, and the selector to our drag select div.
-        $this.addClass("drag-select").append($leftField, $rightField, $selector);
+        $this.addClass("drag-select").append($leftField, $rightField, $switcherClone);
+
+        var leftHeight = $this.find(".leftValue").height(),
+            rightHeight = $this.find(".rightValue").height();
+
+        // Center the right an left valurs vertically. 
+        $this.find(".leftValue").css("margin-top", -(leftHeight / 2));
+        $this.find(".rightValue").css("margin-top", -(rightHeight / 2));
 
         $this.find(".selector")
             .mousedown(function (event) {
