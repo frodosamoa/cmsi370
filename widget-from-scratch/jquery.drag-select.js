@@ -8,15 +8,30 @@
     - Callback for whenever the control has been manipulated.
 */
 (function ($) {
+
+    // Templates for the right and left values of the switch.
+    var $leftTemplate = $("<div id=\"left\" class=\"leftValue\"></div>"),
+        $rightTemplate = $("<div id=\"right\" class=\"rightValue\"></div>");
+        $selector = $("<div class=\"selector\"></div>")
+
     // Private plugin helpers.
     $.fn.dragSelect = function (options) {
         var $this = this,
             $current = null,
-            left = options.values ? (options.values.left || "Left") : "Left",
-            right = options.values ? (options.values.right || "Right") : "Right";
-            console.log(options)
+            leftValue = options.values ? (options.values.left || "Left") : "Left",
+            rightValue = options.values ? (options.values.right || "Right") : "Right",
+            $leftField = $leftTemplate.clone(),
+            $rightField = $rightTemplate.clone();
+            $selector = $selector.clone();
 
-        $this.addClass("drag-select")
+        // Put in the user defined values into the divs.
+        $leftField.text(leftValue);
+        $rightField.text(rightValue);
+
+        // Append the right value, left value, and the selector to our drag select div.
+        $this.addClass("drag-select").append($leftField, $rightField, $selector);
+
+        $this.find(".selector")
             .mousedown(function (event) {
                 $current = $(this);
             });
