@@ -24,28 +24,20 @@
 	position: absolute;
 }
 
-.rightUnactive {
+.rightUnactive, .leftUnactive {
 	color: #FFF;
 	position: absolute;
 	top: 50%;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
-.leftUnactive {
-	color: #FFF;
-	position: absolute;
-	top: 50%;
-}
 
-.rightActive {
+.rightActive, .leftActive {
 	color: #000;
 	position: absolute;
 	top: 50%;
 	z-index: 20;
-}
-
-.leftActive {
-	color: #000;
-	position: absolute;
-	top: 50%;
-	z-index: 20;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
