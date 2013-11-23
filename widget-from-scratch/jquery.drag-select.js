@@ -22,6 +22,7 @@
             $current = null,
             leftValue = options.values ? (options.values.left || "Left") : "Left",
             rightValue = options.values ? (options.values.right || "Right") : "Right",
+            // activeSide = options.activeSide ? ;
             $leftActiveField = $leftActiveTemplate.clone(),
             $rightActiveField = $rightActiveTemplate.clone()
             $leftUnactiveField = $leftUnactiveTemplate.clone(),
@@ -42,6 +43,8 @@
 
         var leftMarginTop = -($this.find(".leftActive").height() / 2),
             rightMarginTop = -($this.find(".rightActive").height() / 2),
+            leftPadding = parseInt($this.css("padding-left")),
+            rightPadding = parseInt($this.css("padding-right")),
             sideMargin = ($this.innerWidth() / 4);
 
         // Center the right and left values vertically. 
@@ -56,14 +59,20 @@
         $this.find(".switcher")
             .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2))
             .css("width", ($this.innerWidth() / 2))
+            .css("left", leftPadding)
+            .css("right", "auto");
 
         $this.click(function () {
             var switchClicked = $this.find(".switcher");
-            if (switchClicked.css("left")) {
-                switchClicked.css("right", parseInt($this.css("padding-left")))
-            } else if (switchClicked.css("right"))
-            $this.find(".switcher").css("left", parseInt($this.css("padding-left")));            
-        })
+                
+            if (switchClicked.css("left") === "auto" && parseInt(switchClicked.css("right")) === rightPadding) {
+                switchClicked.css("right", "auto");
+                switchClicked.css("left", leftPadding);
+            } else if (switchClicked.css("right") === "auto" && parseInt(switchClicked.css("left")) === leftPadding) {
+                switchClicked.css("right", rightPadding);
+                switchClicked.css("left", "auto");
+            } 
+        });
 
         $this.find(".switcher")
             .mousedown(function (event) {
@@ -73,7 +82,8 @@
         $(document)
             .mousemove(function (event) {
                 if ($current) {
-                    $current.css("left", (event.screenX % $current.width()));
+                    $current.css("left", (event.screenX % $current.width()))
+                            .css("right", 0);
                 }
             })
             .mouseup(function (event) {
