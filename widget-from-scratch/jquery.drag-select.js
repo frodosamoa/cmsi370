@@ -22,16 +22,16 @@
     $.fn.dragSelect = function (options) {
         var $this = this,
             $current = null,
+            anchorX = 0,
+            rightClicked = false,
             leftValue = options.values ? (options.values.left || "Left") : "Left",
             rightValue = options.values ? (options.values.right || "Right") : "Right",
-            // activeSide = options.activeSide ? ;
+            leftInitialActiveSide = options.leftActive,// ? options.leftActive : !(options.leftActive);
             $leftActiveField = $leftActiveTemplate.clone(),
             $rightActiveField = $rightActiveTemplate.clone()
             $leftUnactiveField = $leftUnactiveTemplate.clone(),
             $rightUnactiveField = $rightUnactiveTemplate.clone();
-            $switcherClone = $switcher.clone(),
-            anchorX = 0,
-            rightClicked = false;
+            $switcherClone = $switcher.clone();
 
         // Put in the values into the div templates.
         $leftActiveField.text(leftValue);
@@ -45,35 +45,40 @@
                     $rightActiveField, $rightUnactiveField,
                     $switcherClone);
 
-        var leftMarginTop = -($this.find(".leftActive").height() / 2),
-            rightMarginTop = -($this.find(".rightActive").height() / 2),
+        // Values used for centerin values vertically and horizontally.
+        var innerHeight = $this.innerHeight(),
+            innerWidth = $this.innerWidth(),
+            centerValueMargin = -($this.find(".leftActive").height() / 2),
+            topBottomPadding = parseInt($this.css("padding-top")),
             leftPadding = parseInt($this.css("padding-left")),
             rightPadding = parseInt($this.css("padding-right")),
-            sideMargin = ($this.innerWidth() / 4);
+            fourthInnerWidth = (innerWidth / 4);
 
         // Center the right and left values vertically. 
         $this.find(".leftActive, .leftUnactive")
-            .css("margin-top",leftMarginTop)
-            .css("left", sideMargin - ($this.find(".leftActive").width() / 2));
+            .css("margin-top", centerValueMargin)
+            .css("left", fourthInnerWidth + centerValueMargin);
         $this.find(".rightActive, .rightUnactive")
-            .css("margin-top", rightMarginTop)
-            .css("right", sideMargin - ($this.find(".rightActive").width() / 2));
+            .css("margin-top", centerValueMargin)
+            .css("right", fourthInnerWidth + centerValueMargin);
 
         // Make the switch be as close as possible to the edges and set it to the default value.
         $this.find(".switcher")
-            .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2))
-            .css("width", (($this.innerWidth() - leftPadding - rightPadding)/ 2))
-            .css("left", leftPadding)
-            .css("right", "auto");
+            .css("height", innerHeight - (topBottomPadding * 2))
+            .css("width", ((innerWidth - leftPadding - rightPadding)/ 2))
+            .css("left", leftInitialActiveSide ? leftPadding : "auto")
+            .css("right", leftInitialActiveSide ? "auto" : rightPadding);
 
         $this.click(function () {
-            var switchClicked = $this.find(".switcher");
-                
-            if (switchClicked.css("left") === "auto" && parseInt(switchClicked.css("right")) === rightPadding) {
-                switchClicked.css("right", "auto").css("left", leftPadding);
-            } else if (switchClicked.css("right") === "auto" && parseInt(switchClicked.css("left")) === leftPadding) {
-                switchClicked.css("right", rightPadding).css("left", "auto");
-            } 
+            var switchClicked = $this.find(".switcher"),
+                leftCSS = switchClicked.css("left"),
+                rightCSS = switchClicked.css("right"),
+                leftActive = rightCSS === "auto",
+                rightActive = leftCSS === "auto";
+
+            switchClicked
+                .css("left", leftActive ? "auto" : leftPadding)
+                .css("right", rightActive ? "auto" : rightPadding);
         });
 
         $this.find(".switcher")
@@ -91,7 +96,6 @@
                         left = event.pageX - anchorX,
                         right = parent.innerWidth() - left - switchWidth;
 
-
                     if (rightClicked) {
                         right = anchorX - event.pageX;
                         left = parent.innerWidth() - right - switchWidth;
@@ -108,16 +112,26 @@
             })
             .mouseup(function (event) {
                 if ($current) {
-                    if (parseInt($current.css("left")) < parseInt($current.css("right"))) {
-                        $current.css("right", rightPadding).css("left", "auto");
-                    } else if (parseInt($current.css("left")) > parseInt($current.css("right"))) {
-                        $current.css("right", "auto").css("left", leftPadding);
+                    var leftCSS = $current.css("left"),
+                        rightCSS = $current.css("right"),
+                        leftGreater;
+
+                    if (leftCSS === "auto") {
+                        leftGreater = false;
+                    } else if (rightCSS === "auto") {
+                        leftGreater = true;
+                    } else {
+                        leftGreater = parseInt(leftCSS) > parseInt(rightCSS)
                     }
+
+                    $current.css("right", leftGreater ? "auto" : rightPadding)
+                        .css("left", leftGreater ? leftPadding : "auto");
+
+                    // Reset anchorX, current, and rightClicked.
+                    rightClicked = false;
+                    anchorX = 0;
+                    $current = null;
                 }
-                // Reset anchorX and current.
-                rightClicked = false;
-                anchorX = 0;
-                $current = null;
             });
         
     };

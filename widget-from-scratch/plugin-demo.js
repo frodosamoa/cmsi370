@@ -5,6 +5,10 @@ $(function () {
             right: "Female"
         },
 
+        shape: "round",
+
+        leftActive: true,
+
         change: function (oldSelection, newSelection) {
             console.log("Changed from " + oldSelection + " to " + newSelection);
         }
