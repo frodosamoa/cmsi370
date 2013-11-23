@@ -7,6 +7,17 @@
     change: function () { }
     - Callback for whenever the control has been manipulated.
 
+    shape: "round" || "square"
+    - the default is square if no shape is assigned.
+
+    activeSide: "left" || "right"
+    - the default is left is no active side is assigned.
+
+    height: integer
+    - the default is 45 if no height is assigned.
+
+    width: integer
+    -the default is 150 if no width is assigned.
 
 */
 (function ($) {
@@ -20,18 +31,37 @@
 
     // Private plugin helpers.
     $.fn.dragSelect = function (options) {
+        // Variables to hold our drag-select, and state variables.
         var $this = this,
             $current = null,
             anchorX = 0,
             rightClicked = false,
+
+            // Left and right values.
             leftValue = options.values ? (options.values.left || "Left") : "Left",
             rightValue = options.values ? (options.values.right || "Right") : "Right",
-            leftInitialActiveSide = options.leftActive,// ? options.leftActive : !(options.leftActive);
+
+            // Which side is active.
+            leftInitialActiveSide = options.activeSide ? options.activeSide === "left" : true,
+
+            // Shape of the switch.
+            shape = options.shape ? options.shape : "square",
+
+            // Height and width of our switch.
+            height = options.height ? options.height : 40,
+            width = options.width ? options.width: 150,
+
+            // Using templates to create clone of each div or p.
             $leftActiveField = $leftActiveTemplate.clone(),
             $rightActiveField = $rightActiveTemplate.clone()
             $leftUnactiveField = $leftUnactiveTemplate.clone(),
             $rightUnactiveField = $rightUnactiveTemplate.clone();
             $switcherClone = $switcher.clone();
+
+        // Set the width, height, and shape for the drag-select.
+        $this.css("width", width);
+        $this.css("height", height);
+        $this.css("border-radius", shape === "round" ? (height / 2) : 3);
 
         // Put in the values into the div templates.
         $leftActiveField.text(leftValue);
@@ -45,7 +75,7 @@
                     $rightActiveField, $rightUnactiveField,
                     $switcherClone);
 
-        // Values used for centerin values vertically and horizontally.
+        // Values used for centering values vertically and horizontally.
         var innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
             centerValueMargin = -($this.find(".leftActive").height() / 2),
@@ -67,7 +97,8 @@
             .css("height", innerHeight - (topBottomPadding * 2))
             .css("width", ((innerWidth - leftPadding - rightPadding)/ 2))
             .css("left", leftInitialActiveSide ? leftPadding : "auto")
-            .css("right", leftInitialActiveSide ? "auto" : rightPadding);
+            .css("right", leftInitialActiveSide ? "auto" : rightPadding)
+            .css("border-radius", shape === "round" ? (height / 2) : 3);
 
         $this.click(function () {
             var switchClicked = $this.find(".switcher"),
@@ -121,7 +152,7 @@
                     } else if (rightCSS === "auto") {
                         leftGreater = true;
                     } else {
-                        leftGreater = parseInt(leftCSS) > parseInt(rightCSS)
+                        leftGreater = parseInt(leftCSS) > parseInt(rightCSS);
                     }
 
                     $current.css("right", leftGreater ? "auto" : rightPadding)
