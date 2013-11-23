@@ -27,7 +27,8 @@
             $rightActiveField = $rightActiveTemplate.clone()
             $leftUnactiveField = $leftUnactiveTemplate.clone(),
             $rightUnactiveField = $rightUnactiveTemplate.clone();
-            $switcherClone = $switcher.clone();
+            $switcherClone = $switcher.clone(),
+            anchorX = 0;
 
         // Put in the values into the div templates.
         $leftActiveField.text(leftValue);
@@ -55,10 +56,10 @@
             .css("margin-top", rightMarginTop)
             .css("right", sideMargin - ($this.find(".rightActive").width() / 2));
 
-        // Make the switch be as close as possible to the edges.
+        // Make the switch be as close as possible to the edges and set it to the default value.
         $this.find(".switcher")
             .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2))
-            .css("width", ($this.innerWidth() / 2))
+            .css("width", (($this.innerWidth() - leftPadding - rightPadding)/ 2))
             .css("left", leftPadding)
             .css("right", "auto");
 
@@ -66,29 +67,48 @@
             var switchClicked = $this.find(".switcher");
                 
             if (switchClicked.css("left") === "auto" && parseInt(switchClicked.css("right")) === rightPadding) {
-                switchClicked.css("right", "auto");
-                switchClicked.css("left", leftPadding);
+                switchClicked.css("right", "auto").css("left", leftPadding);
             } else if (switchClicked.css("right") === "auto" && parseInt(switchClicked.css("left")) === leftPadding) {
-                switchClicked.css("right", rightPadding);
-                switchClicked.css("left", "auto");
+                switchClicked.css("right", rightPadding).css("left", "auto");
             } 
         });
 
         $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $(this);
+                anchorX = event.pageX;
             });
 
         $(document)
             .mousemove(function (event) {
                 if ($current) {
-                    $current.css("left", (event.screenX % $current.width()))
-                            .css("right", 0);
+                    var parent = $current.parent()
+                        switchWidth = $current.width(),
+                        left = event.pageX - anchorX,
+                        right = parent.innerWidth() - left - switchWidth;
+
+                    if (left <= leftPadding) {
+                        $current.css("left", leftPadding).css("right", "auto");
+                    } else if (right <= rightPadding) {
+                        $current.css("right", rightPadding).css("left", "auto");                       
+                    } else {
+                        $current.css("left", left).css("right", right);
+                    }
+                    console.log($current.css("left") + " " + $current.css("right"))
                 }
             })
             .mouseup(function (event) {
+                if ($current) {
+                    if (parseInt($current.css("left")) < parseInt($current.css("right"))) {
+                        $current.css("right", rightPadding).css("left", "auto");
+                    } else if (parseInt($current.css("left")) > parseInt($current.css("right"))) {
+                        $current.css("right", "auto").css("left", leftPadding);
+                    }
+                }
+                // Reset anchorX and current.
+                anchorX = 0;
                 $current = null;
             });
-
+        
     };
 }(jQuery));
