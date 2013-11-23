@@ -28,7 +28,7 @@
             $rightUnactiveField = $rightUnactiveTemplate.clone();
             $switcherClone = $switcher.clone();
 
-        // Put in the user defined values into the divs.
+        // Put in the values into the div templates.
         $leftActiveField.text(leftValue);
         $rightActiveField.text(rightValue);
         $leftUnactiveField.text(leftValue);
@@ -36,29 +36,33 @@
 
         // Append the right value, left value, and the selector to our drag select div.
         $this.addClass("drag-select")
-            .append($leftActiveField, $rightActiveField,
-                    $leftUnactiveField, $rightUnactiveField,
+            .append($leftActiveField, $leftUnactiveField,
+                    $rightActiveField, $rightUnactiveField,
                     $switcherClone);
-
 
         var leftMarginTop = -($this.find(".leftActive").height() / 2),
             rightMarginTop = -($this.find(".rightActive").height() / 2),
-            sideMargin = ($this.find(".switcher").width() / 5);
+            sideMargin = ($this.innerWidth() / 4);
 
         // Center the right and left values vertically. 
         $this.find(".leftActive, .leftUnactive")
             .css("margin-top",leftMarginTop)
-            .css("left", sideMargin);
+            .css("left", sideMargin - ($this.find(".leftActive").width() / 2));
         $this.find(".rightActive, .rightUnactive")
             .css("margin-top", rightMarginTop)
-            .css("right", sideMargin);
+            .css("right", sideMargin - ($this.find(".rightActive").width() / 2));
 
         // Make the switch be as close as possible to the edges.
         $this.find(".switcher")
-            .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2));
+            .css("height", $this.innerHeight() - (parseInt($this.css("padding-top")) * 2))
+            .css("width", ($this.innerWidth() / 2))
 
         $this.click(function () {
-            $this.find(".switcher").css("left", $this.width() - $this.find(".switcher").width());            
+            var switchClicked = $this.find(".switcher");
+            if (switchClicked.css("left")) {
+                switchClicked.css("right", parseInt($this.css("padding-left")))
+            } else if (switchClicked.css("right"))
+            $this.find(".switcher").css("left", parseInt($this.css("padding-left")));            
         })
 
         $this.find(".switcher")
