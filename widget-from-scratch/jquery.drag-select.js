@@ -6,14 +6,16 @@
 
     change: function () { }
     - Callback for whenever the control has been manipulated.
+
+
 */
 (function ($) {
 
     // Templates for the right and left values of the switch.
-    var $leftActiveTemplate = $("<div class=\"leftActive\"></div>"),
-        $rightActiveTemplate = $("<div class=\"rightActive\"></div>"),
-        $leftUnactiveTemplate = $("<div class=\"leftUnactive\"></div>"),
-        $rightUnactiveTemplate = $("<div class=\"rightUnactive\"></div>")
+    var $leftActiveTemplate = $("<p class=\"leftActive\"></p>"),
+        $rightActiveTemplate = $("<p class=\"rightActive\"></p>"),
+        $leftUnactiveTemplate = $("<p class=\"leftUnactive\"></p>"),
+        $rightUnactiveTemplate = $("<p class=\"rightUnactive\"></p>")
         $switcher = $("<div class=\"switcher\"></div>");
 
     // Private plugin helpers.
@@ -28,7 +30,8 @@
             $leftUnactiveField = $leftUnactiveTemplate.clone(),
             $rightUnactiveField = $rightUnactiveTemplate.clone();
             $switcherClone = $switcher.clone(),
-            anchorX = 0;
+            anchorX = 0,
+            rightClicked = false;
 
         // Put in the values into the div templates.
         $leftActiveField.text(leftValue);
@@ -77,15 +80,22 @@
             .mousedown(function (event) {
                 $current = $(this);
                 anchorX = event.pageX;
+                rightClicked = $current.css("left") === "auto";
             });
 
         $(document)
             .mousemove(function (event) {
                 if ($current) {
-                    var parent = $current.parent()
+                    var parent = $current.parent(),
                         switchWidth = $current.width(),
                         left = event.pageX - anchorX,
                         right = parent.innerWidth() - left - switchWidth;
+
+
+                    if (rightClicked) {
+                        right = anchorX - event.pageX;
+                        left = parent.innerWidth() - right - switchWidth;
+                    }
 
                     if (left <= leftPadding) {
                         $current.css("left", leftPadding).css("right", "auto");
@@ -94,7 +104,6 @@
                     } else {
                         $current.css("left", left).css("right", right);
                     }
-                    console.log($current.css("left") + " " + $current.css("right"))
                 }
             })
             .mouseup(function (event) {
@@ -106,6 +115,7 @@
                     }
                 }
                 // Reset anchorX and current.
+                rightClicked = false;
                 anchorX = 0;
                 $current = null;
             });
