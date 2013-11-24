@@ -1,6 +1,5 @@
 .drag-select {
-    border: 1px solid #1589FF;
-    background: #1589FF;
+    border: 1px solid;
     -moz-user-select: none;
     -webkit-user-select: none;
     position: relative;
@@ -16,23 +15,12 @@
 
 .switcher {
 	position: absolute;
-	border: 1px solid #82CAFF;
-	background: #82CAFF;
+	border: 1px solid ;
 	z-index: 10;
 	position: absolute;
 }
 
-.rightUnactive, .leftUnactive {
-	color: #FFF;
-	position: absolute;
-	top: 50%;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-}
-
-
-.rightActive, .leftActive {
-	color: #000;
+.right, .left {
 	position: absolute;
 	top: 50%;
 	z-index: 20;
