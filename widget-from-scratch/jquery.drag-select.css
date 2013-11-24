@@ -1,5 +1,4 @@
 .drag-select {
-    border: 1px solid;
     -moz-user-select: none;
     -webkit-user-select: none;
     position: relative;
@@ -15,7 +14,6 @@
 
 .switcher {
 	position: absolute;
-	border: 1px solid ;
 	z-index: 10;
 	position: absolute;
 }

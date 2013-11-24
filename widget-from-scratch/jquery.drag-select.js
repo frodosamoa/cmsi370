@@ -98,53 +98,45 @@
             $rightValue = $rightValueTemplate.clone()
             $switcherClone = $switcher.clone();
 
-
+        // Depeding on what the user provided, assign the colors.
         switch (color) {
-
             case "red":
                 backgroundColor = RED.background;
                 switchColor = RED.switcher;
                 fontColor = RED.font;
-            break;
-
+                break;
             case "blue":
                 backgroundColor = BLUE.background;
                 switchColor = BLUE.switcher;
                 fontColor = BLUE.font;
-            break;
-
+                break;
             case "green":
                 backgroundColor = GREEN.background;
                 switchColor = GREEN.switcher;
                 fontColor = GREEN.font;
-            break;
-
+                break;
             case "purple":
                 backgroundColor = PURPLE.background;
                 switchColor = PURPLE.switcher;
                 fontColor = PURPLE.font;
-            break;
-
+                break;
             case "light":
                 backgroundColor = LIGHT.background;
                 switchColor = LIGHT.switcher;
                 fontColor = LIGHT.font;
-            break;
-
+                break;
             case "dark":
                 backgroundColor = DARK.background;
                 switchColor = DARK.switcher;
                 fontColor = DARK.font;
-            break;
+                break;
         }
 
         // Set the width, height, shape, and color for the drag-select.
         $this
             .css("width", width).css("height", height)
             .css("border-radius", shape === "round" ? (height / 2) : 3)
-            .css("background", backgroundColor)
-            .css("border-color", backgroundColor);
-
+            .css("background", backgroundColor);
 
         // Put in the values into the div templates.
         $leftValue.text(leftValue);
@@ -180,9 +172,9 @@
             .css("left", leftInitialActiveSide ? leftPadding : "auto")
             .css("right", leftInitialActiveSide ? "auto" : rightPadding)
             .css("border-radius", shape === "round" ? (height / 2) : 3)
-            .css("background", switchColor)
-            .css("border-color", switchColor);
+            .css("background", switchColor);
 
+        // If we click anywhere on the drag-select, switch it.
         $this.click(function() {
             var switchClicked = $this.find(".switcher"),
                 leftCSS = switchClicked.css("left"),
@@ -195,6 +187,7 @@
                 .css("right", rightActive ? "auto" : leftPadding);
         })
 
+        // If we click on a switch
         $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $this.find(".switcher");
@@ -210,6 +203,7 @@
                         left = event.pageX - anchorX,
                         right = parent.innerWidth() - left - switchWidth;
 
+                    // If we click on the switch when it is on the right...
                     if (rightClicked) {
                         right = anchorX - event.pageX;
                         left = parent.innerWidth() - right - switchWidth;
@@ -238,6 +232,7 @@
                         snapSide = parseInt(leftCSS) > parseInt(rightCSS);
                     }
 
+                    // Snap the switch accordingly.
                     $current.css("right", snapSide ? "auto" : rightPadding)
                         .css("left", snapSide ? leftPadding : "auto");
 
