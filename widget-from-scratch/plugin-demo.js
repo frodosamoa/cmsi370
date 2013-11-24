@@ -69,7 +69,7 @@ $(function () {
         width: 300,
         height: 70,
         activeSide: "right",
-        shape: "round",
+        shape: "square",
         color: "red"
     });
 
