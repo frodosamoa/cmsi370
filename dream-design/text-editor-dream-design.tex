@@ -23,71 +23,113 @@ Text editors are some of the most important pieces of software that programmers 
 
 The design would mainly use audio recording from the user for all main actions. The ability to type in the editor is always a possibility, but when the user simply gets tired of doing that they can revert to their spoken voice for accomplishing their goal.
 
-Certain key combinations would denote certain types of actions. Whenever a user will hold the key combination, the application would wait for some kind of input and only after the user lets go of the keys will the application respond.
+Certain key combinations would denote certain types of actions. Whenever a user will hold the key combination, the application would wait for some kind of input and only after the user lets go of the keys will the application respond. This application would be advanced enough to be able to read and reacognize variables, functions, and anything named by the user. The reason for choosing different key combinations for user input is because attempting to have the application attempt to decode what a user is trying to say is extremely hard. This way the application would know what kind of input it would be recieving.
 
-\subsection{Record code/text}
-\keys{\Alt + R} This would allow the user to record any text they want to have written down. Certain words would be keywords, like \textit{for loop}, \textit{if}, \textit{section}, etc. would all have their overall syntax saved for any particular syntax of a file. So for example if a 
+When the user would launch the application for the first time, they would be guided through a series of tasks for them to be acquianted with the overall commands of the application. This would be comprehensive enough for them to be able to code from the get go.
 
-\keys{\Alt + R + V} This denotes recording verbatim. This would tell the application to ignore keywords and to simply record whatever input the user has provided. This would allow for 
+Also, this application could be modofifed to simply be an extension for your favorite text editor like \textit{Sublime Text 2}, \textit{TextWrangler}, or \textit{MacVim}. This way, cross application compatitily would be functional.
 
-\subsection{File actions}
+\section{\menu{File} actions}
 
-	\subsubsection{File syntax}
-	\keys{\Alt + Y}  This would allow the user to to change the syntax of the file. Sample input of the user includes: "Python", "C++", "\LaTeX", "Ruby on Rails", "JSON", etc.
+\menu{File > Save}
+\section{\menu{Edit} actions}
+\section{\menu{Selection} actions}
+\section{\menu{View} actions}
 
-	\subsubsection{File encoding}
-	\keys{\ctrl + \Alt + E} The user could change the encoding of the file. Input from the user can be: "UTF-8", "UTF-16 Little Endian", etc.
+\keys{\Alt + F}
+Complete a specific file action. Input ranges from: "save", "save as", "new file", "close file", "open most recent", "open last closed file", "close window", "new window", etc. All of the usual file actions will be included here.
 
+\subsection{File syntax}
+\keys{\Alt + Y}
+Changes the syntax of the file. Sample input of the user includes: "Python", "C++", "\LaTeX", "Ruby on Rails", "JSON", etc.
 
-	\subsubsection{File actions}
-	\keys{\Alt + F} Complete a specific file action. Input ranges from: "save", "save as", "new file", "open most recent", "open last closed file", "close window", "new window", etc.
+\subsection{File encoding}
+\keys{\Alt + E}
+Changes the encoding of the file. Input from the user can be: "UTF-8", "UTF-16 Little Endian", etc.
 
+\subsection{\menu{Edit} actions}
+\keys{\Alt + Z}
+Completes a specific edit action. Input ranges from: "cut", "copy", "paste", and "paste and indent". All of the normal edit actions would be listed here.
 
+\subsection{Text entry and manipulation}
 
-\subsection{Text and cursor manipulation}
+	\subsection{Text entry}
+	\keys{\Alt + R}
+	This would allow the user to record any text they want to have written down. Certain words would be keywords, like \textit{for loop}, \textit{if}, \textit{section}, etc. would all have their overall syntax saved for any particular syntax of a file. So for example if a 
 
-	\subsection{Cursor}
+	\keys{\Alt + R + V}
+	This denotes recording verbatim. This would tell the application to ignore keywords and to simply record whatever input the user has provided. This would allow for 
 
-	\subsubsection{Selecting text}
-	\keys{\Alt + S} Select a certain part of the text. "word" "line" "paragraph" "scope"
-
-	\subsubsection{Text style for \LaTeX}
-	\keys{\Alt + S + T} If a user is perparing a document using \LaTeX, this would allow them to change specifc style of text.
-
-	\subsubsection{Expanding selection}
-	\keys{\Alt + E} Once a user has selected their text, they can expand their selection in a number of ways.
-
-	\subsubsection{Selection manipulation}
-	\keys{\Alt + M} Once a user has selected their text, they can manipulate it in several ways. Input includes: "put into if statment", "",  
-
-	\subsubsection{Line number}
-	\keys{\Alt + L} Go a certain line number. Sample input includes: "fifty-three", "first", "last", "two", etc.
-
-	\subsubsection{Moving text}
-	\keys{\Alt + M} Once a pience of text is selected, the user can move the text as the please. Sample input that the user can provide: "up one line", "to the top", "move into XXX method"
 
 	\subsubsection{Deleting Text}
-	\keys{\Alt + D} Delete a certain part of the text. Input from the user includes: "word", "line", "paragraph", "scope", etc.
+	\marginpar{\keys{\Alt + D}}
+	Delete a certain part of the text. Input from the user includes: "word", "line", "paragraph", "scope", "indentation", and "brackets". Any of the previous commands can be prefixed with "here to end of" or "here to beginning of" to delete a part of a word, line, paragraph, etc.
 
-\subsection{Scolling}
-\keys{\Alt + A} The user would be able to scroll depending on their input: Sample input includes: "up", "down", "top", and "bottom". The speed at which the text is scrolled at could be changed in the settings.
+	\subsection{Variable decalration}
+	\marginpar{\keys{\Alt + V}}
+	Declares a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, if a user would.
+
+\subsection{Cursor manipulation}
+
+
+	\subsubsection{Selection}
+	\marginpar{\keys{\Alt + S}}
+	Select a certain part of the text. This works very similarly to text deletion. Voice input can include: "word", "line", "paragraph", "scope", "indentation", and "brackets". Any of the previous commands can be prefixed with "here to end of" or "here to beginning of" to select a part of a word, line, paragraph, etc. Also, input can include: "right" and "left" to move the cursor one character over in either direction.
+
+	\subsubsection{Text style for \LaTeX}
+	\marginpar{\keys{\Alt + S + T}}
+	If a user is perparing a document using \LaTeX, this would allow them to change specifc style of text.
+
+	text case
+
+	\subsubsection{Expanding selection}
+	\marginpar{\keys{\Alt + E}}
+	Once a user has selected their text, they can expand their selection in a number of ways. Input ranges from: "next", "previous", and "all". This command would highlight the next, previous, or all instrances of the given selection.
+
+	\subsubsection{Selection manipulation}
+	\marginpar{\keys{\Alt + M}}
+	Once a user has selected their text, they can manipulate it in several ways. Input includes: "put into if statment", "move into function XXX",  
+
+
+	\subsubsection{Moving text}
+	\marginpar{\keys{\Alt + M}}
+	Once a pience of text is selected, the user can move the text as the please. Sample input that the user can provide: "up one line", "to the top", "move into XXX method".
+
+	\subsubsection{Line number}
+	\marginpar{\keys{\Alt + L}}
+	Go a certain line number. Sample input can include a specifc line number or the top or bottom. Examples: "fifty-three", "first", "last", "two", etc.
+
+
+\subsection{Window/view manipulation}
+
+	\subsection{Scolling}
+	\marginpar{\keys{\Alt + W}}
+	The user would be able to scroll depending on their input: Sample input includes: "up", "down", "page up", "page down" "top", and "bottom". The speed at which the text is scrolled at could be changed in the preferences of the application.
+
+	window movement and minimization
+
+
+\subsection{File compiling and build}
 
 \subsection{Preferences}
-\keys{\Alt + P} The user would be able to scroll depending on their input: Sample input includes: "up", "down", "top", and "bottom". The speed at which the text is scrolled at could be changed in the settings.
+\marginpar{\keys{\Alt + P}}
+The user would be able to scroll depending on their input: Sample input includes: "up", "down", "top", and "bottom". The speed at which the text is scrolled at could be changed in the settings.
 
 \subsection{User defined commands}
 
+
+\keys{win}{\Alt}
 
 
 \section{Usage Scenarios}
 
 \subsection{Handicapped persons}
 
-The first user group that comes to mind are people who normally have some difficulty typing. Due to some physical barriers, they might be unable to input or manipulate text via the keyboard. This application would allow for those people who want to code, to be able to do so.
+The first user group that comes to mind are people who normally have some difficulty typing. Due to some physical barriers, they might be unable to input or manipulate text via the keyboard. This application would allow for the people who want to code to be able to do so. 
 
 \subsection{The tired coder}
 
-The second user group that comes to mind is the coder who is simply just tired of typing.
+The second user group that comes to mind is the coder who is simply just tired of typing. For this target group, the technology would simply be an addition to their flow of programming. For example, when a user wants to move a piece of code into another function, this application would perform the given task faster than the typing equivalent. The action required for this is as follows: \keys{\Alt + M} "move into function XXX". This involves less keystrokes and scrolling than the normal action: \keys{\cmd + X}, then some scrolling, then \keys{\cmd + V}.
 
 \section{Rationale}
 
@@ -101,16 +143,44 @@ The second user group that comes to mind is the coder who is simply just tired o
 \section{Usability metric forecast}
 
 \subsection{Learnability}
-The overall learnability of the application would not be the fastest. Learning a new set of key commands is never a quick thing to lean. Also learning new phrases for certain actions for users could take a while.
+The overall learnability of the application would not be the fastest. Learning a new set of key commands is never a quick thing to lean. Also learning new phrases for certain actions for users could take a while. Since the user would be guided through a series of tasks the very first time they opened the application, this would help with the learnability. This help sequence would be available for the user to reacquiant themseleves at any time with the applications commands.
+
 \subsection{Efficiency}
+The efficiency of the application would increase over time. As a user became more and more familiar with the flow of the application, they would be able to use the application very efficiently. Since the list of actions is fairly comprehensive, the actions that a user could accomplish via voice is nearly the same as via keyboard.
 
 \subsection{Errors}
+The rate of errors would decrease over time. But as imagined, they could be pretty high for a first time user. In any case, the user would be able to simply ue the keyboard to accomplish their task instead of using the voice control.
 
 \subsection{Memorability}
-In terms of memorability, the application would fare well. The same commands would do that same things and revisiting this application after some time would not take long to remeber how the application functions. Refamiliarizing onesef with the application would be straightforward.
+In terms of memorability, the application would fare well. The same commands would do that same things and revisiting this application after some time would not take long to remeber how the application functions. Refamiliarizing onesef with the application would be straightforward. Once again, a user could look to the series of tasks outlined in the help section to reacquiant themselves with the application.
 
 \subsection{Satisfaction}
-Not surprisingly, this metric is largely subjective. For people who previously had a hard time coding due to a disability, this would induce large amounts of satisfaction. For people who do not have any physical diabilities impeding them from typing, teir satisfaction would rely upon how effiecient they have become at using the application. The overall learning process could be
+Not surprisingly, this metric is largely subjective. For people who previously had a hard time coding due to a disability, this would induce large amounts of satisfaction. For people who do not have any physical diabilities impeding them from typing, teir satisfaction would rely upon how effiecient they have become at using the application. The overall learning process could be slightly hard, therefore unsatisfactory.
+
+\pagebreak
+
+
+\section{Key command table}
+
+
+\begin{tabular}{ l | l | l }
+Key command & Voice input & corresponding action \\ \hline
+\keys{\Alt + Y} &  \\ \hline
+\keys{\ctrl + \Alt + E} &  \\ \hline
+\keys{\Alt + F} & "save"  & \menu{File > Save}\\ \hline
+\keys{\Alt + R} &  \\ \hline
+\keys{\Alt + R + V} &  \\ \hline
+\keys{\Alt + D} &  \\ \hline
+\keys{\Alt + V} &  \\ \hline
+\keys{\Alt + S} &  \\ \hline
+\keys{\Alt + S + T} &  \\ \hline
+\keys{\Alt + E} &  \\ \hline
+\keys{\Alt + M} &  \\ \hline
+\keys{\Alt + M} &  \\ \hline
+\keys{\Alt + L} &  \\ \hline
+\keys{\Alt + } &  \\ \hline
+\keys{\Alt + P} &  \\ \hline
+\end{tabular}
 
 \end{document}
 	
