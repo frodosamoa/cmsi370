@@ -72,7 +72,7 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 
 	\subsection{Find similar selections}
 	\keys{\Alt + F + S}
-	Finds next, previous, or all similar selections. Input ranges from: "next", "previous", and "all". This command would highlight the next, previous, or all instances of the given selection.
+	Finds next, previous, or all similar selections. Input ranges from: "next", "previous", "add next", and "all". This command would highlight the next, previous, or all instances of the given selection. It can also add the next instance.
 
 	\subsection{Replace}
 	\keys{\Alt + R}
@@ -156,9 +156,9 @@ The second user group that comes to mind is the coder who is simply just tired o
 \section{Rationale}
 
 \subsection{Mental Models}
-The mental models of the designer (me) are to automate a task which is largely not automatic. Yes, there are many different applications that automatically produce code in varying ways from user input. Yet, automated code is almost always a big no-no. The mental model that this design is attempting to send across to the user is that this application/package/plugin is meant to work in conjunction with the normal commands that a user is used to using. This would not be a complete replacement of the way in which 
+The mental models of the designer (me) are to automate a task which is largely not automatic. Yes, there are many different applications that automatically produce code in varying ways from user input. Yet, automated code is almost always a big no-no. The mental model that this design is attempting to send across to the user is that this application/package/plugin is meant to work in conjunction with the normal commands that a user is used to using. This would not be a complete replacement of the way in which a coder could code, but more as a supplement.
 
-\subsection{Interaction design concepts, guidelines, principles, and theories}
+\subsection{Interaction design guidelines and principles}
 \subsubsection{Guidelines}
 In terms of meeting certain guidelines regarding input and data entry, this proposed design is in line with Smith and Mosier's guidelines \cite{guidelines}. They mention that a design should strive for minimal input actions by the user. By using voice, the actual amount of key presses declines sharply. The interaction with the user is simplified incredibly and allows for less doing to accomplish the same result.
 
@@ -197,11 +197,13 @@ Not surprisingly, this metric is largely subjective. For people who previously h
 
 \pagebreak
 
-
+\newgeometry{top=1.5cm}
 \section{Key command table}
 \label{sec:command_table}
+If a voice input area is blank, this means that the user can input whatever they want. If the menu action and key commands are blank, this means there is no corresponding action or commands for the voice equivalent. \vspace{2mm}
 
 
+\begin{adjustbox}{center}
 \begin{tabular}{ | l | l || l | l |}
 
 \hline
@@ -239,29 +241,63 @@ Key command & Voice input & Menu action & Key commands\\ \hline
 	& "indent left" & \menu{Edit > Line > Unindent} & \keys{\cmd + [} \\
 	& "insert line" & \menu{Selection > Expand Selection to Scope} & \keys{\shift + \cmd + \Space}\\ \hline
 
-\keys{\Alt + M} & & & \\ \hline
-\keys{\Alt + T} & & & \\ \hline
-\keys{\Alt + F} & & & \\ \hline
-\keys{\Alt + F + S} & & & \\ \hline
-\keys{\Alt + R} & & & \\ \hline
-\end{tabular}
+\multirow{2}{*}{\keys{\Alt + T}} & "upper case" & \menu{Edit > Convert Case > Upper Case} & \keys{\cmd + K}, \keys{\cmd + U}\\
+	& "lower case"  & \menu{Edit > Convert Case > Lower Case} & \keys{\cmd + K}, \keys{\cmd + L}\\ \hline
 
+\keys{\Alt + F} & & \menu{Find > Find...} & \keys{\cmd + F}\\ \hline
+
+\multirow{4}{*}{\keys{\Alt + F + S}} & "next" & \menu{Find > Find Next} & \keys{\cmd + G}\\
+	& "previous"  & \menu{Find > Find Previous} & \keys{\shift + \cmd + G}\\ 
+	& "add next"  & \menu{Find > Quick Add Next} & \keys{\cmd + D}\\ 
+	& "all"  & \menu{Find > Quick Find All} & \keys{\ctrl + \cmd + G}\\ \hline
+
+\multirow{4}{*}{\keys{\Alt + R}} & & \menu{Find > Replace} & \keys{\Alt + \cmd + F}\\
+	& "previous"  & \menu{Find > Find Previous} & \keys{\shift + \cmd + G}\\ 
+	& "add next"  & \menu{Find > Quick Add Next} & \keys{\cmd + D}\\ 
+	& "all"  & \menu{Find > Quick Find All} & \keys{\ctrl + \cmd + G}\\ \hline
+
+\multirow{2}{*}{\keys{\Alt + R + S}} & "next" & \menu{Find > Replace Next} & \keys{\Alt + \cmd + E}\\
+	& "previous"  &  & \\ \hline
+
+\end{tabular}
+\end{adjustbox}
+
+\pagebreak
+
+\begin{adjustbox}{center}
 \begin{tabular}{ | l | l || l | l |}
 
 \hline
 Key command & Voice input & Menu action & Key commands\\ \hline
-\keys{\Alt + R + S} & & & \\ \hline
+
 \keys{\Alt + D} & & & \\ \hline
-\keys{\Alt + W} & & & \\ \hline
-\keys{\Alt + B} & & \menu{Tools > Build} & \\ \hline
+
+
+\multirow{7}{*}{\keys{\Alt + D}} & "all" & \menu{Selection > Select All}, & \keys{\cmd + A}, \keys{Delete}\\
+	& "word" & \menu{Selection > Expand Selection to Word} & \keys{\cmd + D}\\
+	& "line" & \menu{Edit > Text > Delete Line} & \keys{\ctrl + \shift + K}\\
+	& "paragraph" & & \\
+	& "scope" & \menu{Selection > Expand Selection to Scope} & \keys{\shift + \cmd + \Space}\\
+	& "indentation" & \menu{Selection > Expand Selection to Indentation} & \keys{\shift + \cmd + J}\\
+	& "brackets" & \menu{Selection > Expand Selection to Brackets} & \keys{\ctrl + \shift + M}\\ \hline
+
+\multirow{3}{*}{\keys{\Alt + W}} & "minimize" & \menu{Window > Minimize} & \keys{\cmd + M}\\
+	& "left" & \menu{Goto > Switch File > Next File} & \keys{\shift + \cmd + [} or \keys{\Alt + \cmd + \arrowkeyright}\\
+	& "rihgt" & \menu{Goto > Switch File > Previous File} & \keys{\shift + \cmd + ]} or \keys{\Alt + \cmd + \arrowkeyleft}\\ \hline
+\keys{\Alt + B} & & \menu{Tools > Build} & \keys{\cmd + B} \\ \hline
 \keys{\Alt + B + S} & & \menu{Tools > Build System} & \\ \hline
-\keys{\Alt + P} & & & \\ \hline
+
+\multirow{3}{*}{\keys{\Alt + P}} & "font larger" & \menu{Sublime Text 2 > Preferences > Font > Font Larger} & \keys{\cmd + =}\\
+	& "font smaller" & \menu{Sublime Text 2 > Preferences > Font > Font Smaller} & \keys{\cmd + -}\\
+	& "color scheme" & \menu{Sublime Text 2 > Preferences > Color Scheme} & \\ \hline
+
 \keys{\Alt + S + Y} & & \menu{View > Syntax} & \\ \hline
 \keys{\Alt + E} & & \menu{File > Reopen With Encoding} & \\ \hline
-\keys{\Alt + L} & & \menu{Goto > Goto Line...} & \keys{\ctrl + L}\\ \hline
+\keys{\Alt + L} & & \menu{Goto > Goto Line...} & \keys{\ctrl + G}\\ \hline
 \end{tabular}
+\end{adjustbox}
 
-
+\restoregeometry
 
 \pagebreak
 \bibliography{text-editor-dream-design}
