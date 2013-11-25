@@ -11,3 +11,4 @@ individual_checklist.pdf
 *.bbl
 *.log
 *.fdb_latexmk
+*.out
