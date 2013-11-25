@@ -23,7 +23,7 @@
 
 Text editors are some of the most important pieces of software that programmers can use for their craft. I think a redesign of this application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this application/package/plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions.
 
-The design would mainly use audio recording from the user for all main actions. The ability to type in the editor is always a possibility, but when the user simply gets tired of doing that they can revert to their spoken voice for accomplishing their goal.
+The design would mainly use audio recording from the user for all main actions. When the user simply gets tired of typing, they can revert to their spoken voice for accomplishing their goal. The ability to type in the editor is always a possibility and can be relied upon in the event of the audio recording not working as planned.
 
 Certain key combinations would denote certain types of actions. Whenever a user will hold the key combination, the application would wait for some kind of input and only after the user lets go of the keys will the application respond. This application would be advanced enough to be able to read and recognize variable and function names given by the user. The reason for choosing different key combinations for user input is because attempting to have the application attempt to decode what a user is trying to say is extremely hard. This way the application would know what kind of input it would be receiving.
 
@@ -33,7 +33,7 @@ Also, this application could be modified to simply be an extension for any text 
 
 \section{\menu{File} actions}
 
-\keys{\Alt + F}
+\keys{\Alt + Y}
 Complete a specific file action. Input ranges from: "save", "save as", "save all", "new file", "close file", "close all files", "open most recent", "open last closed file", "close window", and "new window". Each respective action does what it denotes.
 
 \section{\menu{Edit}}
@@ -54,7 +54,7 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	Selects a certain part of the text. Voice input can include: "all", "word", "line", "paragraph", "scope", "indentation", and "brackets". Any of the previous commands except for "all" can be prefixed with "end of" or "beginning of" to select from the cursor to the beginning or end of the word, line, paragraph, etc. Also, input can include: "right" and "left" to move the cursor one character over in either direction.
 
 	\subsection{Selection manipulation}
-	\keys{\Alt + M}
+	\keys{\Alt + S + M}
 	Manipulates the selection in several ways. Input includes: "duplicate", "comment", "uncomment", "indent", "insert line". "indent" can be suffixed with "left" or "right". "insert line" can be suffixed with "before" and "after". If the user has selected multiple subsequent lines, another input can be "join". This joins the selection on to one line. 
 
 	\subsection{Moving text}
@@ -67,18 +67,28 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 
 \section{\menu{Find}}
 
-	\subsection{\menu{Find} actions}
+	\subsection{Find}
+	\keys{\Alt + F}
+	Finds a word or phrase. Input is whatever the user wants to search for.
 
-	\subsection{Finding similar selections}
-	\keys{\Alt + E}
-	Expands a selection of text in a number of ways. Input ranges from: "next", "previous", and "all". This command would highlight the next, previous, or all instances of the given selection.
+	\subsection{Find similar selections}
+	\keys{\Alt + F + S}
+	Finds next, previous, or all similar selections. Input ranges from: "next", "previous", and "all". This command would highlight the next, previous, or all instances of the given selection.
+
+	\subsection{Replace}
+	\keys{\Alt + R}
+	Replaces a selection. Input is whatever the user wants to replace the selection with.
+
+	\subsection{Replace similar selections}
+	\keys{\Alt + R + S}
+	Replaces next, previous, or all similar selections. Input ranges from: "next", "previous", and "all". This command would replace the next, previous, or all instances of the given selection.
 
 \section{Text entry and manipulation}
 
 	\subsection{Text entry}
 	\begin{enumerate}
 	\item \keys{\Alt + R}
-	Records user input. This would allow the user to record any text they want to have entered. Keywords of whatever syntax the file is in would be recognized. Certain keywords would denote operators like +, =, |, /, etc.
+	Records user input. This would allow the user to record any text they want to have entered. Keywords of whatever syntax the file is in would be recognized. Certain keywords would denote operators like +, =, |, /, etc. This command would also take car of declaring a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
 
 	\item \keys{\Alt + R + V}
 	Records verbatim. This would tell the application to ignore keywords and to simply record whatever input the user has provided. This would allow for saying input like "for", "equals", "pipe", etc. so that the application would not be confused with what to enter into the file.
@@ -88,15 +98,11 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	\keys{\Alt + D}
 	Delete a certain part of the text. This works extremely similarly to text selection. All of the same inputs work in the same way except for that the simply delete the text instead of selecting it. An added input here would be "delete" for the case that the user has selected some text and then decides to delete it after the selection was made.
 
-	\subsection{Variable declaration}
-	\keys{\Alt + V}
-	Declares a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
-
 
 \section{Window/view manipulation}
 
 	\keys{\Alt + W}
-	Changes the view of the current file. Input includes: "up", "down", "page up", "page down" "top", and "bottom". The speed at which the text is scrolled at could be changed in the user preferences. This command would also allow for an input of "minimize" to minimize a window. User inputs of "left" and "right" would cycle through the active tabs of the window in the direction that was specified.
+	Changes the view of the current file. Input includes: "up", "down", "page up", "page down" "top", and "bottom". This command would also allow for an input of "minimize" to minimize a window. User inputs of "left" and "right" would cycle through the active tabs of the window in the direction that was specified.
 
 \section{\menu{Tools}}
 
@@ -109,17 +115,16 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	\end{enumerate}
 
 \subsection{Preferences}
-\keys{\Alt + P}
-The user would be able to scroll depending on their input: Sample input includes: "up", "down", "top", and "bottom". The speed at which the text is scrolled at could be changed in the settings.
+	\keys{\Alt + P}
+	Changes a preference. Input for this can be: "font" and  "color scheme". "font" can be suffixed with "larger" and "smaller". This command would not be able to edit and package control settings due to the way \textbf{Sublime Text} stores preference files. 
 
-\subsection{User defined commands}
-
+\section{User defined commands}
 
 
 \section{\menu{Other}}
 
 	\subsection{File syntax}
-	\keys{\Alt + Y}
+	\keys{\Alt + S + Y}
 	Changes the syntax of the file. Sample input of the user includes: "Python", "C++", "\LaTeX", "Ruby on Rails", "JSON", etc.
 
 	\subsection{File encoding}
@@ -129,7 +134,6 @@ The user would be able to scroll depending on their input: Sample input includes
 	\subsection{Go to line number}
 	\keys{\Alt + L}
 	Moves the cursor to a certain line number. Sample input can include a specific line number or the top or bottom. Examples: "fifty-three", "first", "last", "two", etc. These inputs can prefixed with "end of" and "beginning of" to go to the end or beginning of that line. The default will be the beginning of the line. This could be changed in the user preferences.
-
 
 
 \section{Usage Scenarios}
@@ -148,7 +152,9 @@ The second user group that comes to mind is the coder who is simply just tired o
 \section{Rationale}
 
 \subsection{Priorities}
+
 \subsection{Mental Models}
+
 \subsection{Interaction design concepts, guidelines, principles, and theories}
 
 
@@ -177,27 +183,31 @@ Not surprisingly, this metric is largely subjective. For people who previously h
 \section{Key command table}
 
 
-\begin{tabular}{ | l | l | l | }
+\begin{tabular}{ | l | l | l |}
 \hline
 Key command & Voice input & corresponding menu action \\ \hline
-\keys{\Alt + Y} &  \\ \hline
-\keys{\ctrl + \Alt + E} &  \\ \hline
-\multirow{2}{*}{\keys{\Alt + F}} & "save"  & \menu{File > Save}\\
+\multirow{2}{*}{\keys{\Alt + Y}} & "save"  & \menu{File > Save}\\
 	& "save as" & \menu{File > Save As..}\\ \hline
-
-
-\keys{\Alt + R} &  \\ \hline
-\keys{\Alt + R + V} &  \\ \hline
-\keys{\Alt + D} &  \\ \hline
-\keys{\Alt + V} &  \\ \hline
-\keys{\Alt + S} &  \\ \hline
-\keys{\Alt + S + T} &  \\ \hline
-\keys{\Alt + E} &  \\ \hline
-\keys{\Alt + M} &  \\ \hline
-\keys{\Alt + M} &  \\ \hline
-\keys{\Alt + L} &  \\ \hline
-\keys{\Alt + } &  \\ \hline
-\keys{\Alt + P} &  \\ \hline
+\keys{\Alt + E} & & \\ \hline
+\keys{\Alt + Z} & & \\ \hline
+\keys{\Alt + S} & & \\ \hline
+\keys{\Alt + S + M} & & \\ \hline
+\keys{\Alt + M} & & \\ \hline
+\keys{\Alt + T} & & \\ \hline
+\keys{\Alt + F} & & \\ \hline
+\keys{\Alt + F + S} & & \\ \hline
+\keys{\Alt + R} & & \\ \hline
+\keys{\Alt + R + S} & & \\ \hline
+\keys{\Alt + R} & & \\ \hline
+\keys{\Alt + R + V} & & \\ \hline
+\keys{\Alt + D} & & \\ \hline
+\keys{\Alt + W} & & \\ \hline
+\keys{\Alt + B} & & \\ \hline
+\keys{\Alt + B + S} & & \\ \hline
+\keys{\Alt + P} & & \\ \hline
+\keys{\Alt + S + Y} & & \\ \hline
+\keys{\Alt + E} & & \\ \hline
+\keys{\Alt + L} & & \\ \hline
 \end{tabular}
 
 \end{document}
