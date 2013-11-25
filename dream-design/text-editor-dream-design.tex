@@ -9,6 +9,7 @@
 \usepackage{enumitem}
 \usepackage{chngpage}
 \usepackage{multirow}
+\usepackage{hyperref}
 
 
 \title{Dream Design of a Text Editor}
@@ -21,16 +22,14 @@
 
 \section{Design}
 
-Text editors are some of the most important pieces of software that programmers can use for their craft. I think a redesign of this application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this application/package/plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions.
+Text editors are some of the most important pieces of software that programmers can use for their craft. I think a redesign of this application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this application/package/plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions. In this document, I will be using the Mac keys for shortcuts. \keys{\cmd} denotes Command. \keys{\Alt} denotes Option or Alt. \keys{\shift} denotes Shift. \keys{\ctrl} denotes control.
 
 The design would mainly use audio recording from the user for all main actions. When the user simply gets tired of typing, they can revert to their spoken voice for accomplishing their goal. The ability to type in the editor is always a possibility and can be relied upon in the event of the audio recording not working as planned.
 
 Certain key combinations would denote certain types of actions. Whenever a user will hold the key combination, the application would wait for some kind of input and only after the user lets go of the keys will the application respond. This application would be advanced enough to be able to read and recognize variable and function names given by the user. The reason for choosing different key combinations for user input is because attempting to have the application attempt to decode what a user is trying to say is extremely hard. This way the application would know what kind of input it would be receiving.
 
-When the user would launch the application for the first time, they would be guided through a series of tasks for them to be acquainted with the overall commands of the application. This would be comprehensive enough for them to be able to code from the get go.
-
-Also, this application could be modified to simply be an extension for any text editor \textit{TextWrangler}, \textit{Notepad++}, or \textit{MacVim}. This way, cross application compatibility would be functional.
-
+When the user would launch the application for the first time, they application would ask them to read a passage. This is like the scene in \textit{Mission: Impossible III} when Tom Cruise (disguised as Philip Seymour Hoffman) asks Philip Seymour Hoffman to read a passage \cite{mission-impossible}. This would analyze a person's accent and other vocal measurements so the application could truly understand their voice. They would then be guided through a series of tasks for them to be acquainted with the overall commands of the application. This would be comprehensive enough for them to be able to code from the get go. Also, this application could be modified to simply be an extension for any other text editor like \textit{TextWrangler}, \textit{Notepad++}, or \textit{MacVim}. This way, cross application compatibility would be accomplished. 
+	For a list of all the commands, look at \ref{sec:command_table} for reference. 
 \section{\menu{File} actions}
 
 \keys{\Alt + Y}
@@ -88,10 +87,13 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	\subsection{Text entry}
 	\begin{enumerate}
 	\item \keys{\Alt + R}
-	Records user input. This would allow the user to record any text they want to have entered. Keywords of whatever syntax the file is in would be recognized. Certain keywords would denote operators like +, =, |, /, etc. This command would also take car of declaring a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
+	Records user input. This would allow the user to record any text they want to have entered. Keywords of whatever syntax the file is in would be recognized. Certain keywords would denote operators like +, =, |, /, etc. 
 
 	\item \keys{\Alt + R + V}
 	Records verbatim. This would tell the application to ignore keywords and to simply record whatever input the user has provided. This would allow for saying input like "for", "equals", "pipe", etc. so that the application would not be confused with what to enter into the file.
+
+	\item \keys{\Alt + D + V}
+	Declares a variable. This command would take care of declaring a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
 	\end{enumerate}
 
 	\subsubsection{Deleting Text}
@@ -118,9 +120,6 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	\keys{\Alt + P}
 	Changes a preference. Input for this can be: "font" and  "color scheme". "font" can be suffixed with "larger" and "smaller". This command would not be able to edit and package control settings due to the way \textbf{Sublime Text} stores preference files. 
 
-\section{User defined commands}
-
-
 \section{\menu{Other}}
 
 	\subsection{File syntax}
@@ -129,11 +128,18 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 
 	\subsection{File encoding}
 	\keys{\Alt + E}
-	Changes the encoding of the file. Input from the user can be: "UTF-8", "UTF-16 Little Endian", etc.
+	Changes the encoding of the file and reopens it. Input from the user can be: "UTF-8", "UTF-16 Little Endian", etc.
 
 	\subsection{Go to line number}
 	\keys{\Alt + L}
 	Moves the cursor to a certain line number. Sample input can include a specific line number or the top or bottom. Examples: "fifty-three", "first", "last", "two", etc. These inputs can prefixed with "end of" and "beginning of" to go to the end or beginning of that line. The default will be the beginning of the line. This could be changed in the user preferences.
+
+
+\section{Error handling and response from the application}
+
+In terms of being able to undo any unwanted change made by the user, the command \keys{\cmd + Z} is always available to undo a task.
+
+In terms of error handling, if the application were to not understand what the user said, the application would prompt the user to re-speak their input after they let go of the key combination. If the input received was clearer than that, the application would do one of two things. First, if the input was extremely close to a specific keyword, variable name, etc. then it would prompt the user with, "did you mean XXX?" where XXX denotes the closest believe matching keyword, variable name, etc. If the input received was clearer yet still slightly indistinguishable between more than one keyword, the application would prompt the user a list of options that the application would believe that the user was saying. The user could then cycle through the options using "next" or "previous". If the application would prompt a user to correct something, the user would need to press \keys{\Alt + H} to respond to an error. This way the application would be able to provide positive,, specific, and constructive error messages for the user to correct their actions. In terms of providing constant feedback on the state of the application, the application would respond with "unable to complete" with a reason for not completing the action.
 
 
 \section{Usage Scenarios}
@@ -144,20 +150,32 @@ The first user group that comes to mind are people who normally have some diffic
 
 \subsection{The tired coder}
 
-The second user group that comes to mind is the coder who is simply just tired of typing. For this target group, the technology would simply be an addition to their flow of programming. For example, when a user wants to move a piece of code into another function, this application would perform the given task faster than the typing equivalent. The action required for this is as follows: \keys{\Alt + M} "move into function XXX". This involves less keystrokes and scrolling than the normal action: \keys{\cmd + X}, then some scrolling, then \keys{\cmd + V}.
-
-
+The second user group that comes to mind is the coder who is simply just tired of typing. For this target group, the technology would simply be an addition to their flow of programming. For example, when a user wants to move a piece of code into another function, this application would perform the given task faster than the typing equivalent.
 
 
 \section{Rationale}
 
-\subsection{Priorities}
-
 \subsection{Mental Models}
+The mental models of the designer (me) are to automate a task which is largely not automatic. Yes, there are many different applications that automatically produce code in varying ways from user input. Yet, automated code is almost always a big no-no. The mental model that this design is attempting to send across to the user is that this application/package/plugin is meant to work in conjunction with the normal commands that a user is used to using. This would not be a complete replacement of the way in which 
 
 \subsection{Interaction design concepts, guidelines, principles, and theories}
+\subsubsection{Guidelines}
+In terms of meeting certain guidelines regarding input and data entry, this proposed design is in line with Smith and Mosier's guidelines \cite{guidelines}. They mention that a design should strive for minimal input actions by the user. By using voice, the actual amount of key presses declines sharply. The interaction with the user is simplified incredibly and allows for less doing to accomplish the same result.
 
+This also address the guideline that there should be a flexibility for user control of data entry. The voice input can always be used, but when a user wants to simply type out the code, they \textit{can}.
 
+\subsection{Principles}
+A strong principle of interaction design is to know your user, which really means that you can't know your user. The design of any application is supposed to be able to work around many different dimensions. The most important dimension that the design of this text editor addresses is the dimension of physical abilities. By making this design work for people of any physical ability (provided they can speak), it covers a large group of people. By doing so, this application can accommodate multiple user profiles. This design also contains slightly multi layered interface due to the initial help task list for the user to get acquainted with the design.
+
+Let's take a look and see how the design fares against some important rules of interaction design.
+
+First, looking at a few "golden rules" of interaction design by Shneidermann, we can see that the design proposed takes a few into consideration. It caters to universal usability and it permits easy reversal of actions \cite{shniederman-golden-rules}.
+
+Second, looking at Nielsen's Ten Usability Heuristics, we can see that it address some on the nose. The design proposed uses simple and natural dialog and speaks the users language. These two are the case because the user is actually using their own voice for communication. It keeps things consistent by having the shortcuts always doing the same thing. It heavily employs the use of shortcuts for ease of use. And most importantly, it address the heuristic of help and documentation by having a help sequence always available to the user \cite{nielsen-usability-heuristics}.
+
+Third, looking at Tognazzini's Sixteen First Principles, it also makes sure that these are addressed. It protects the users work by always allowing them to undo what they have done. The interface provided is very explorable and the user would find many new commands at their leisure to employ. It employs the first principle of human interface objects by letting the user perceive the application visually. It plays to the user other sense because voice is a large component of this interface. It has a standard way of interacting and it has standard resulting behaviors. All in all, it is understandable, self-consistent, and stable \cite{tognazzini-first-principles}.
+
+All in all, the interface designed approaches many rules that are seen to be very important in the way that people interact with an interface.
 
 
 \section{Usability metric forecast}
@@ -181,34 +199,73 @@ Not surprisingly, this metric is largely subjective. For people who previously h
 
 
 \section{Key command table}
+\label{sec:command_table}
 
 
-\begin{tabular}{ | l | l | l |}
+\begin{tabular}{ | l | l || l | l |}
+
 \hline
-Key command & Voice input & corresponding menu action \\ \hline
-\multirow{2}{*}{\keys{\Alt + Y}} & "save"  & \menu{File > Save}\\
-	& "save as" & \menu{File > Save As..}\\ \hline
-\keys{\Alt + E} & & \\ \hline
-\keys{\Alt + Z} & & \\ \hline
-\keys{\Alt + S} & & \\ \hline
-\keys{\Alt + S + M} & & \\ \hline
-\keys{\Alt + M} & & \\ \hline
-\keys{\Alt + T} & & \\ \hline
-\keys{\Alt + F} & & \\ \hline
-\keys{\Alt + F + S} & & \\ \hline
-\keys{\Alt + R} & & \\ \hline
-\keys{\Alt + R + S} & & \\ \hline
-\keys{\Alt + R} & & \\ \hline
-\keys{\Alt + R + V} & & \\ \hline
-\keys{\Alt + D} & & \\ \hline
-\keys{\Alt + W} & & \\ \hline
-\keys{\Alt + B} & & \\ \hline
-\keys{\Alt + B + S} & & \\ \hline
-\keys{\Alt + P} & & \\ \hline
-\keys{\Alt + S + Y} & & \\ \hline
-\keys{\Alt + E} & & \\ \hline
-\keys{\Alt + L} & & \\ \hline
+Key command & Voice input & Menu action & Key commands\\ \hline
+\multirow{10}{*}{\keys{\Alt + Y}} & "save"  & \menu{File > Save} & \keys{\cmd + S}\\
+	& "save as" & \menu{File > Save As..} & \keys{\shift + \cmd + S}\\
+	& "save all" & \menu{File > Save All} & \keys{\Alt + \cmd + S}\\
+	& "new file" & \menu{File > New File} & \keys{\cmd + N}\\ 
+	& "close file" & \menu{File > Close File} & \keys{\cmd + W}\\ 
+	& "close all files" & \menu{File > Close All Files} & \\ 
+	& "open most recent" &  & \\ 
+	& "open last closed file" & \menu{File > Open Recent > Reopen Closed File} & \keys{\shift + \cmd + T}\\ 
+	& "close window" & \menu{File > Close Window} & \keys{\shift + \cmd + W}\\ 
+	& "new window" & \menu{File > New Window} & \keys{\shift + \cmd + N}\\ \hline
+
+\multirow{4}{*}{\keys{\Alt + E}} & "cut" & \menu{Edit > Cut} & \keys{\cmd + X}\\
+	& "copy" & \menu{Edit > Copy} & \keys{\cmd + C}\\
+	& "paste" & \menu{Edit > Paste} & \keys{\cmd + V}\\
+	& "paste and indent" & \menu{Edit > Paste and Indent} & \keys{\shift + \cmd + V}\\ \hline
+
+\multirow{2}{*}{\keys{\Alt + Z}} & "undo" & \menu{Edit > Undo} & \keys{\cmd + Z}\\
+	& "repeat" & \menu{Edit > Repeat} & \keys{\cmd + Y}\\ \hline
+
+\multirow{7}{*}{\keys{\Alt + S}} & "all" & \menu{Selection > Select All} & \keys{\cmd + A}\\
+	& "word" & \menu{Selection > Expand Selection to Word} & \keys{\cmd + D}\\
+	& "line" & \menu{Selection > Expand Selection to Line} & \keys{\cmd + L}\\
+	& "paragraph" & \menu{Selection > Expand Selection to Paragraph} & \\
+	& "scope" & \menu{Selection > Expand Selection to Scope} & \keys{\shift + \cmd + \Space}\\
+	& "indentation" & \menu{Selection > Expand Selection to Indentation} & \keys{\shift + \cmd + J}\\
+	& "brackets" & \menu{Selection > Expand Selection to Brackets} & \keys{\ctrl + \shift + M}\\ \hline
+
+\multirow{5}{*}{\keys{\Alt + S + M}} & "duplicate" & \menu{Selection > Select All} & \keys{\cmd + A}\\
+	& "comment", "uncomment"  & \menu{Edit > Comment > Toggle Comment} & \keys{\cmd + /}\\
+	& "indent right" & \menu{Edit > Line > Indent} & \keys{\cmd + ]} \\
+	& "indent left" & \menu{Edit > Line > Unindent} & \keys{\cmd + [} \\
+	& "insert line" & \menu{Selection > Expand Selection to Scope} & \keys{\shift + \cmd + \Space}\\ \hline
+
+\keys{\Alt + M} & & & \\ \hline
+\keys{\Alt + T} & & & \\ \hline
+\keys{\Alt + F} & & & \\ \hline
+\keys{\Alt + F + S} & & & \\ \hline
+\keys{\Alt + R} & & & \\ \hline
 \end{tabular}
+
+\begin{tabular}{ | l | l || l | l |}
+
+\hline
+Key command & Voice input & Menu action & Key commands\\ \hline
+\keys{\Alt + R + S} & & & \\ \hline
+\keys{\Alt + D} & & & \\ \hline
+\keys{\Alt + W} & & & \\ \hline
+\keys{\Alt + B} & & \menu{Tools > Build} & \\ \hline
+\keys{\Alt + B + S} & & \menu{Tools > Build System} & \\ \hline
+\keys{\Alt + P} & & & \\ \hline
+\keys{\Alt + S + Y} & & \menu{View > Syntax} & \\ \hline
+\keys{\Alt + E} & & \menu{File > Reopen With Encoding} & \\ \hline
+\keys{\Alt + L} & & \menu{Goto > Goto Line...} & \keys{\ctrl + L}\\ \hline
+\end{tabular}
+
+
+
+\pagebreak
+\bibliography{text-editor-dream-design}
+\bibliographystyle{plain}
 
 \end{document}
 	
