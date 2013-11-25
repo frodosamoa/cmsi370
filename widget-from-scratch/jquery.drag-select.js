@@ -72,6 +72,8 @@
             $current = null,
             anchorX = 0,
             rightClicked = false,
+            left = 0,
+            right = 0,
 
             // Left and right values.
             leftValue = options.values ? (options.values.left || "Left") : "Left",
@@ -199,9 +201,10 @@
             .mousemove(function (event) {
                 if ($current) {
                     var parent = $current.parent(),
-                        switchWidth = $current.width(),
-                        left = event.pageX - anchorX,
-                        right = parent.innerWidth() - left - switchWidth;
+                        switchWidth = $current.width();
+
+                    left = event.pageX - anchorX;
+                    right = parent.innerWidth() - left - switchWidth;
 
                     // If we click on the switch when it is on the right...
                     if (rightClicked) {
@@ -209,34 +212,35 @@
                         left = parent.innerWidth() - right - switchWidth;
                     }
 
-                    if (left < leftPadding) {
+                    if (left <= leftPadding) {
                         $current.css("left", leftPadding).css("right", "auto");
-                    } else if (right < rightPadding) {
+                    } else if (right <= rightPadding) {
                         $current.css("right", rightPadding).css("left", "auto");                       
                     } else {
                         $current.css("left", left).css("right", right);
                     }
+                    // console.log($current.css("left") + " " + left + " " + $current.css("right") + " " + right)
                 }
             })
             .mouseup(function (event) {
                 if ($current) {
-                    var leftCSS = $current.css("left"),
-                        rightCSS = $current.css("right"),
-                        snapSide;
+                    var snapSide = false;
 
-                    if (leftCSS === "auto") {
+                    if (left <= leftPadding) {
                         snapSide = false;
-                    } else if (rightCSS === "auto") {
+                    } else if (right <= rightPadding) {
                         snapSide = true;
                     } else {
-                        snapSide = parseInt(leftCSS) > parseInt(rightCSS);
+                        snapSide = left > right;
                     }
-
+                    
                     // Snap the switch accordingly.
                     $current.css("right", snapSide ? "auto" : rightPadding)
                         .css("left", snapSide ? leftPadding : "auto");
 
                     // Reset current and rightClicked.
+                    left = 0;
+                    right = 0;
                     anchorX = 0;
                     rightClicked = false;
                     $current = null;
