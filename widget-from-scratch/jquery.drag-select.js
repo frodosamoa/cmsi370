@@ -150,9 +150,9 @@
         var innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
             centerValueMargin = -($this.find(".left").height() / 2),
-            topBottomPadding = parseInt($this.css("padding-top")),
-            leftPadding = parseInt($this.css("padding-left")),
-            rightPadding = parseInt($this.css("padding-right")),
+            topBottomPadding = Math.round(Number($this.css("padding-top").substring(0, $this.css("padding-top").indexOf("px")))),
+            leftPadding = Math.round(Number($this.css("padding-left").substring(0, $this.css("padding-left").indexOf("px")))),
+            rightPadding = Math.round(Number($this.css("padding-right").substring(0, $this.css("padding-right").indexOf("px")))),
             fourthInnerWidth = (innerWidth / 4);
 
         // Center the right and left values vertically. 
@@ -209,9 +209,9 @@
                         left = parent.innerWidth() - right - switchWidth;
                     }
 
-                    if (left <= leftPadding) {
+                    if (left < leftPadding) {
                         $current.css("left", leftPadding).css("right", "auto");
-                    } else if (right <= rightPadding) {
+                    } else if (right < rightPadding) {
                         $current.css("right", rightPadding).css("left", "auto");                       
                     } else {
                         $current.css("left", left).css("right", right);
