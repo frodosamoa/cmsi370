@@ -30,21 +30,6 @@ $(function () {
      *  CREATION
      */
 
-        // Create the create sex switch.
-        $("#create-character").click(function () {
-            $("#create-sex").dragSelect({
-                values : {
-                    left: "Male",
-                    right: "Female"
-                },
-                shape: "square",
-                activeSide : "left",
-                color: "light",
-                width: 510,
-                height: 45
-            });
-         })
-
         // Create modal.
     	$('#confirm-create').click(function () {
 
@@ -120,10 +105,24 @@ $(function () {
         });
 
         // Cleanup after closure of modal.
-        $('#createModal').on('hidden.bs.modal', function () {
-            $('#character-name-input, #create-class, #create-level, #create-money').val('');
-            $('#create-sex').empty();
-        });
+        $('#createModal')
+            .on('hidden.bs.modal', function () {
+                $('#character-name-input, #create-class, #create-level, #create-money').val('');
+                $('#create-sex').empty();
+            })
+            .on('show.bs.modal', function () {
+                $("#create-sex").dragSelect({
+                    values : {
+                        left: "Male",
+                        right: "Female"
+                    },
+                    shape: "square",
+                    activeSide : "left",
+                    color: "light",
+                    width: 510,
+                    height: 45
+                });
+            });
 
         // Spawn random character information for character creation.
         $('#spawn-character').click(function () {
@@ -153,26 +152,6 @@ $(function () {
     /**
      *  EDITION
      */
-
-        // Edit modal.
-        $('#edit-character').click(function () {
-            $('#edit-character-name-input').val($('#character-name > h3').text())
-            $('#edit-class').val($('#character-class').text())
-
-            // Create the switch for the edit character with their given sex.
-            $("#edit-sex").dragSelect({
-                values : {
-                    left: "Male",
-                    right: "Female"
-                },
-                shape: "square",
-                activeSide : $('#character-gender').text().toUpperCase() === 'MALE' ? "left" : "right",
-                color: "light",
-                width: 510,
-                height: 45
-            });
-        });
-
 
         // Edit the character.
         $('#confirm-edit').click(function () {
@@ -224,11 +203,29 @@ $(function () {
         });
 
         // Cleanup after closure of modal.
-        $('#editModal').on('hidden.bs.modal', function () {
-            $('#edit-class').val('');
-            $('#edit-character').removeClass('active');
-            $("#edit-sex").empty();
-        });
+        $('#editModal')
+            .on('hidden.bs.modal', function () {
+                $('#edit-class').val('');
+                $('#edit-character').removeClass('active');
+                $("#edit-sex").empty();
+            })
+            .on('show.bs.modal', function () {
+                $('#edit-character-name-input').val($('#character-name > h3').text())
+                $('#edit-class').val($('#character-class').text())
+
+                // Create the switch for the edit character with their given sex.
+                $("#edit-sex").dragSelect({
+                    values : {
+                        left: "Male",
+                        right: "Female"
+                    },
+                    shape: "square",
+                    activeSide : $('#character-gender').text().toUpperCase() === 'MALE' ? "left" : "right",
+                    color: "light",
+                    width: 510,
+                    height: 45
+                });
+            });
 
     /**
      *  DELETION
