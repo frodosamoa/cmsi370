@@ -351,4 +351,30 @@ $(function () {
         }
     );
 
+    console.log($(".left").width())
+
+    $(".create-sex").dragSelect({
+        values : {
+            left: "Male",
+            right: "Female"
+        },
+        shape: "square",
+        activeSide : "left",
+        color: "light",
+        width: 500,
+        height: 45
+    });
+
+    $(".edit-sex").dragSelect({
+        values : {
+            left: "Male",
+            right: "Female"
+        },
+        shape: "square",
+        activeSide : "left",
+        color: "light",
+        width: 500,
+        height: 45
+    });
+
 });

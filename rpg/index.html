@@ -8,6 +8,7 @@
 
     <!-- My CSS -->
     <link rel="stylesheet" href="rpg.css">
+    <link rel="stylesheet" href="jquery.drag-select.css">
   </head>
   <body>
 
@@ -37,6 +38,7 @@
             <button id="create-character" href="#createModal" data-toggle="modal" class="btn btn-success btn-block">
               <span id="edit-glyph" class="glyphicon glyphicon-plus white page-icons"></span>
             </button>
+
           </div>
         </div>
 
@@ -90,13 +92,14 @@
 
       <!-- Character creation modal. -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
+        <div  class="modal-dialog">
+           
+          <div  class="modal-content">
+            <div id="createcharactermodal" class="modal-header">
               <h4 class="modal-title">Create Character</h4>
             </div>
 
-            <div class="modal-body text-center">
+            <div  class="modal-body text-center">
                 <input id="character-name-input" type="text" class="form-control" placeholder="Your character's name">
                 
                 <br>
@@ -113,7 +116,9 @@
                       <input type="radio"> Female
                     </label>
                   </div>
-
+                  <div id="switch-container">
+                   <div class="create-sex"></div>
+                 </div>
                 <br>
                 <p>Roll for your character's <strong>level</strong>.</p>
                 <div class="input-group">
@@ -167,6 +172,9 @@
                 <label id="edit-female" class="btn btn-default">
                   <input type="radio"> Female
                 </label>
+              </div>
+              <div id="switch-container">
+                <div class="create-sex"></div>
               </div>
             </div>
             <div class="modal-footer">
@@ -239,5 +247,8 @@
 
     <!-- Code specific to our RPG user interface. -->
     <script src="rpg.js"></script>
+
+    <!-- Code specific to the jQuery drag-select plugin. -->
+    <script src="jquery.drag-select.js"></script>
   </body>
 </html>
