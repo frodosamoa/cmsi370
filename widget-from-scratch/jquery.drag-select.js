@@ -155,19 +155,20 @@
         // Values used for centering values vertically and horizontally.
         var innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
-            centerValueMargin = -($this.find(".left").height() / 2),
             topBottomPadding = Math.round(Number($this.css("padding-top").substring(0, $this.css("padding-top").indexOf("px")))),
             leftPadding = Math.round(Number($this.css("padding-left").substring(0, $this.css("padding-left").indexOf("px")))),
             rightPadding = Math.round(Number($this.css("padding-right").substring(0, $this.css("padding-right").indexOf("px")))),
-            fourthInnerWidth = (innerWidth / 4);
+            fourthInnerWidth = (innerWidth / 4),
+            halfInnerHeight = (innerHeight / 2);
 
+            console.l
         // Center the right and left values vertically. 
         $this.find(".left")
-            .css("margin-top", centerValueMargin)
+            .css("top", halfInnerHeight - ($this.find(".left").height() / 2))
             .css("left", fourthInnerWidth - ($this.find(".left").width() / 2))
             .css("color", fontColor);
         $this.find(".right")
-            .css("margin-top", centerValueMargin)
+            .css("top", halfInnerHeight - ($this.find(".right").height() / 2))
             .css("right", fourthInnerWidth - ($this.find(".right").width() / 2))
             .css("color", fontColor);
 

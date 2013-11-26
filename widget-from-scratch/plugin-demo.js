@@ -5,11 +5,11 @@ $(function () {
             right: "Female"
         },
 
-        shape: "round",
+        shape: "square",
         activeSide : "left",
         color: "blue",
-        width: 400,
-        height: 100
+        width: 530,
+        height: 45
     });
 
     $(".drag-select-onoff").dragSelect({
