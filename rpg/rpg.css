@@ -3,8 +3,9 @@ html, body {
 	height: 100%;
 }
 
-.switch-container {
-	width: 506px;
+#create-sex-container, #edit-sex-container {
+	margin: 0 auto;
+	width: 526px;
 	height: 52px;
 }
 
