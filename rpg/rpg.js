@@ -30,6 +30,21 @@ $(function () {
      *  CREATION
      */
 
+        // Create the create sex switch.
+        $("#create-character").click(function () {
+            $("#create-sex").dragSelect({
+                values : {
+                    left: "Male",
+                    right: "Female"
+                },
+                shape: "square",
+                activeSide : "left",
+                color: "light",
+                width: 510,
+                height: 45
+            });
+         })
+
         // Create modal.
     	$('#confirm-create').click(function () {
 
@@ -43,7 +58,7 @@ $(function () {
             var character = {
                     name      : $('#character-name-input').val(),
                     classType : $('#create-class').val(),
-                    gender    : $('#create-male').hasClass('active') ? 'MALE' : 'FEMALE',
+                    gender    : $('#create-sex .switcher').css('right') === "auto" ? 'MALE' : 'FEMALE',
                     level     : $('#create-level').val(),
                     money     : $('#create-money').val()
                 };
@@ -107,7 +122,7 @@ $(function () {
         // Cleanup after closure of modal.
         $('#createModal').on('hidden.bs.modal', function () {
             $('#character-name-input, #create-class, #create-level, #create-money').val('');
-            $('#create-male, #create-female').removeClass('active');
+            $('#create-sex').empty();
         });
 
         // Spawn random character information for character creation.
@@ -117,15 +132,20 @@ $(function () {
                 function (character) {
                     $('#character-name-input').val(character.name);
                     $('#create-class').val(character.classType);
-                    if (character.gender === 'MALE') {
-                        $('#create-male').addClass('active');
-                        $('#create-female').removeClass('active');
-                    } else {
-                        $('#create-female').addClass('active');
-                        $('#create-male').removeClass('active');
-                    }
                     $('#create-level').val(character.level);
                     $('#create-money').val(character.money);
+                    $('#create-sex').empty();
+                    $("#create-sex").dragSelect({
+                        values : {
+                            left: "Male",
+                            right: "Female"
+                        },
+                        shape: "square",
+                        activeSide : character.gender === 'MALE' ? "left" : "right",
+                        color: "light",
+                        width: 510,
+                        height: 45
+                    });
                 }
             );
         });
@@ -138,12 +158,21 @@ $(function () {
         $('#edit-character').click(function () {
             $('#edit-character-name-input').val($('#character-name > h3').text())
             $('#edit-class').val($('#character-class').text())
-            if ($('#character-gender').text().toUpperCase() === 'MALE') {
-                $('#edit-male').addClass('active');
-            } else {
-                $('#edit-female').addClass('active');
-            }
+
+            // Create the switch for the edit character with their given sex.
+            $("#edit-sex").dragSelect({
+                values : {
+                    left: "Male",
+                    right: "Female"
+                },
+                shape: "square",
+                activeSide : $('#character-gender').text().toUpperCase() === 'MALE' ? "left" : "right",
+                color: "light",
+                width: 510,
+                height: 45
+            });
         });
+
 
         // Edit the character.
         $('#confirm-edit').click(function () {
@@ -164,7 +193,7 @@ $(function () {
                     id         : idToEdit,
                     name       : $('#character-name > h3').text(),
                     classType  : $('#edit-class').val(), 
-                    gender     : $('#edit-male').hasClass('active') ? 'MALE' : 'FEMALE', 
+                    gender     : $('#edit-sex .switcher').css('right') === "auto" ? 'MALE' : 'FEMALE', 
                     level      : $('#character-level').text(), 
                     money      : $('#character-money').text()
                 };
@@ -197,7 +226,8 @@ $(function () {
         // Cleanup after closure of modal.
         $('#editModal').on('hidden.bs.modal', function () {
             $('#edit-class').val('');
-            $('#edit-male, #edit-female, #edit-character').removeClass('active');
+            $('#edit-character').removeClass('active');
+            $("#edit-sex").empty();
         });
 
     /**
@@ -350,31 +380,5 @@ $(function () {
             });
         }
     );
-
-    console.log($(".left").width())
-
-    $(".create-sex").dragSelect({
-        values : {
-            left: "Male",
-            right: "Female"
-        },
-        shape: "square",
-        activeSide : "left",
-        color: "light",
-        width: 500,
-        height: 45
-    });
-
-    $(".edit-sex").dragSelect({
-        values : {
-            left: "Male",
-            right: "Female"
-        },
-        shape: "square",
-        activeSide : "left",
-        color: "light",
-        width: 500,
-        height: 45
-    });
 
 });
