@@ -233,12 +233,23 @@
                     } else {
                         snapSide = left > right;
                     }
+                    console.log(left + " " + right)
                     
+                    // If the mouseup is in the same place that it 
+                    if (anchorX === event.pageX) {
+                        if (left === 0) {
+                            snapSide = !rightClicked;
+                        } else if (right === 0) {
+                            snapSide = rightClicked;
+                        }
+                    }
+
                     // Snap the switch accordingly.
                     $current.css("right", snapSide ? "auto" : rightPadding)
                         .css("left", snapSide ? leftPadding : "auto");
 
                     // Reset current and rightClicked.
+                    snapSide = false;
                     left = 0;
                     right = 0;
                     anchorX = 0;
