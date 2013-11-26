@@ -40,7 +40,7 @@ $(function () {
             right: "F"
         },
 
-        width: 80,
+        width: "60%",
         height: 40,
         activeSide: "right",
         shape: "round",
@@ -56,8 +56,7 @@ $(function () {
         width: 80,
         height: 40,
         activeSide: "right",
-        shape: "round",
-        color: "light"
+        shape: "round"
     });
 
     $(".drag-select-MALEFEMALE").dragSelect({

@@ -19,6 +19,9 @@
     width: integer
     -the default is 150 if no width is assigned.
 
+    color: "blue" || "red" || "purple" || "green" || "light" || "dark"
+    -the default is light if no color is assigned.
+
 */
 
 (function ($) {
@@ -26,7 +29,7 @@
     var DEFAULT_WIDTH = 40,
         DEFAULT_HEIGHT = 150,
         DEFAULT_SHAPE = "square",
-        DEFAULT_COLOR = "white",
+        DEFAULT_COLOR = "light",
 
         // Color values.
         BLUE = {
@@ -35,29 +38,29 @@
             font       : "#1029CC"
         },
         RED = {
-            background : "#AD0C2F",
-            switcher : "#ED3B62",
-            font : "#610B23"
+            background  : "#AD0C2F",
+            switcher    : "#ED3B62",
+            font        : "#610B23"
         }
         GREEN = {
-            background : "#1A871D",
-            switcher : "#24D62A",
-            font : "#0B610E"
+            background  : "#1A871D",
+            switcher    : "#24D62A",
+            font        : "#0B610E"
         }
         PURPLE = {
-            background : "#4D1C9C",
-            switcher : "#875CCC",
-            font : "#A87ACF"
+            background  : "#4D1C9C",
+            switcher    : "#875CCC",
+            font        : "#A87ACF"
         }
         LIGHT = {
-            background : "#D0D0D0",
-            switcher : "#FFFFFF",
-            font : "#454545"
+            background  : "#D0D0D0",
+            switcher    : "#FFFFFF",
+            font        : "#454545"
         }
         DARK = {
-            background : "#505050",
-            switcher : "#808080",
-            font : "#C7C7C7"
+            background  : "#505050",
+            switcher    : "#808080",
+            font        : "#C7C7C7"
         }
 
         // Templates for the right and left values of the switch.
@@ -74,6 +77,7 @@
             rightClicked = false,
             left = 0,
             right = 0,
+            snapSide = false,
 
             // Left and right values.
             leftValue = options.values ? (options.values.left || "Left") : "Left",
@@ -189,20 +193,43 @@
                 .css("right", rightActive ? "auto" : leftPadding);
         })
 
-        // If we click on a switch
+        // If we click on a switch...
         $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $this.find(".switcher");
                 rightClicked = $current.css("left") === "auto";
                 anchorX = event.pageX;
             })
+            .mouseup(function (event) {
+                if ($current) {
+                    // If the mouse up was in the same spot.
+                    if (anchorX === event.pageX) {
+                        snapSide = left === 0 ? !rightClicked : rightClicked;
+                    } else {
+                        snapSide = left > right;
+                    }
+
+                    // Snap the switch accordingly.
+                    $current.css("right", !snapSide ? rightPadding : "auto")
+                            .css("left", snapSide ? leftPadding : "auto");
+
+                    // Reset state variables.
+                    left = 0;
+                    right = 0;
+                    anchorX = 0;
+                    rightClicked = false;
+                    $current = null;
+                }
+            });
 
         $(document)
             .mousemove(function (event) {
                 if ($current) {
+                    // Hold on to the parent and the switch width.
                     var parent = $current.parent(),
                         switchWidth = $current.width();
 
+                    // Hold left and right values.
                     left = event.pageX - anchorX;
                     right = parent.innerWidth() - left - switchWidth;
 
@@ -212,6 +239,7 @@
                         left = parent.innerWidth() - right - switchWidth;
                     }
 
+                    // Move the switch accordingly and change it's css.
                     if (left <= leftPadding) {
                         $current.css("left", leftPadding).css("right", "auto");
                     } else if (right <= rightPadding) {
@@ -219,37 +247,26 @@
                     } else {
                         $current.css("left", left).css("right", right);
                     }
-                    // console.log($current.css("left") + " " + left + " " + $current.css("right") + " " + right)
                 }
             })
-            .mouseup(function (event) {
-                if ($current) {
-                    var snapSide = false;
 
-                    if (left <= leftPadding) {
-                        snapSide = false;
-                    } else if (right <= rightPadding) {
-                        snapSide = true;
+            // If we let go of a click, not on a switch...
+            .mouseup(function (event) {
+                // Make sure we are tracking a switch.
+                if ($current) {
+                    // If the mouse up was in the same spot.
+                    if (anchorX === event.pageX) {
+                        snapSide = left === 0 ? !rightClicked : rightClicked;
+                    //If not, see which side is bigger.
                     } else {
                         snapSide = left > right;
                     }
-                    console.log(left + " " + right)
-                    
-                    // If the mouseup is in the same place that it 
-                    if (anchorX === event.pageX) {
-                        if (left === 0) {
-                            snapSide = !rightClicked;
-                        } else if (right === 0) {
-                            snapSide = rightClicked;
-                        }
-                    }
 
                     // Snap the switch accordingly.
-                    $current.css("right", snapSide ? "auto" : rightPadding)
-                        .css("left", snapSide ? leftPadding : "auto");
+                    $current.css("right", snapSide ? rightPadding : "auto")
+                            .css("left",  !snapSide ? leftPadding : "auto");
 
-                    // Reset current and rightClicked.
-                    snapSide = false;
+                    // Reset state variables.
                     left = 0;
                     right = 0;
                     anchorX = 0;
