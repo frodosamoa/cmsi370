@@ -26,42 +26,12 @@
 
 (function ($) {
     // Default values stored as "constants".
-    var DEFAULT_WIDTH = 40,
-        DEFAULT_HEIGHT = 150,
-        DEFAULT_SHAPE = "square",
-        DEFAULT_COLOR = "light",
-
-        // Color values.
-        BLUE = {
-            background : "#1589FF",
-            switcher   : "#82CAFF",
-            font       : "#1029CC"
+    var defaults = {
+            width   : 40,
+            height  : 150,
+            shape   : "square",
+            color   : "light"
         },
-        RED = {
-            background  : "#AD0C2F",
-            switcher    : "#ED3B62",
-            font        : "#610B23"
-        }
-        GREEN = {
-            background  : "#1A871D",
-            switcher    : "#24D62A",
-            font        : "#0B610E"
-        }
-        PURPLE = {
-            background  : "#4D1C9C",
-            switcher    : "#875CCC",
-            font        : "#A87ACF"
-        }
-        LIGHT = {
-            background  : "#D0D0D0",
-            switcher    : "#FFFFFF",
-            font        : "#454545"
-        }
-        DARK = {
-            background  : "#505050",
-            switcher    : "#808080",
-            font        : "#C7C7C7"
-        }
 
         // Templates for the right and left values of the switch.
         $leftValueTemplate = $("<p class=\"left\"></p>"),
@@ -74,10 +44,13 @@
         var $this = this,
             $current = null,
             anchorX = 0,
-            rightClicked = false,
-            left = 0,
-            right = 0,
-            snapSide = false,
+            leftActive = false,
+
+            // Margin lengths and widths.
+            rightMargin = 3, 
+            leftMargin = 3,
+            topMargin = 3,
+            bottomMargin = 3,
 
             // Left and right values.
             leftValue = options.values ? (options.values.left || "Left") : "Left",
@@ -85,64 +58,64 @@
 
             // Which side is active.
             leftInitialActiveSide = options.activeSide ? options.activeSide === "left" : true,
+            leftActive = leftInitialActiveSide,
 
             // Shape of the switch.
-            shape = options.shape ? options.shape : DEFAULT_SHAPE,
+            shape = options.shape ? options.shape : defaults.shape,
 
             // Color of the switch.
-            color = options.color ? options.color : DEFAULT_COLOR,
+            color = options.color ? options.color : defaults.color,
             backgroundColor,
             switchColor,
             fontColor,
 
             // Height and width of our switch.
-            height = options.height ? options.height : DEFAULT_WIDTH,
-            width = options.width ? options.width: DEFAULT_HEIGHT,
+            height = options.height ? options.height : defaults.width,
+            width = options.width ? options.width: defaults.height,
 
             // Using templates to create clone of each div or p.
             $leftValue = $leftValueTemplate.clone(),
             $rightValue = $rightValueTemplate.clone()
-            $switcherClone = $switcher.clone();
+            $switcherClone = $switcher.clone(),
 
-        // Depeding on what the user provided, assign the colors.
-        switch (color) {
-            case "red":
-                backgroundColor = RED.background;
-                switchColor = RED.switcher;
-                fontColor = RED.font;
-                break;
-            case "blue":
-                backgroundColor = BLUE.background;
-                switchColor = BLUE.switcher;
-                fontColor = BLUE.font;
-                break;
-            case "green":
-                backgroundColor = GREEN.background;
-                switchColor = GREEN.switcher;
-                fontColor = GREEN.font;
-                break;
-            case "purple":
-                backgroundColor = PURPLE.background;
-                switchColor = PURPLE.switcher;
-                fontColor = PURPLE.font;
-                break;
-            case "light":
-                backgroundColor = LIGHT.background;
-                switchColor = LIGHT.switcher;
-                fontColor = LIGHT.font;
-                break;
-            case "dark":
-                backgroundColor = DARK.background;
-                switchColor = DARK.switcher;
-                fontColor = DARK.font;
-                break;
-        }
+            snapSide = function (event, move) {
+                // Make sure we are tracking a switch.
+                if ($current) {
+                    var transform = event.pageX - anchorX,
+                        maxTranslate = $current.parent().width() - $current.width(),
+                        middlePoint = $current.parent().width() / 4,
+                        newCSS;
+
+                    if (transform === 0) {
+                        transform = leftActive ? maxTranslate - rightMargin : leftMargin;
+                    } else if (transform < middlePoint) {
+                        transform = leftMargin;
+                    } else if (transform > middlePoint) {
+                        transform = maxTranslate - rightMargin;
+                    }
+
+                    leftActive = !leftActive;
+                    newCSS = "translate(" + transform + "px)";
+
+                    $current.css({
+                        "transform" : newCSS,
+                        "-moz-transform" : newCSS,
+                        "-webkit-transform": newCSS
+                    });
+
+                    // Reset state variables.
+                    anchorX = 0;
+                    $current = null;
+                }
+            };
+
 
         // Set the width, height, shape, and color for the drag-select.
-        $this
-            .css("width", width).css("height", height)
-            .css("border-radius", shape === "round" ? (height / 2) : 3)
-            .css("background", backgroundColor);
+        $this.css({
+            "width": width,
+            "height": height,
+            "border-radius": shape === "round" ? (height / 2) : 3 
+        });
 
         // Put in the values into the div templates.
         $leftValue.text(leftValue);
@@ -155,126 +128,123 @@
         // Values used for centering values vertically and horizontally.
         var innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
-            topBottomPadding = Math.round(Number($this.css("padding-top").substring(0, $this.css("padding-top").indexOf("px")))),
-            leftPadding = Math.round(Number($this.css("padding-left").substring(0, $this.css("padding-left").indexOf("px")))),
-            rightPadding = Math.round(Number($this.css("padding-right").substring(0, $this.css("padding-right").indexOf("px")))),
+            rightValueWidth = $this.find(".right").width(),
+            rightValueHeight = $this.find(".right").height(),
+            leftValueWidth = $this.find(".left").width(),
+            leftValueHeight = $this.find(".left").height(),
             fourthInnerWidth = (innerWidth / 4),
             halfInnerHeight = (innerHeight / 2);
 
-            console.l
         // Center the right and left values vertically. 
         $this.find(".left")
-            .css("top", halfInnerHeight - ($this.find(".left").height() / 2))
-            .css("left", fourthInnerWidth - ($this.find(".left").width() / 2))
+            .css("margin-top", halfInnerHeight - (leftValueHeight / 2))
+            .css("margin-left", fourthInnerWidth - (leftValueWidth / 2))
             .css("color", fontColor);
         $this.find(".right")
-            .css("top", halfInnerHeight - ($this.find(".right").height() / 2))
-            .css("right", fourthInnerWidth - ($this.find(".right").width() / 2))
+            .css("margin-top", halfInnerHeight - (rightValueHeight / 2))
+            .css("margin-left", (fourthInnerWidth * 3) - (rightValueWidth / 2))
             .css("color", fontColor);
 
+        var newCSS = "translate(" + (leftActive ? leftMargin : (innerWidth - (innerWidth / 2) - rightMargin)) + "px)";
+
         // Make the switch be as close as possible to the edges and set it to the default value.
-        $this.find(".switcher")
-            .css("height", innerHeight - (topBottomPadding * 2))
-            .css("width", ((innerWidth - leftPadding - rightPadding)/ 2))
-            .css("left", leftInitialActiveSide ? leftPadding : "auto")
-            .css("right", leftInitialActiveSide ? "auto" : rightPadding)
-            .css("border-radius", shape === "round" ? (height / 2) : 3)
-            .css("background", switchColor);
+        $this.find(".switcher").css({
+            "height": innerHeight - topMargin - bottomMargin,
+            "width": (innerWidth/ 2),
+            "border-radius": shape === "round" ? (height / 2) : 3,
+            "background": switchColor,
+            "transform" : newCSS,
+            "margin-top" : topMargin,
+            "-moz-transform" : newCSS,
+            "-webkit-transform": newCSS
+        });
 
-        // If we click anywhere on the drag-select, switch it.
-        $this.click(function() {
-            var switchClicked = $this.find(".switcher"),
-                leftCSS = switchClicked.css("left"),
-                rightCSS = switchClicked.css("right"),
-                leftActive = rightCSS === "auto",
-                rightActive = leftCSS === "auto";
 
-            switchClicked
-                .css("left", leftActive ? "auto" : leftPadding)
-                .css("right", rightActive ? "auto" : leftPadding);
-        })
+
+        // Depeding on what the user provided, assign the colors.
+        switch (color) {
+            case "red":
+                $this.addClass("red-drag-select");
+                $this.find(".switcher").addClass("red-switcher");
+                $this.find(".left").addClass("red-font");
+                $this.find(".right").addClass("red-font");
+                break;
+            case "blue":
+                $this.addClass("blue-drag-select");
+                $this.find(".switcher").addClass("blue-switcher");
+                $this.find(".left").addClass("blue-font");
+                $this.find(".right").addClass("blue-font");
+                break;
+            case "green":
+                $this.addClass("green-drag-select");
+                $this.find(".switcher").addClass("green-switcher");
+                $this.find(".left").addClass("green-font");
+                $this.find(".right").addClass("green-font");
+                break;
+            case "purple":
+                $this.addClass("purple-drag-select");
+                $this.find(".switcher").addClass("purple-switcher");
+                $this.find(".left").addClass("purple-font");
+                $this.find(".right").addClass("purple-font");
+                break;
+            case "light":
+                $this.addClass("light-drag-select");
+                $this.find(".switcher").addClass("light-switcher");
+                $this.find(".left").addClass("light-font");
+                $this.find(".right").addClass("light-font");
+                break;
+            case "dark":
+                $this.addClass("dark-drag-select");
+                $this.find(".switcher").addClass("dark-switcher");
+                $this.find(".left").addClass("dark-font");
+                $this.find(".right").addClass("dark-font");
+                break;
+        }
+
 
         // If we click on a switch...
         $this.find(".switcher")
             .mousedown(function (event) {
                 $current = $this.find(".switcher");
-                rightClicked = $current.css("left") === "auto";
                 anchorX = event.pageX;
             })
-            .mouseup(function (event) {
-                if ($current) {
-                    // If the mouse up was in the same spot.
-                    if (anchorX === event.pageX) {
-                        snapSide = left === 0 ? !rightClicked : rightClicked;
-                    } else {
-                        snapSide = left > right;
-                    }
-
-                    // Snap the switch accordingly.
-                    $current.css("right", !snapSide ? rightPadding : "auto")
-                            .css("left", snapSide ? leftPadding : "auto");
-
-                    // Reset state variables.
-                    left = 0;
-                    right = 0;
-                    anchorX = 0;
-                    rightClicked = false;
-                    $current = null;
-                }
-            });
+            .mouseup(snapSide);
 
         $(document)
             .mousemove(function (event) {
                 if ($current) {
-                    // Hold on to the parent and the switch width.
-                    var parent = $current.parent(),
-                        switchWidth = $current.width();
-
                     // Hold left and right values.
-                    left = event.pageX - anchorX;
-                    right = parent.innerWidth() - left - switchWidth;
+                    var transform = event.pageX - anchorX,
+                        maxTranslate = $current.parent().width() - $current.width(),
+                        newCSS;
 
-                    // If we click on the switch when it is on the right...
-                    if (rightClicked) {
-                        right = anchorX - event.pageX;
-                        left = parent.innerWidth() - right - switchWidth;
+                    if (leftActive) {
+                        transform = anchorX - event.pageX; 
                     }
 
-                    // Move the switch accordingly and change it's css.
-                    if (left <= leftPadding) {
-                        $current.css("left", leftPadding).css("right", "auto");
-                    } else if (right <= rightPadding) {
-                        $current.css("right", rightPadding).css("left", "auto");                       
-                    } else {
-                        $current.css("left", left).css("right", right);
+                    if (transform < leftMargin) {
+                        transform = leftMargin;
+                    } else if (transform > maxTranslate - rightMargin) {
+                        transform = maxTranslate - rightMargin;
+
                     }
+
+                    if (!leftActive) {
+                        leftActive = !leftActive;
+                    }
+
+                    newCSS = "translate(" + transform + "px)";
+
+                    $current.css({
+                        "transform" : newCSS,
+                        "-moz-transform" : newCSS,
+                        "-webkit-transform": newCSS
+                    });
                 }
             })
 
             // If we let go of a click, not on a switch...
-            .mouseup(function (event) {
-                // Make sure we are tracking a switch.
-                if ($current) {
-                    // If the mouse up was in the same spot.
-                    if (anchorX === event.pageX) {
-                        snapSide = left === 0 ? !rightClicked : rightClicked;
-                    //If not, see which side is bigger.
-                    } else {
-                        snapSide = left > right;
-                    }
-
-                    // Snap the switch accordingly.
-                    $current.css("right", snapSide ? rightPadding : "auto")
-                            .css("left",  !snapSide ? leftPadding : "auto");
-
-                    // Reset state variables.
-                    left = 0;
-                    right = 0;
-                    anchorX = 0;
-                    rightClicked = false;
-                    $current = null;
-                }
-            });
+            .mouseup(snapSide);
         
     };
 }(jQuery));
