@@ -1,0 +1,91 @@
+.drag-select {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    margin: 3px 3px 3px 3px;
+}
+
+.switcher {
+    z-index: 10;
+    position: absolute;
+}
+
+.right, .left {
+    position: absolute;
+    z-index: 20;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+/* BLUE COLORS */
+
+.blue-drag-select {
+    background: #1589FF; 
+}
+.blue-switcher {
+    background: #82CAFF;
+}
+.blue-font {
+    color: #1029CC;
+}
+
+/* RED COLORS */
+
+.red-drag-select {
+    background: #AD0C2F;
+}
+
+.red-switcher {
+    background: #ED3B62;
+}
+.red-font {
+    color: #610B23;
+}
+
+/* GREEN COLORS */
+
+.green-drag-select {
+    background: #1A871D;
+}
+.green-switcher {
+    background: #24D62A;
+}
+.green-font {
+    font: #0B610E;
+}
+
+/* PURPLE COLORS */
+
+.purple-drag-select {
+    background: #4D1C9C;
+}
+.purple-switcher {
+    background: #875CCC;
+}
+.purple-font {
+    font: #A87ACF;
+}
+
+/* LIGHT COLORS */
+
+.light-drag-select {
+    background: #D0D0D0;
+}
+.light-switcher {
+    background: #FFFFFF;
+}
+.light-font {
+    font: #454545;
+}
+
+/* DARK COLORS */
+
+.dark-drag-select {
+    background: #505050;
+}
+.dark-switcher {
+    background: #808080;
+}
+.dark-font {
+    font: #C7C7C7;
+}
+
