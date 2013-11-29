@@ -110,19 +110,6 @@ $(function () {
                 $('#character-name-input, #create-class, #create-level, #create-money').val('');
                 $('#create-sex').empty();
             })
-            .on('show.bs.modal', function () {
-                $("#create-sex").dragSelect({
-                    values : {
-                        left: "Male",
-                        right: "Female"
-                    },
-                    shape: "square",
-                    activeSide : "left",
-                    color: "light",
-                    width: 510,
-                    height: 45
-                });
-            });
 
         // Spawn random character information for character creation.
         $('#spawn-character').click(function () {
@@ -133,18 +120,6 @@ $(function () {
                     $('#create-class').val(character.classType);
                     $('#create-level').val(character.level);
                     $('#create-money').val(character.money);
-                    $('#create-sex').empty();
-                    $("#create-sex").dragSelect({
-                        values : {
-                            left: "Male",
-                            right: "Female"
-                        },
-                        shape: "square",
-                        activeSide : character.gender === 'MALE' ? "left" : "right",
-                        color: "light",
-                        width: 510,
-                        height: 45
-                    });
                 }
             );
         });
@@ -207,24 +182,10 @@ $(function () {
             .on('hidden.bs.modal', function () {
                 $('#edit-class').val('');
                 $('#edit-character').removeClass('active');
-                $("#edit-sex").empty();
             })
             .on('show.bs.modal', function () {
                 $('#edit-character-name-input').val($('#character-name > h3').text())
                 $('#edit-class').val($('#character-class').text())
-
-                // Create the switch for the edit character with their given sex.
-                $("#edit-sex").dragSelect({
-                    values : {
-                        left: "Male",
-                        right: "Female"
-                    },
-                    shape: "square",
-                    activeSide : $('#character-gender').text().toUpperCase() === 'MALE' ? "left" : "right",
-                    color: "light",
-                    width: 510,
-                    height: 45
-                });
             });
 
     /**
@@ -377,5 +338,29 @@ $(function () {
             });
         }
     );
+
+    $("#create-sex").dragSelect({
+        values : {
+            left: "Male",
+            right: "Female"
+        },
+        shape: "square",
+        activeSide : "left",
+        color: "light",
+        width: 510,
+        height: 45
+    });
+
+    $("#edit-sex").dragSelect({
+        values : {
+            left: "Male",
+            right: "Female"
+        },
+        shape: "square",
+        activeSide : "left",
+        color: "light",
+        width: 510,
+        height: 45
+    });
 
 });
