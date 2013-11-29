@@ -19,10 +19,9 @@
 \begin{document}
 \maketitle
 
-
 \section{Design}
 
-Text editors are some of the most important pieces of software that programmers can use for their craft. I think a redesign of this application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this application/package/plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions. In this document, I will be using the Mac keys for shortcuts. \keys{\cmd} denotes Command. \keys{\Alt} denotes Option or Alt. \keys{\shift} denotes Shift. \keys{\ctrl} denotes control.
+Text editors are some of the most important pieces of software that programmers can use for their craft. I think a redesign of this application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this application/package/plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions. In this document, I will be using the Mac keys for shortcuts. \keys{\cmd} denotes Command. \keys{\Alt} denotes Option or Alt. \keys{\shift} denotes Shift. \keys{\ctrl} denotes control. \keys{\Space} denotes space.
 
 The design would mainly use audio recording from the user for all main actions. When the user simply gets tired of typing, they can revert to their spoken voice for accomplishing their goal. The ability to type in the editor is always a possibility and can be relied upon in the event of the audio recording not working as planned.
 
@@ -93,10 +92,10 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 	Records verbatim. This would tell the application to ignore keywords and to simply record whatever input the user has provided. This would allow for saying input like "for", "equals", "pipe", etc. so that the application would not be confused with what to enter into the file.
 
 	\item \keys{\Alt + D + V}
-	Declares a variable. This command would take care of declaring a new variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
+	Declares a variable. A user's preferences and the syntax of the file that the user is working on shape the way that variables would be declared. For example, a user could define the standard to be camel casing, or underscores between words, or hyphens. This preference could be assigned by language or just generally by the user. Depending on the language variable types definitely apply.
 	\end{enumerate}
 
-	\subsubsection{Deleting Text}
+	\subsection{Deleting Text}
 	\keys{\Alt + D}
 	Delete a certain part of the text. This works extremely similarly to text selection. All of the same inputs work in the same way except for that the simply delete the text instead of selecting it. An added input here would be "delete" for the case that the user has selected some text and then decides to delete it after the selection was made.
 
@@ -118,7 +117,7 @@ Complete a specific file action. Input ranges from: "save", "save as", "save all
 
 \subsection{Preferences}
 	\keys{\Alt + P}
-	Changes a preference. Input for this can be: "font" and  "color scheme". "font" can be suffixed with "larger" and "smaller". This command would not be able to edit and package control settings due to the way \textbf{Sublime Text} stores preference files. 
+	Changes a preference. Input for this can be: "font" and  "color scheme". "font" can be suffixed with "larger" and "smaller". This command would not be able to edit preferences or package control settings due to the way \textbf{Sublime Text} stores preference files. 
 
 \section{\menu{Other}}
 
@@ -264,14 +263,22 @@ Key command & Voice input & Menu action & Key commands\\ \hline
 
 \pagebreak
 
+\section*{14 Key command table (cont.)}
 \begin{adjustbox}{center}
 \begin{tabular}{ | l | l || l | l |}
 
 \hline
 Key command & Voice input & Menu action & Key commands\\ \hline
 
-\keys{\Alt + D} & & & \\ \hline
-
+\multirow{8}{*}{\keys{\Alt + D}} & "all" & \menu{Selection > Select All} & \keys{\cmd + A}\\
+	& "word" & \menu{Selection > Expand Selection to Word} & \keys{\cmd + D}\\
+	& "beginning of word" & \menu{Edit > Text > Delete Word Forward} & \\
+	& "end of word" & \menu{Edit > Text > Delete Word Backward} &\\
+	& "line" & \menu{Edit > Text > Delete Line} & \keys{\ctrl + \shift + L}\\
+	& "paragraph" & & \\
+	& "scope" &  & \\
+	& "indentation" & & \\
+	& "brackets" & & \\ \hline
 
 \multirow{7}{*}{\keys{\Alt + D}} & "all" & \menu{Selection > Select All}, & \keys{\cmd + A}, \keys{Delete}\\
 	& "word" & \menu{Selection > Expand Selection to Word} & \keys{\cmd + D}\\
@@ -284,7 +291,9 @@ Key command & Voice input & Menu action & Key commands\\ \hline
 \multirow{3}{*}{\keys{\Alt + W}} & "minimize" & \menu{Window > Minimize} & \keys{\cmd + M}\\
 	& "left" & \menu{Goto > Switch File > Next File} & \keys{\shift + \cmd + [} or \keys{\Alt + \cmd + \arrowkeyright}\\
 	& "rihgt" & \menu{Goto > Switch File > Previous File} & \keys{\shift + \cmd + ]} or \keys{\Alt + \cmd + \arrowkeyleft}\\ \hline
+
 \keys{\Alt + B} & & \menu{Tools > Build} & \keys{\cmd + B} \\ \hline
+
 \keys{\Alt + B + S} & & \menu{Tools > Build System} & \\ \hline
 
 \multirow{3}{*}{\keys{\Alt + P}} & "font larger" & \menu{Sublime Text 2 > Preferences > Font > Font Larger} & \keys{\cmd + =}\\
@@ -296,6 +305,7 @@ Key command & Voice input & Menu action & Key commands\\ \hline
 \keys{\Alt + L} & & \menu{Goto > Goto Line...} & \keys{\ctrl + G}\\ \hline
 \end{tabular}
 \end{adjustbox}
+
 
 \restoregeometry
 
