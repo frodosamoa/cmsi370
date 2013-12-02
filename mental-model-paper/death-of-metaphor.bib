@@ -30,7 +30,8 @@
 %
 % Ars Technica
 %	
-
+% JD: Good, you know the {} trick for retaining capitalization.  Some other
+%     entries could use this too, actually.  See computer-use below.
 @misc{ars-technica-mavericks,
 	title = {{OS X} 10.9 {M}avericks: the {A}rs {T}echnica {R}eview},
 	author = {John Siracusa},
@@ -63,6 +64,9 @@
 	note = {\url{http://www.apple.com/ios/design/} (last accessed on 11/02/13}
 }
 
+% JD: The formatting of "Apple Computer, Inc." here makes BibTeX think that "Inc."
+%     is Apple's last name :)  Enclose the whole thing in { } (thus resulting in
+%     doubles {{ }} to eliminate the first name/last name parsing.
 @book{apple,
 	author = {Apple Computer, Inc.},
 	title = {Macintosh Human Interface Guidelines},
