@@ -45,7 +45,7 @@ $(function() {
                 // JD: Alternatively, you can define this "template" as a standalone
                 //     string at the top, then set its attributes via jQuery, e.g.:
                 //
-                //     var TEMP_BOX_TEMPLATE = $('<div class="box"></div>');
+                //     var TEMP_BOX_TEMPLATE = '<div class="box"></div>';
                 //
                 //     ...
                 //
