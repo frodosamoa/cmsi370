@@ -41,6 +41,23 @@ $(function() {
                 touchCache.creatingBox.width = 0;
 
                 // Create a stringy version of our initial box from out touchCache.
+                //
+                // JD: Alternatively, you can define this "template" as a standalone
+                //     string at the top, then set its attributes via jQuery, e.g.:
+                //
+                //     var TEMP_BOX_TEMPLATE = $('<div class="box"></div>');
+                //
+                //     ...
+                //
+                //     var tempBox = $(TEMP_BOX_TEMPLATE)
+                //             .attr({ id: touch.identifier })
+                //             .width(touchCache.creatingBox.width)
+                //             .height(touchCache.creatingBox.height)
+                //             ...;
+                //
+                //     You may find this approach to be a little more readable and
+                //     less error-prone.
+                //
                 var tempBox = "<div id=\"" + 
                               touch.identifier + "\" class=\"box\"style=\"width: " +
                               touchCache.creatingBox.width + "px; height: " + 
@@ -110,6 +127,7 @@ $(function() {
                         left    : touchXGreater ? touchCache.initialX : touchX,
                         top     : touchYGreater ? touchCache.initialY : touchY
                     };
+                    // JD: Nicely consolidated code here :)
 
                     // Update the box's style in the drawing area.
                     $('#' + touch.identifier)
@@ -117,6 +135,15 @@ $(function() {
                             .css('height', touchCache.creatingBox.height)
                             .css('left', touchCache.creatingBox.left)
                             .css('top', touchCache.creatingBox.top);
+
+                    // JD: You can "coalesce" multiple CSS properties into a single object:
+                    //
+                    //     $('#' + touch.identifier).css({
+                    //         width: touchCache.creatingBox.width,
+                    //         height: touchCache.creatingBox.height,
+                    //         left: touchCache.creatingBox.left,
+                    //         top: touchCache.creatingBox.top
+                    //     });
                 }
             });
             
@@ -136,6 +163,8 @@ $(function() {
                         parentHeight = boxParent.height(),
                         parentBottom = parentWidth + boxParent.offset().top,
                         parentRight = parentHeight + boxParent.offset().left,
+                        // JD: Don't forget left and top---easy to miss because the drawing area
+                        //     is near the upper-left of the page, but still grounds for deletion.
                         outsideDrawingArea = touch.target.movingBox.offset().left > parentRight ||
                                              touch.target.movingBox.offset().top > parentBottom;
 
@@ -152,6 +181,8 @@ $(function() {
                 // If we have created something...
                 var touchCache = cache[touch.identifier];
                 if (touchCache && touchCache.creatingBox) {
+                    // JD: "20" is another good candidate for a "constant" variable
+                    //     declaration at the top of this function.
                     var boxTooSmall = touchCache.creatingBox.width < 20 &&
                                       touchCache.creatingBox.height < 20;
 
