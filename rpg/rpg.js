@@ -20,7 +20,18 @@ $(function () {
             '</tr>',
         characterListRowTemplate = '<tr>' +
             '<td></td>'+
-            '</tr>';
+            '</tr>',
+        getTranslate = function (switcher) {
+            var matrix = switcher.css("-webkit-transform") ||
+                switcher.css("-moz-transform") ||
+                switcher.css("transform"),
+                translate = 0;
+            console.log(matrix)
+            if (matrix !== 'none') {
+                translate = Number(matrix.split('(')[1].split(')')[0].split(', ')[4]);
+            } 
+            return translate;
+        };
 
 /**
  *  CHARACTERS
@@ -43,7 +54,10 @@ $(function () {
             var character = {
                     name      : $('#character-name-input').val(),
                     classType : $('#create-class').val(),
-                    gender    : $('#create-sex .switcher').css('right') === "auto" ? 'MALE' : 'FEMALE',
+                    gender    : getTranslate($("#create-sex .switcher")) === 
+                                parseInt($("#create-sex").css("margin-top"))
+                                     ? 'MALE' 
+                                     : 'FEMALE',
                     level     : $('#create-level').val(),
                     money     : $('#create-money').val()
                 };
@@ -109,6 +123,7 @@ $(function () {
             .on('hidden.bs.modal', function () {
                 $('#character-name-input, #create-class, #create-level, #create-money').val('');
                 $('#create-sex').empty();
+                //flick switch
             })
 
         // Spawn random character information for character creation.
@@ -120,6 +135,7 @@ $(function () {
                     $('#create-class').val(character.classType);
                     $('#create-level').val(character.level);
                     $('#create-money').val(character.money);
+                    $("#create-sex").dragSelect.flickSwitch(false);
                 }
             );
         });
@@ -147,7 +163,10 @@ $(function () {
                     id         : idToEdit,
                     name       : $('#character-name > h3').text(),
                     classType  : $('#edit-class').val(), 
-                    gender     : $('#edit-sex .switcher').css('right') === "auto" ? 'MALE' : 'FEMALE', 
+                    gender     : getTranslate($("#create-sex .switcher")) === 
+                                 parseInt($("#create-sex").css("margin-top")) 
+                                    ? 'MALE'
+                                    : 'FEMALE', 
                     level      : $('#character-level').text(), 
                     money      : $('#character-money').text()
                 };
@@ -182,10 +201,12 @@ $(function () {
             .on('hidden.bs.modal', function () {
                 $('#edit-class').val('');
                 $('#edit-character').removeClass('active');
+                //flick switch
             })
             .on('show.bs.modal', function () {
                 $('#edit-character-name-input').val($('#character-name > h3').text())
                 $('#edit-class').val($('#character-class').text())
+                //flick switch
             });
 
     /**
@@ -345,7 +366,7 @@ $(function () {
             right: "Female"
         },
         shape: "square",
-        activeSide : "left",
+        leftActive: true,
         color: "light",
         width: 510,
         height: 45
@@ -357,7 +378,7 @@ $(function () {
             right: "Female"
         },
         shape: "square",
-        activeSide : "left",
+        leftActive: true,
         color: "light",
         width: 510,
         height: 45
