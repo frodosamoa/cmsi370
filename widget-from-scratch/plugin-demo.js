@@ -6,7 +6,7 @@ $(function () {
         },
 
         shape: "square",
-        activeSide : "left",
+        leftActive : true,
         color: "blue",
         width: 530,
         height: 45
@@ -19,9 +19,9 @@ $(function () {
         },
 
         color: "dark",
-        width: "100%"
+        width: "100%",
+        height: 60
     });
-
 
     $(".drag-select-yesno").dragSelect({
         values : {
@@ -29,7 +29,7 @@ $(function () {
             right: "no"
         },
 
-        activeSide: "right",
+        leftActive: false,
         shape: "round",
         color: "purple"
     });
@@ -42,7 +42,7 @@ $(function () {
 
         width: "60%",
         height: 40,
-        activeSide: "right",
+        leftActive: true,
         shape: "round",
         color: "green"
     });
@@ -53,9 +53,9 @@ $(function () {
             right: "I"
         },
 
-        width: 80,
-        height: 40,
-        activeSide: "right",
+        width: 160,
+        height: 80,
+        leftActive: false,
         shape: "round"
     });
 
@@ -67,7 +67,7 @@ $(function () {
 
         width: 300,
         height: 70,
-        activeSide: "right",
+        leftActive: true,
         shape: "square",
         color: "red"
     });
