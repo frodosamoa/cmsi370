@@ -44,8 +44,10 @@
         // State variables.
         var $this = this,
             $current = null,
+            initialClicked = null,
             anchorX = 0,
             currentTranslate = 0,
+            clickValid = false,
 
             // Switch margin.
             switchMargin = 3, 
@@ -82,38 +84,42 @@
                 // Make sure we are tracking a switch.
                 if ($current) {
                     var transform = event.pageX - anchorX + currentTranslate,
-                        maxTranslate = $current.parent().width() - $current.width(),
+                        minTranslate = switchMargin,
+                        maxTranslate = $current.parent().width() - $current.width() - switchMargin;
                         middlePoint = $current.parent().innerWidth() / 4;
 
-                    if (event.pageX === anchorX) { // If the click was in the same spot...
-                        transform = leftActive ? (maxTranslate - switchMargin) : switchMargin;
-                    } else if (transform < middlePoint) { 
-                        transform = switchMargin;
-                    } else if (transform > middlePoint) {
-                        transform = maxTranslate - switchMargin;
+                    // If the click was valid or in the same spot,
+                    // translate the switch accordingly.
+                    if (clickValid) {
+                        transform = transform < middlePoint ? minTranslate : maxTranslate;
+                    } else if (event.pageX === anchorX) {
+                        transform = leftActive ? maxTranslate : minTranslate;
                     }
 
-                    // Translate our switch.
-                    translateSwitch($current, transform);
+                    if (clickValid || event.pageX === anchorX) {
+                        translateSwitch($current, transform);
+                    }
 
                     // If the switch changed sides, change the active variable.
-                    if ((leftActive && (transform === (maxTranslate - switchMargin))) || 
-                       ((!leftActive) && transform === switchMargin)) {
+                    if ((leftActive && (transform === maxTranslate)) || 
+                       ((!leftActive) && transform === minTranslate)) {
                         leftActive = !leftActive;
                     }
 
                     // Reset state variables.
-                    $current = null;
+                    $current, initialClicked = null;
                     anchorX = 0;
                     currentTranslate = 0;
+                    clickValid = false;
                 }
             },
 
             // Mouse down event helper function.
-            startMouseDown = function (switcher, clickX, switcherTranslate) {
+            startMouseDown = function (switcher, event) {
+                initialClicked = event.target;
                 $current = switcher;
-                anchorX = clickX;
-                currentTranslate = switcherTranslate;
+                anchorX = event.pageX;
+                currentTranslate = getTranslate(switcher);
             },
 
             // Gets the translate from the transform matrix of a switch.
@@ -139,9 +145,6 @@
                 });
             };
 
-                        console.log(leftActive)
-
-
         // DRAG SELECT
         // Add "drag-select" color classes. Append left value, right value, 
         // switcher. Add CSS and mousedown event.
@@ -153,9 +156,9 @@
                 "height": height,
                 "border-radius": shape === "round" ? (height / 2) : 3 
             })
-                // .mousedown(function (event) {
-                //     startMouseDown(switcher, event.pageX, getTranslate(switcher))
-                // });
+            .mousedown(function (event) {
+                startMouseDown(switcher, event);
+            });
 
         // Values used for centering values vertically and horizontally and
         // for creating the switch size.
@@ -171,45 +174,34 @@
 
         // LEFT VALUE
         // Add CSS, color, and mousedown event.
-        left.css({
+        left.addClass(fontColor)
+            .css({
                 "margin-top": (innerHeight / 2) - (left.height() / 2),
                 "margin-left": (innerWidth / 4) - (left.width() / 2)
-            })
-            .addClass(fontColor)
-            .mousedown(function (event) {
-                if (leftActive) {
-                    startMouseDown(switcher, event.pageX, getTranslate(switcher));
-                }
             });
 
         // RIGHT VALUE
         // Ass CSS, color, and mousedown event.
-        right.addClass(fontColor)
+        right
+            .addClass(fontColor)
             .css({
                 "margin-top": (innerHeight / 2) - (right.height() / 2),
                 "margin-left": ((innerWidth / 4) * 3) - (right.width() / 2)
-            })
-            .mousedown(function (event) {
-                if (!leftActive) {
-                    startMouseDown(switcher, event.pageX, getTranslate(switcher));
-                }
             });
 
         // SWITCHER
         // Add CSS, color, and mousedown event.
-        switcher.css({
-                    "height": innerHeight - (2 * switchMargin),
-                    "width": (innerWidth/ 2) - switchMargin,
-                    "border-radius": shape === "round" ? (height / 2) : switchMargin,
-                    "margin-top" : switchMargin,
-                    "transform" : initialSwitcherCSS,
-                    "-moz-transform" : initialSwitcherCSS,
-                    "-webkit-transform": initialSwitcherCSS
-                })
-                .addClass(switcherColor)
-                .mousedown(function (event) {
-                    startMouseDown(switcher, event.pageX, getTranslate(switcher));
-                });
+        switcher
+            .addClass(switcherColor)
+            .css({
+                "height": innerHeight - (2 * switchMargin),
+                "width": (innerWidth/ 2) - switchMargin,
+                "border-radius": shape === "round" ? (height / 2) : switchMargin,
+                "margin-top" : switchMargin,
+                "transform" : initialSwitcherCSS,
+                "-moz-transform" : initialSwitcherCSS,
+                "-webkit-transform": initialSwitcherCSS
+            });
 
         // Mouse move and mouse up events for the whole document.
         $(document)
@@ -217,17 +209,25 @@
                 if ($current) {
                     // Hold left and right values.
                     var transform = event.pageX - anchorX + currentTranslate,
-                        maxTranslate = $current.parent().width() - $current.width();
+                        minTranslate = switchMargin,
+                        maxTranslate = $current.parent().width() - $current.width() - switchMargin;
+                    
+                    // Sees if a click is valid, clicked on elements on the
+                    // side where the switcher is or on the switch itself.
+                    clickValid = (leftActive && (initialClicked === left[0])) ||
+                                 (!leftActive && (initialClicked === right[0])) ||
+                                 initialClicked === switcher[0];
 
                     // Keep the switch bounded inside the drag select.
-                    if (transform < switchMargin) {
-                        transform = switchMargin;
-                    } else if (transform > maxTranslate - switchMargin) {
-                        transform = maxTranslate - switchMargin;
-                    }
+                    if (clickValid) {
+                        if (transform < minTranslate) {
+                            transform = minTranslate;
+                        } else if (transform > maxTranslate) {
+                            transform = maxTranslate;
+                        }
 
-                    // Translate the switch.
-                    translateSwitch($current, transform);
+                        translateSwitch($current, transform);
+                    } 
                 }
             })
             .mouseup(snapSide);  
