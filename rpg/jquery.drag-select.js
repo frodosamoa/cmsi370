@@ -27,10 +27,11 @@
 (function ($) {
     // Default values stored as "constants".
     var defaults = {
-            width   : 40,
-            height  : 150,
-            shape   : "square",
-            color   : "light"
+            width       : 40,
+            height      : 150,
+            shape       : "square",
+            color       : "light",
+            leftActive  : true
         },
 
         // Templates for the right and left values, and the switch.
@@ -43,9 +44,10 @@
         // State variables.
         var $this = this,
             $current = null,
+            initialClicked = null,
             anchorX = 0,
-            leftActive = false,
             currentTranslate = 0,
+            clickValid = false,
 
             // Switch margin.
             switchMargin = 3, 
@@ -55,62 +57,69 @@
             rightValue = options.values ? (options.values.right || "Right") : "Right",
 
             // Which side is active.
-            leftActive = options.activeSide ? options.activeSide === "left" : true,
+            leftActive = typeof(options.leftActive) !== "undefined" 
+                            ? options.leftActive
+                            : defaults.leftActive,
 
-            // Shape of the switch.
+            // Shape of the drag select and switch.
             shape = options.shape ? options.shape : defaults.shape,
 
-            // Color of the switch.
+            // Colors.
             color = options.color ? options.color : defaults.color,
+            dragSelectColor = "drag-select-" + color,
+            switcherColor = "switcher-" + color,
+            fontColor = "font-" + color,
 
-            // Height and width of our switch.
+            // Height and width of our drag select.
             height = options.height ? options.height : defaults.width,
             width = options.width ? options.width: defaults.height,
 
-            // Clones of templates.
-            $leftValue = $leftValueTemplate.clone(),
-            $rightValue = $rightValueTemplate.clone()
+            // Clones of templates with values put in.
+            $leftValue = $leftValueTemplate.clone().text(leftValue),
+            $rightValue = $rightValueTemplate.clone().text(rightValue),
             $switcherClone = $switcher.clone(),
 
             // Snaps the switch to a specific side.
             snapSide = function (event) {
                 // Make sure we are tracking a switch.
-                console.log(event)
                 if ($current) {
-                    console.log($current)
                     var transform = event.pageX - anchorX + currentTranslate,
-                        maxTranslate = $current.parent().width() - $current.width(),
+                        minTranslate = switchMargin,
+                        maxTranslate = $current.parent().width() - $current.width() - switchMargin;
                         middlePoint = $current.parent().innerWidth() / 4;
 
-                    if (event.pageX === anchorX) {
-                        console.log(leftActive)
-                        transform = leftActive ? (maxTranslate - switchMargin) : switchMargin;
-                    } else if (transform < middlePoint) {
-                        transform = switchMargin;
-                    } else if (transform > middlePoint) {
-                        transform = maxTranslate - switchMargin;
+                    // If the click was valid or in the same spot,
+                    // translate the switch accordingly.
+                    if (clickValid) {
+                        transform = transform < middlePoint ? minTranslate : maxTranslate;
+                    } else if (event.pageX === anchorX) {
+                        transform = leftActive ? maxTranslate : minTranslate;
+                    }
+
+                    if (clickValid || event.pageX === anchorX) {
+                        translateSwitch($current, transform);
                     }
 
                     // If the switch changed sides, change the active variable.
-                    if ((leftActive && (transform === (maxTranslate - switchMargin))) || 
-                       ((!leftActive) && transform === switchMargin)) {
+                    if ((leftActive && (transform === maxTranslate)) || 
+                       ((!leftActive) && transform === minTranslate)) {
                         leftActive = !leftActive;
                     }
 
-                    translateSwitch($current, transform);
-
                     // Reset state variables.
-                    transform = 0;
+                    $current, initialClicked = null;
                     anchorX = 0;
-                    $current = null;
+                    currentTranslate = 0;
+                    clickValid = false;
                 }
             },
 
             // Mouse down event helper function.
-            startMouseDown = function (switcher, clickX, switcherTranslate) {
+            startMouseDown = function (switcher, event) {
+                initialClicked = event.target;
                 $current = switcher;
-                anchorX = clickX;
-                currentTranslate = switcherTranslate;
+                anchorX = event.pageX;
+                currentTranslate = getTranslate(switcher);
             },
 
             // Gets the translate from the transform matrix of a switch.
@@ -136,150 +145,92 @@
                 });
             };
 
-        // Set the width, height, and shape for the drag-select.
-        $this.css({
-            "width": width,
-            "height": height,
-            "border-radius": shape === "round" ? (height / 2) : 3 
-        });
-
-        // Put the right and left values into their templates.
-        $leftValue.text(leftValue);
-        $rightValue.text(rightValue);
-
-        // Append the right value, left value, and the switcher to our drag select div.
+        // DRAG SELECT
+        // Add "drag-select" color classes. Append left value, right value, 
+        // switcher. Add CSS and mousedown event.
         $this.addClass("drag-select")
-            .append($leftValue, $rightValue, $switcherClone);
+            .addClass(dragSelectColor)
+            .append($leftValue, $rightValue, $switcherClone)
+            .css({
+                "width": width,
+                "height": height,
+                "border-radius": shape === "round" ? (height / 2) : 3 
+            })
+            .mousedown(function (event) {
+                startMouseDown(switcher, event);
+            });
 
-        // Values used for centering values vertically and horizontally.
+        // Values used for centering values vertically and horizontally and
+        // for creating the switch size.
         var switcher = $this.find(".switcher"),
-            currentRight = $this.find(".right"),
-            currentLeft = $this.find(".left"),
+            right = $this.find(".right"),
+            left = $this.find(".left"),
             innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
-            rightValueWidth = currentRight.width(),
-            rightValueHeight = currentRight.height(),
-            leftValueWidth = currentLeft.width(),
-            leftValueHeight = currentLeft.height(),
-            fourthInnerWidth = (innerWidth / 4),
-            halfInnerHeight = (innerHeight / 2);
+            initialSwitcherTransform = leftActive
+                                        ? switchMargin 
+                                        : (innerWidth - (innerWidth / 2)),
+            initialSwitcherCSS = "translate(" + initialSwitcherTransform + "px)";
 
-        // Center the right and left values vertically and horizontally. 
-        currentLeft.css({
-            "margin-top": halfInnerHeight - (leftValueHeight / 2),
-            "margin-left": fourthInnerWidth - (leftValueWidth / 2)
-        });
-        currentRight.css({
-            "margin-top": halfInnerHeight - (rightValueHeight / 2),
-            "margin-left": (fourthInnerWidth * 3) - (rightValueWidth / 2)
-        });
-
-        // Inital transform for the switcher.
-        var initalTransform = leftActive ? switchMargin : (innerWidth - (innerWidth / 2)),
-            initialCSS = "translate(" + initalTransform + "px)";
-
-        // Make the switch be as close as possible to the edges and set it to the default value.
-        switcher.css({
-            "height": innerHeight - (2 * switchMargin),
-            "width": (innerWidth/ 2) - switchMargin,
-            "border-radius": shape === "round" ? (height / 2) : 3,
-            "margin-top" : switchMargin,
-            "transform" : initialCSS,
-            "-moz-transform" : initialCSS,
-            "-webkit-transform": initialCSS
-        });
-
-        // Depeding on what the user provided, assign the colors.
-        switch (color) {
-            case "red":
-                $this.addClass("red-drag-select");
-                switcher.addClass("red-switcher");
-                currentLeft.addClass("red-font");
-                currentRight.addClass("red-font");
-                break;
-            case "blue":
-                $this.addClass("blue-drag-select");
-                switcher.addClass("blue-switcher");
-                currentLeft.addClass("blue-font");
-                currentRight.addClass("blue-font");
-                break;
-            case "green":
-                $this.addClass("green-drag-select");
-                switcher.addClass("green-switcher");
-                currentLeft.addClass("green-font");
-                currentRight.addClass("green-font");
-                break;
-            case "purple":
-                $this.addClass("purple-drag-select");
-                switcher.addClass("purple-switcher");
-                currentLeft.addClass("purple-font");
-                currentRight.addClass("purple-font");
-                break;
-            case "light":
-                $this.addClass("light-drag-select");
-                switcher.addClass("light-switcher");
-                currentLeft.addClass("light-font");
-                currentRight.addClass("light-font");
-                break;
-            case "dark":
-                $this.addClass("dark-drag-select");
-                switcher.addClass("dark-switcher");
-                currentLeft.addClass("dark-font");
-                currentRight.addClass("dark-font");
-                break;
-        }
-
-        // If we click on the drag-select, but not on the switch.
-        $this.mousedown(function (event) {
-                startMouseDown(switcher, event.pageX, getTranslate(switcher))
+        // LEFT VALUE
+        // Add CSS, color, and mousedown event.
+        left.addClass(fontColor)
+            .css({
+                "margin-top": (innerHeight / 2) - (left.height() / 2),
+                "margin-left": (innerWidth / 4) - (left.width() / 2)
             });
 
-        // If we click the left value and the switch is on the left.
-        currentLeft
-            .mousedown(function (event) {
-                if (leftActive) {
-                    startMouseDown(switcher, event.pageX, getTranslate(switcher));
-                }
+        // RIGHT VALUE
+        // Ass CSS, color, and mousedown event.
+        right
+            .addClass(fontColor)
+            .css({
+                "margin-top": (innerHeight / 2) - (right.height() / 2),
+                "margin-left": ((innerWidth / 4) * 3) - (right.width() / 2)
             });
 
-        // If we click on the right value and the switch is on the right.
-        currentRight
-            .mousedown(function (event) {
-                if (!leftActive) {
-                    startMouseDown(switcher, event.pageX, getTranslate(switcher));
-                }
-            });
-
-        // If we click on the switch.
+        // SWITCHER
+        // Add CSS, color, and mousedown event.
         switcher
-            .mousedown(function (event) {
-                startMouseDown(switcher, event.pageX, getTranslate(switcher));
+            .addClass(switcherColor)
+            .css({
+                "height": innerHeight - (2 * switchMargin),
+                "width": (innerWidth/ 2) - switchMargin,
+                "border-radius": shape === "round" ? (height / 2) : switchMargin,
+                "margin-top" : switchMargin,
+                "transform" : initialSwitcherCSS,
+                "-moz-transform" : initialSwitcherCSS,
+                "-webkit-transform": initialSwitcherCSS
             });
 
+        // Mouse move and mouse up events for the whole document.
         $(document)
             .mousemove(function (event) {
                 if ($current) {
                     // Hold left and right values.
                     var transform = event.pageX - anchorX + currentTranslate,
-                        maxTranslate = $current.parent().width() - $current.width();
+                        minTranslate = switchMargin,
+                        maxTranslate = $current.parent().width() - $current.width() - switchMargin;
+                    
+                    // Sees if a click is valid, clicked on elements on the
+                    // side where the switcher is or on the switch itself.
+                    clickValid = (leftActive && (initialClicked === left[0])) ||
+                                 (!leftActive && (initialClicked === right[0])) ||
+                                 initialClicked === switcher[0];
 
                     // Keep the switch bounded inside the drag select.
-                    if (transform < switchMargin) {
-                        transform = switchMargin;
-                    } else if (transform > maxTranslate - switchMargin) {
-                        transform = maxTranslate - switchMargin;
-                    }
+                    if (clickValid) {
+                        if (transform < minTranslate) {
+                            transform = minTranslate;
+                        } else if (transform > maxTranslate) {
+                            transform = maxTranslate;
+                        }
 
-                    // Translate the switch.
-                    translateSwitch($current, transform);
+                        translateSwitch($current, transform);
+                    } 
                 }
             })
             .mouseup(snapSide);  
     };
 
-
-    $.fn.dragSelect.flickSwitch = function (side) {
-        var $this = this;
-        console.log($this);
-    };
 }(jQuery));

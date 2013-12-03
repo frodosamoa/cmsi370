@@ -18,74 +18,73 @@
 
 /* BLUE COLORS */
 
-.blue-drag-select {
+.drag-select-blue {
     background: #1589FF; 
 }
-.blue-switcher {
+.switcher-blue {
     background: #82CAFF;
 }
-.blue-font {
+.font-blue {
     color: #1029CC;
 }
 
 /* RED COLORS */
 
-.red-drag-select {
+.drag-select-red {
     background: #AD0C2F;
 }
 
-.red-switcher {
+.switcher-red {
     background: #ED3B62;
 }
-.red-font {
+.font-red {
     color: #610B23;
 }
 
 /* GREEN COLORS */
 
-.green-drag-select {
+.drag-select-green {
     background: #1A871D;
 }
-.green-switcher {
+.switcher-green {
     background: #24D62A;
 }
-.green-font {
+.font-green {
     font: #0B610E;
 }
 
 /* PURPLE COLORS */
 
-.purple-drag-select {
+.drag-select-purple {
     background: #4D1C9C;
 }
-.purple-switcher {
+.switcher-purple {
     background: #875CCC;
 }
-.purple-font {
+.font-purple {
     font: #A87ACF;
 }
 
 /* LIGHT COLORS */
 
-.light-drag-select {
+.drag-select-light {
     background: #D0D0D0;
 }
-.light-switcher {
+.switcher-light {
     background: #FFFFFF;
 }
-.light-font {
+.font-light {
     font: #454545;
 }
 
 /* DARK COLORS */
 
-.dark-drag-select {
+.drag-select-dark {
     background: #505050;
 }
-.dark-switcher {
+.switcher-dark {
     background: #808080;
 }
-.dark-font {
+.font-dark {
     font: #C7C7C7;
 }
-
