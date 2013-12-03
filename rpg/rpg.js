@@ -21,16 +21,35 @@ $(function () {
         characterListRowTemplate = '<tr>' +
             '<td></td>'+
             '</tr>',
-        getTranslate = function (switcher) {
-            var matrix = switcher.css("-webkit-transform") ||
-                switcher.css("-moz-transform") ||
-                switcher.css("transform"),
+
+        // Helper function to get translation from a transform matrix.
+        getTranslate = function (element) {
+            var matrix = element.css("-webkit-transform") ||
+                element.css("-moz-transform") ||
+                element.css("transform"),
                 translate = 0;
             console.log(matrix)
             if (matrix !== 'none') {
                 translate = Number(matrix.split('(')[1].split(')')[0].split(', ')[4]);
             } 
             return translate;
+        },
+
+        //
+        // NOTE: The following function is made simply for functionality.
+        // of the rpg website. This *IS* not the right way to do it, this
+        // is simply done so that the switch is functional.
+        //
+
+        // Helper function to translate switch.
+        translateSwitch = function (switcher, transform) {
+            var newCSS = "translate(" + transform + "px)";
+
+            switcher.css({
+                "transform" : newCSS,
+                "-moz-transform" : newCSS,
+                "-webkit-transform": newCSS
+            });
         };
 
 /**
@@ -54,8 +73,8 @@ $(function () {
             var character = {
                     name      : $('#character-name-input').val(),
                     classType : $('#create-class').val(),
-                    gender    : getTranslate($("#create-sex .switcher")) === 
-                                parseInt($("#create-sex").css("margin-top"))
+                    gender    : getTranslate($("#create-gender .switcher")) === 
+                                parseInt($("#create-gender").css("margin-top"))
                                      ? 'MALE' 
                                      : 'FEMALE',
                     level     : $('#create-level').val(),
@@ -113,6 +132,8 @@ $(function () {
                     $characterInfo.find('#character-level').text(character.level);
                     $characterInfo.find('#character-money').text(character.money);
                     $('#character-info-table > tbody').html($characterInfo);
+
+
                 }
             });
 
@@ -122,8 +143,7 @@ $(function () {
         $('#createModal')
             .on('hidden.bs.modal', function () {
                 $('#character-name-input, #create-class, #create-level, #create-money').val('');
-                $('#create-sex').empty();
-                //flick switch
+                translateSwitch($('#create-gender .switcher'), parseInt($("#create-gender").css("margin-top")));
             })
 
         // Spawn random character information for character creation.
@@ -135,7 +155,14 @@ $(function () {
                     $('#create-class').val(character.classType);
                     $('#create-level').val(character.level);
                     $('#create-money').val(character.money);
-                    $("#create-sex").dragSelect.flickSwitch(false);
+
+                    //Translate the switch according to the spawned character.
+                    var transform = character.gender === "MALE" 
+                                        ? parseInt($("#create-gender").css("margin-top"))
+                                        : ($("#create-gender").innerWidth() - 
+                                           $("#create-gender .switcher").innerWidth() - 
+                                           parseInt($("#create-gender").css("margin-top")));
+                    translateSwitch($('#create-gender .switcher'), transform);
                 }
             );
         });
@@ -163,8 +190,8 @@ $(function () {
                     id         : idToEdit,
                     name       : $('#character-name > h3').text(),
                     classType  : $('#edit-class').val(), 
-                    gender     : getTranslate($("#create-sex .switcher")) === 
-                                 parseInt($("#create-sex").css("margin-top")) 
+                    gender     : getTranslate($("#edit-gender .switcher")) === 
+                                 parseInt($("#edit-gender").css("margin-top")) 
                                     ? 'MALE'
                                     : 'FEMALE', 
                     level      : $('#character-level').text(), 
@@ -201,12 +228,18 @@ $(function () {
             .on('hidden.bs.modal', function () {
                 $('#edit-class').val('');
                 $('#edit-character').removeClass('active');
-                //flick switch
             })
             .on('show.bs.modal', function () {
-                $('#edit-character-name-input').val($('#character-name > h3').text())
-                $('#edit-class').val($('#character-class').text())
-                //flick switch
+                $('#edit-character-name-input').val($('#character-name > h3').text());
+                $('#edit-class').val($('#character-class').text());
+
+                //Transform the switch according to the selected character.
+                var transform = $("#character-gender").text() === "Male" 
+                    ? parseInt($("#edit-gender").css("margin-top"))
+                    : ($("#edit-gender").innerWidth() - 
+                       $("#edit-gender .switcher").innerWidth() - 
+                       parseInt($("#edit-gender").css("margin-top")));
+                translateSwitch($('#edit-gender .switcher'), transform);
             });
 
     /**
@@ -360,7 +393,7 @@ $(function () {
         }
     );
 
-    $("#create-sex").dragSelect({
+    $("#create-gender").dragSelect({
         values : {
             left: "Male",
             right: "Female"
@@ -372,7 +405,7 @@ $(function () {
         height: 45
     });
 
-    $("#edit-sex").dragSelect({
+    $("#edit-gender").dragSelect({
         values : {
             left: "Male",
             right: "Female"
