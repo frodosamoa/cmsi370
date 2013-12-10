@@ -18,6 +18,17 @@
 
 /* BLUE COLORS */
 
+/* JD: Note the comment I made in plugin-demo.js.  Looks like you
+       already have the classes nicely broken down here.  I think
+       you will be OK with just telling the user to concatenate
+       the .drag-select-* classes directly into their HTML (the
+       way Bootstrap does badges or tables, for example).  For the
+       .switcher-* and .font-* classes, you can make those use
+       the containment selectors (>, [space]).
+       
+       Again, to emphasize, the way you did it is decent, but just
+       a little divergent from fully CSS-driven appearance settings. */
+
 .drag-select-blue {
     background: #1589FF; 
 }

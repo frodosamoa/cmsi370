@@ -23,10 +23,16 @@
     -the default is light if no color is assigned.
 
 */
+// JD: Nicely-done documentation block.  Though now you probably mean
+//     "switch" rather than "swivel" :)
 
 (function ($) {
     // Default values stored as "constants".
-    var defaults = {
+    var defaults = { // JD: You can retain the convention of all-caps to indicate
+                     //     the intention that a variable be "constant."  Of course
+                     //     there is no way to enforce that in JavaScript, but the
+                     //     capitalization will at least remind you of the intent
+                     //     when you see the variable references elsewhere.
             width       : 40,
             height      : 150,
             shape       : "square",
@@ -35,6 +41,11 @@
         },
 
         // Templates for the right and left values, and the switch.
+
+        // JD: To eliminate the backslash, you can mix quote delimiters,
+        //     e.g., '<p class="left"></p>'
+        //
+        //     A little more readable that way, yes?
         $leftValueTemplate = $("<p class=\"left\"></p>"),
         $rightValueTemplate = $("<p class=\"right\"></p>"),
         $switcher = $("<div class=\"switcher\"></div>");
@@ -50,14 +61,14 @@
             clickValid = false,
 
             // Switch margin.
-            switchMargin = 3, 
+            switchMargin = 3, // JD: Looks like another candidate for constant.
 
             // Left and right values.
             leftValue = options.values ? (options.values.left || "Left") : "Left",
             rightValue = options.values ? (options.values.right || "Right") : "Right",
 
             // Which side is active.
-            leftActive = typeof(options.leftActive) !== "undefined" 
+            leftActive = typeof(options.leftActive) !== "undefined" // JD: Falsy wasn't enough?
                             ? options.leftActive
                             : defaults.leftActive,
 
@@ -66,6 +77,8 @@
 
             // Colors.
             color = options.color ? options.color : defaults.color,
+            // JD: ^^^Why not use the a || b idiom for shape and color too?
+
             dragSelectColor = "drag-select-" + color,
             switcherColor = "switcher-" + color,
             fontColor = "font-" + color,
@@ -73,6 +86,7 @@
             // Height and width of our drag select.
             height = options.height ? options.height : defaults.width,
             width = options.width ? options.width: defaults.height,
+            // JD: ^^^Ditto a || b
 
             // Clones of templates with values put in.
             $leftValue = $leftValueTemplate.clone().text(leftValue),
@@ -129,6 +143,8 @@
                     switcher.css("transform"),
                     translate = 0;
                 if (matrix !== 'none') {
+                    // JD: Hmm, this one looks a little fragile...a regex might
+                    //     be easier to read.
                     translate = Number(matrix.split('(')[1].split(')')[0].split(', ')[4]);
                 } 
                 return translate;
@@ -167,7 +183,7 @@
             left = $this.find(".left"),
             innerHeight = $this.innerHeight(),
             innerWidth = $this.innerWidth(),
-            initialSwitcherTransform = leftActive
+            initialSwitcherTransform = leftActive // JD: The indentation here diverges from the others.
                                         ? switchMargin 
                                         : (innerWidth - (innerWidth / 2)),
             initialSwitcherCSS = "translate(" + initialSwitcherTransform + "px)";
@@ -230,7 +246,7 @@
                     } 
                 }
             })
-            .mouseup(snapSide);  
+            .mouseup(snapSide); // JD: Nice choice.
     };
 
 }(jQuery));

@@ -23,6 +23,7 @@ $(function () {
             '</tr>',
 
         // Helper function to get translation from a transform matrix.
+        // JD: Yes, we need to find a way to keep this in your plugin code.
         getTranslate = function (element) {
             var matrix = element.css("-webkit-transform") ||
                 element.css("-moz-transform") ||
@@ -40,6 +41,7 @@ $(function () {
         // of the rpg website. This *IS* not the right way to do it, this
         // is simply done so that the switch is functional.
         //
+        // JD: Agreed, glad you are aware of it :)
 
         // Helper function to translate switch.
         translateSwitch = function (switcher, transform) {
@@ -73,6 +75,8 @@ $(function () {
             var character = {
                     name      : $('#character-name-input').val(),
                     classType : $('#create-class').val(),
+                    // JD: This is the one hole in your plugin: providing a clean
+                    //     way to read the current value.
                     gender    : getTranslate($("#create-gender .switcher")) === 
                                 parseInt($("#create-gender").css("margin-top"))
                                      ? 'MALE' 
