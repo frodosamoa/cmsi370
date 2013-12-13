@@ -39,14 +39,19 @@
 \section{Design}
 
 Text editors are some of the most important pieces of software that programmers can use for their craft. I think a design of plugin for this type of an application using multiple interaction styles would be incredibly beneficial for a coder/programmer. For this particular assignment, I will model the way this plugin would work by emulating \textbf{Sublime Text 2} and \textbf{3}'s menus and actions. I will be modeling the way that voice input works by modeling it slightly after Apple OS X's Dictation utility. 
+% JD: LOL so are you a believer in OS X's dictation now? :)
 
 The design would mainly use audio recording from the user for all main actions. When the user simply gets tired of typing, they can revert to their spoken voice for accomplishing their goal. The ability to type in the editor is always a possibility and can be relied upon in the event of the audio recording not working as planned.
 
 When the user would launch the application for the first time, they application would ask them to read a passage. This is like the scene in \textit{Mission: Impossible III} when Tom Cruise (disguised as Philip Seymour Hoffman) asks Philip Seymour Hoffman to read a passage \cite{mission-impossible}. This would analyze a person's accent and other vocal measurements so the application could truly understand their voice. They would then be guided through a series of tasks for them to be acquainted with the overall commands of the application. This would be comprehensive enough for them to be able to code from the get go. Also, this plugin could be modified to be an extension for any other text editor like \textit{TextWrangler}, \textit{Notepad++}, or \textit{MacVim}. This way, cross application compatibility would be accomplished. 
+% JD: Some dictation systems (including OS X's) are beginning to do without this
+%     training phase.  In that light, I think it is now fair for you to also not
+%     feel obligated to include this.
 
 Certain key combinations would denote certain types of actions. Just like Dictation for Mac, pressing \keys{fn} twice would denote the start of a recording. Whenever a user will press a key or key combination once recording has started, the application would understand that the following voice input will be tailored for that action. This application would be advanced enough to be able to read and recognize variable and function names given by the user. The reason for choosing different key combinations for user input is to make the process of completing actions faster and easier for the plugin to recognize. This way the application would know what kind of input it would have to interpret.
+% JD: OK, so this is a potentially intriguing addition.  Let's see what you do with it.
 
-Whenever the user begins to record, a little pox up box on the same line as the cursor would pop up and let the user know that their voice was being recorded. The purple input meter would show the loudness of the user's voice (as shown below).
+Whenever the user begins to record, a little pop up box on the same line as the cursor would pop up and let the user know that their voice was being recorded. The purple input meter would show the loudness of the user's voice (as shown below).
 \begin{center}
 \includegraphics[width=\textwidth]{dictation.png}
 \end{center}
@@ -56,7 +61,8 @@ Another option for users who have a physical disability disallowing them to hold
 I will go through each menu bar action for Sublime Text and show how the plugin would accomplish those given actions.
 
 \subsection{File menu \hfill \normalfont{Key: \keys{Y} Word: "file"}}
-
+% JD: I have a little disconnect here---so if this is spoken, what is the "Y" for again?
+%     Is it a substitute for saying "file"?  I'm guessing that it is...
 
 Complete a specific file menu item. Input ranges from: "save", "save as", "save all", "new file", "close file", "close all files", "open most recent", "open last closed file", "close window", and "new window". Each respective action does what it denotes.
 
@@ -65,6 +71,7 @@ Complete a specific file menu item. Input ranges from: "save", "save as", "save 
 Completes a specific edit menu item. Input ranges from: "cut", "copy", "paste", "paste and indent",  "undo" and "repeat". Each respective action does what it denotes.
 
 \subsection{Text entry, selection, manipluation, and deletion}
+% JD: OK, I'm getting the idea.  Seems like a lot of memorizing though...
 
 	\subsubsection{Entry}
 
@@ -123,7 +130,10 @@ Changes a preference. Input for this can be: "font" and  "color scheme". "font" 
 
 	\subsubsection{Go to line number \hfill \normalfont{Key: \keys{L} Word: "line"}}
 	Moves the cursor to a certain line number. Sample input can include a specific line number or the top or bottom. Examples: "fifty-three", "first", "last", "two", etc. These inputs can prefixed with "end of" and "beginning of" to go to the end or beginning of that line. The default will be the beginning of the line. This could be changed in the user preferences.
-
+% JD: One way to test this design, without necessarily implementing it, is to
+%     have an expert text editor sit and act as "secretary" to your commands.
+%     You can then experience, firsthand, how this interface would "feel" if
+%     it were implemented.
 
 \section{Error handling and response from the application}
 
@@ -135,33 +145,51 @@ In terms of error handling, if the application were to not understand what the u
 
 	\subsection{Handicapped persons}
 	The first user group that comes to mind are people who normally have some difficulty typing. Due to some physical barriers, they might be unable to input or manipulate text via the keyboard. This application would allow for the people who want to code to be able to do so. 
+% JD: This is actually a very compelling case, and the benefits here potentially
+%     make up for the usability doubts that come to mind.  It might be that this
+%     user group genuinely benefits more from this design than others.
 
 	\subsection{The tired coder}
 	The second user group that comes to mind is the coder who is simply just tired of typing. For this target group, the technology would simply be an addition to their flow of programming. For example, when a user wants to move a piece of code into another function, this application would perform the given task faster than the typing equivalent.
+
+% JD: I can sort of see this, but, I don't know, it's a little hard for me to see
+%     someone getting tired from just sitting and typing :)
 
 \section{Rationale}
 
 	\subsection{Mental models}
 	The mental models of the designer (me) are to automate a task which is largely not automatic. Yes, there are many different applications that automatically produce code in varying ways from user input. Yet, automated code is almost always a big no-no. The mental model that this design is attempting to send across to the user is that this plugin is meant to work in conjunction with the normal commands that a user is used to using. This would not be a complete replacement of the way in which a coder could code, but more as a supplement.
+% JD: You hint at something here that has not come up yet---automation.  The commands
+%     you have listed are fairly piecemeal; they can almost all be done with current
+%     keyboard shortcuts or mouse movements.  Automation implies something bigger:
+%     typing out more complicated blocks of text; greater structure; more brains.
+%     I think your "define variable" command gets closest to this.  I think this
+%     rationale would be stronger if your spoken command mix has more of these.
 
 	\subsection{Interaction design guidelines}
 	In terms of meeting certain guidelines regarding input and data entry, this proposed design is in line with Smith and Mosier's guidelines \cite{guidelines}. They mention that a design should strive for minimal input actions by the user. By using voice, the actual amount of key presses declines sharply. The interaction with the user is simplified incredibly and allows for less doing to accomplish the same result.
+% JD: Thank you for citing :)
 
-	This also address the guideline that there should be a flexibility for user control of data entry. The voice input can always be used, but when a user wants to simply type out the code, they \textit{can}.
+	This also addresses the guideline that there should be a flexibility for user control of data entry. The voice input can always be used, but when a user wants to simply type out the code, they \textit{can}.
 
 	\subsection{Interaction design principles}
 	A strong principle of interaction design is to know your user, which really means that you can't know your user. The design of any application is supposed to be able to work around many different dimensions. The most important dimension that the design of this text editor addresses is the dimension of physical abilities. By making this design work for people of any physical ability (provided they can speak), it covers a large group of people. By doing so, this application can accommodate multiple user profiles. This design also contains slightly multi layered interface due to the initial help task list for the user to get acquainted with the design.
 
 	Let's take a look and see how the design fares against some important rules of interaction design.
 
-	First, looking at a few "golden rules" of interaction design by Shneidermann, we can see that the design proposed takes a few into consideration. It caters to universal usability and it permits easy reversal of actions \cite{shniederman-golden-rules}.
+	First, looking at a few "golden rules" of interaction design by Shneiderman, we can see that the design proposed takes a few into consideration. It caters to universal usability and it permits easy reversal of actions \cite{shniederman-golden-rules}.
 
-	Second, looking at Nielsen's Ten Usability Heuristics, we can see that it address some on the nose. The design proposed uses simple and natural dialog and speaks the users language. These two are the case because the user is actually using their own voice for communication. It keeps things consistent by having the shortcuts always doing the same thing. It heavily employs the use of shortcuts for ease of use. And most importantly, it address the heuristic of help and documentation by having a help sequence always available to the user \cite{nielsen-usability-heuristics}.
+	Second, looking at Nielsen's Ten Usability Heuristics, we can see that it address some on the nose. The design proposed uses simple and natural dialog and speaks the users language. These two are the case because the user is actually using their own voice for communication.
+% JD: Uhhh, I'd say that is too literal an interpretation of those principles.
+It keeps things consistent by having the shortcuts always doing the same thing. It heavily employs the use of shortcuts for ease of use. And most importantly, it address the heuristic of help and documentation by having a help sequence always available to the user \cite{nielsen-usability-heuristics}.
 
-	Third, looking at Tognazzini's Sixteen First Principles, it also makes sure that these are addressed. It protects the users work by always allowing them to undo what they have done. The interface provided is very explorable and the user would find many new commands at their leisure to employ. It employs the first principle of human interface objects by letting the user perceive the application visually. It plays to the user other sense because voice is a large component of this interface. It has a standard way of interacting and it has standard resulting behaviors. All in all, it is understandable, self-consistent, and stable \cite{tognazzini-first-principles}.
+	Third, looking at Tognazzini's Sixteen First Principles, it also makes sure that these are addressed. It protects the users work by always allowing them to undo what they have done. The interface provided is very explorable and the user would find many new commands at their leisure to employ. It employs the first principle of human interface objects by letting the user perceive the application visually.
+% JD: But not the spoken command vocabulary though...
+It plays to the user other sense because voice is a large component of this interface. It has a standard way of interacting and it has standard resulting behaviors. All in all, it is understandable, self-consistent, and stable \cite{tognazzini-first-principles}.
 
 	All in all, the interface designed approaches many rules that are seen to be very important in the way that people interact with an interface.
-
+% JD: Proof is in the pudding, as they say---you should try that "human driver"
+%     experiment to see how it feels firsthand.
 
 \section{Usability metric forecast}
 
@@ -172,10 +200,12 @@ In terms of error handling, if the application were to not understand what the u
 	The efficiency of the application would increase over time. As a user became more and more familiar with the flow of the application, they would be able to use the application very efficiently. Since the list of actions is fairly comprehensive, the actions that a user could accomplish via voice is nearly the same as via keyboard.
 
 	\subsection{Errors}
-	The rate of errors would decrease over time. But as imagined, they could be pretty high for a first time user. In any case, the user would be able to simply ue the keyboard to accomplish their task instead of using the voice control.
+	The rate of errors would decrease over time. But as imagined, they could be pretty high for a first time user. In any case, the user would be able to simply use the keyboard to accomplish their task instead of using the voice control.
 
 	\subsection{Memorability}
 	In terms of memorability, the application would fare well. The same commands would do that same things and revisiting this application after some time would not take long to remember how the application functions. Re-familiarizing oneself with the application would be straightforward. Once again, a user could look to the series of tasks outlined in the help section to reacquaint themselves with the application.
+% JD: The application, but how about the commands?  If you sat down at a bash prompt
+%     right now, how many commands from operating systems might you remember?
 
 	\subsection{Satisfaction}
 	Not surprisingly, this metric is largely subjective. For people who previously had a hard time coding due to a disability, this would induce large amounts of satisfaction. For people who do not have any physical disabilities impeding them from typing, their satisfaction would rely upon how efficient they have become at using the application. The overall learning process could be slightly hard, therefore unsatisfactory.
